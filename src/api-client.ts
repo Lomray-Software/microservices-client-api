@@ -25,7 +25,7 @@ export interface IJwtPayload extends JwtPayload {
 export interface IAuthStore {
   signOut: (shouldRefreshPage?: boolean) => Promise<void> | void;
   setShouldRefresh?: (shouldRefresh: boolean) => void;
-  setFetching: (isFetching: boolean) => void;
+  setFetching?: (isFetching: boolean) => void;
 }
 
 export interface IApiClientParams {
@@ -36,6 +36,7 @@ export interface IApiClientParams {
   isClient?: boolean; // is client side (true - SPA, false - SSR backend)
   lang?: string;
   onShowError?: ((error: IBaseException) => Promise<void> | void) | undefined;
+  onError?: ((error: IBaseException) => Promise<void> | void) | undefined;
   headers?: Record<string, any>;
   params: {
     errorConnectionMsg?: string;
@@ -111,6 +112,11 @@ class ApiClient {
   /**
    * @protected
    */
+  protected readonly onError: IApiClientParams['onError'];
+
+  /**
+   * @protected
+   */
   protected readonly onShowError: IApiClientParams['onShowError'];
 
   /**
@@ -138,6 +144,7 @@ class ApiClient {
     isClient,
     lang,
     isProd,
+    onError,
     onShowError,
     headers,
     params,
@@ -147,6 +154,7 @@ class ApiClient {
     this.authStore = authStore;
     this.isClient = isClient;
     this.isProd = isProd;
+    this.onError = onError;
     this.onShowError = onShowError;
     this.headers = headers;
     this.lang = lang;
@@ -356,7 +364,7 @@ class ApiClient {
 
       // Pass flag to client side for update auth tokens & user
       authStore?.setShouldRefresh?.(true);
-      authStore!.setFetching(true);
+      authStore?.setFetching?.(true);
 
       return false;
     }
@@ -419,6 +427,7 @@ class ApiClient {
       if (response?.error) {
         const { error } = response as { error: IBaseException };
 
+        await this.onError?.(error);
         ApiClient.makeBeautifulError(error);
 
         if (!isSkipRenew && (await this.updateAuthTokens(error))) {

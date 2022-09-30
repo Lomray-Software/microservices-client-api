@@ -13,11 +13,11 @@ interface IUser extends IEntity {
   middleName: string;
   email: string;
   phone: string;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string;
   username: string;
-  profile: IProfile;
+  createdAt?: string;
+  updatedAt?: string;
+  deletedAt?: string;
+  profile?: IProfile;
   avatar?: IAttachment;
   role?: Role;
 }

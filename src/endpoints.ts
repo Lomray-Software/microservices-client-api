@@ -8,6 +8,7 @@ import type {
   IAttachmentRemoveInput,
   IAttachmentRemoveOutput,
 } from './interfaces/attachments/methods/attachment/remove';
+import type IToken from './interfaces/authentication/entities/token';
 import type ICookiesRemoveOutput from './interfaces/authentication/methods/cookies/remove';
 import type {
   ITokenRenewInput,
@@ -22,6 +23,10 @@ import type {
 import type { IIdentityProvider } from './interfaces/users/entities/identity-provider';
 import type IProfile from './interfaces/users/entities/profile';
 import type IUser from './interfaces/users/entities/user';
+import type {
+  IIdentityProviderSignInInput,
+  IIdentityProviderSignInOutput,
+} from './interfaces/users/methods/identity-provider/sign-in';
 import type IChangePassword from './interfaces/users/methods/user/change-password';
 import type { ISignInInput, ISignInOutput } from './interfaces/users/methods/user/sign-in';
 import type { ISignOutInput, ISignOutOutput } from './interfaces/users/methods/user/sign-out';
@@ -141,6 +146,7 @@ class Endpoints<TInstance extends IEndpoints = IEndpoints> {
       renew: this.createHandler<ITokenRenewInput, ITokenRenewOutput>('authentication.token.renew', {
         isSkipRenew: true,
       }),
+      update: this.createHandler<IUpdate<IToken>, IView<IToken>>('authentication.token.update'),
     },
     cookies: {
       remove: this.createHandler<never, ICookiesRemoveOutput>('authentication.cookies.remove', {
@@ -189,6 +195,9 @@ class Endpoints<TInstance extends IEndpoints = IEndpoints> {
       update: this.createHandler<IUpdate<IProfile>, IView<IProfile>>('users.profile.update'),
     },
     identityProvider: {
+      signIn: this.createHandler<IIdentityProviderSignInInput, IIdentityProviderSignInOutput>(
+        'users.identity-provider.sign-in',
+      ),
       list: this.createHandler<IQuery<IIdentityProvider>, IList<IIdentityProvider>>(
         'users.identity-provider.list',
       ),
