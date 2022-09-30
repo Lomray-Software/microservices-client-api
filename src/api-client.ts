@@ -56,77 +56,77 @@ class ApiClient {
 
   /**
    * API Endpoints
-   * @private
+   * @protected
    */
-  private endpoints: Endpoints;
+  protected endpoints: Endpoints;
 
   /**
    * Mobx store manager
-   * @private
+   * @protected
    */
-  private storeManager: Manager;
+  protected storeManager: Manager;
 
   /**
    * Client language
-   * @private
+   * @protected
    */
-  private lang: string | undefined;
+  protected lang: string | undefined;
 
   /**
    * Request headers
-   * @private
+   * @protected
    */
   protected readonly headers?: Record<string, any>;
 
   /**
    * Currently going request for refresh auth tokens
-   * @private
+   * @protected
    */
-  private hasAuthRefresh = false;
+  protected hasAuthRefresh = false;
 
   /**
    * Renew token data
-   * @private
+   * @protected
    */
-  private renewTokenData: { attempts: number; resetTimerId: NodeJS.Timeout | null } = {
+  protected renewTokenData: { attempts: number; resetTimerId: NodeJS.Timeout | null } = {
     attempts: 0,
     resetTimerId: null,
   };
 
   /**
-   * @private
+   * @protected
    */
-  private readonly apiDomain: string;
+  protected readonly apiDomain: string;
 
   /**
-   * @private
+   * @protected
    */
-  private readonly isClient: boolean | undefined;
+  protected readonly isClient: boolean | undefined;
 
   /**
-   * @private
+   * @protected
    */
-  private readonly isProd: boolean | undefined;
+  protected readonly isProd: boolean | undefined;
 
   /**
-   * @private
+   * @protected
    */
-  private readonly onShowError: IApiClientParams['onShowError'];
+  protected readonly onShowError: IApiClientParams['onShowError'];
 
   /**
-   * @private
+   * @protected
    */
-  private readonly params: IApiClientParams['params'];
+  protected readonly params: IApiClientParams['params'];
 
   /**
-   * @private
+   * @protected
    */
-  private readonly userStore: IApiClientParams['userStore'];
+  protected readonly userStore: IApiClientParams['userStore'];
 
   /**
-   * @private
+   * @protected
    */
-  private readonly authStore: IApiClientParams['authStore'];
+  protected readonly authStore: IApiClientParams['authStore'];
 
   /**
    * @constructor
@@ -234,9 +234,9 @@ class ApiClient {
 
   /**
    * Get refresh token
-   * @private
+   * @protected
    */
-  private static getRefreshToken(): string | null {
+  protected static getRefreshToken(): string | null {
     return localStorage.getItem(ApiClient.REFRESH_TOKEN_KEY);
   }
 
@@ -255,9 +255,9 @@ class ApiClient {
 
   /**
    * Make beautiful error message
-   * @private
+   * @protected
    */
-  private static makeBeautifulError(error: IBaseException): void {
+  protected static makeBeautifulError(error: IBaseException): void {
     const { message } = error;
     const parts = /Endpoint\sexception\s.+\):(.+)/.exec(message);
 
@@ -267,9 +267,9 @@ class ApiClient {
 
   /**
    * Run request with blocking refresh auth tokens
-   * @private
+   * @protected
    */
-  private async disableRenewAuthTokens<TCallback>(
+  protected async disableRenewAuthTokens<TCallback>(
     callback: () => Promise<TCallback> | TCallback,
   ): Promise<TCallback> {
     this.hasAuthRefresh = true;
@@ -329,9 +329,9 @@ class ApiClient {
 
   /**
    * Detect auth token expiration and try to renew
-   * @private
+   * @protected
    */
-  private async updateAuthTokens(error: IBaseException): Promise<boolean> {
+  protected async updateAuthTokens(error: IBaseException): Promise<boolean> {
     // Method not allowed
     if (error.status === 405 && error.code === -33501) {
       const payloadUserId = error.payload?.['userId'];
@@ -382,9 +382,9 @@ class ApiClient {
 
   /**
    * Handle network and other internal errors
-   * @private
+   * @protected
    */
-  private handleInternalError(e: AxiosError): IBaseException {
+  protected handleInternalError(e: AxiosError): IBaseException {
     const { message, response, code } = e || {};
     const { errorConnectionMsg, errorInternetMsg } = this.params;
     let errMessage = message;
@@ -406,9 +406,9 @@ class ApiClient {
 
   /**
    * Handle backend response
-   * @private
+   * @protected
    */
-  private async handleResponse<TResponse>(
+  protected async handleResponse<TResponse>(
     res: TResponse,
     { shouldShowErrors, isSkipRenew }: IApiClientReqOptions,
   ): Promise<TResponse | 401> {

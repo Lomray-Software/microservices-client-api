@@ -47,7 +47,7 @@ class Endpoints {
    * Endpoints instance for batching
    * @private
    */
-  private batchingInstance: Endpoints;
+  protected batchingInstance: Endpoints;
 
   /**
    * @constructor
@@ -61,7 +61,7 @@ class Endpoints {
   /**
    * Send request to API client
    */
-  private sendRequest = <TInput, TOutput>(
+  protected sendRequest = <TInput, TOutput>(
     method: string,
     params?: TInput,
     options?: IApiClientReqOptions,
@@ -70,7 +70,7 @@ class Endpoints {
   /**
    * Return request data for batch request
    */
-  private sendBatchRequest = <TInput>(method: string, params?: TInput) => ({
+  protected sendBatchRequest = <TInput>(method: string, params?: TInput) => ({
     method,
     params,
   });
@@ -78,7 +78,7 @@ class Endpoints {
   /**
    * Create endpoint handler
    */
-  private createHandler =
+  protected createHandler =
     <TInput, TOutput>(
       method: string,
       { isCached, isSkipRenew }: IEndpointsCreateHandlerConfig = {},
