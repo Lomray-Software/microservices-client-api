@@ -19,9 +19,9 @@ interface IApiClientNativeParams extends IApiClientParams {
       options: IApiClientNativeParams['keychainOptions'],
     ) => Promise<string | undefined>;
   };
-  keychainOptions: {
-    sharedPreferencesName: string;
-    keychainService: string;
+  keychainOptions?: {
+    sharedPreferencesName?: string;
+    keychainService?: string;
   };
 }
 
