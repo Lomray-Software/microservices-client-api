@@ -1,8 +1,8 @@
-import type { IdProvider } from '../../entities/identity-provider';
+import type IdProvider from '../../../../constants/id-provider';
 import type IUser from '../../entities/user';
 
-interface IIdentityProviderSignInInput {
-  provider: IdProvider;
+interface IIdentityProviderSignInInput<TIdProvider = IdProvider> {
+  provider: TIdProvider;
   token: string;
   params?: Record<string, any>;
 }

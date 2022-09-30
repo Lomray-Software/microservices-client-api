@@ -1,13 +1,6 @@
 import type { IEntity } from '@lomray/microservices-types';
+import type Formats from '../../../constants/formats';
 import type IAttachmentEntity from './attachment-entity';
-
-export enum Formats {
-  thumbnail = 'thumbnail',
-  medium = 'medium',
-  small = 'small',
-  large = 'large',
-  extraLarge = 'extra-large',
-}
 
 interface IAttachmentMeta {
   mime: string;

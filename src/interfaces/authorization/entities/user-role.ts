@@ -1,12 +1,12 @@
 import type { IEntity } from '@lomray/microservices-types';
-import type { Role } from './role';
+import type Role from '../../../constants/role';
 
 /**
  * User role
  */
-interface IUserRole extends IEntity {
+interface IUserRole<TRole = Role> extends IEntity {
   userId: string;
-  roleAlias: Role;
+  roleAlias: TRole;
   createdAt: string;
   updatedAt: string;
 }
