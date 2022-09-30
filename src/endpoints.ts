@@ -45,11 +45,11 @@ interface IEndpoints {}
 /**
  * Backend API endpoints
  */
-class Endpoints<TInstance extends IEndpoints = IEndpoints> {
+class Endpoints<TInstance extends IEndpoints = IEndpoints, TClient extends ApiClient = ApiClient> {
   /**
    * API client
    */
-  public readonly apiClient: ApiClient;
+  public readonly apiClient: TClient;
 
   /**
    * Endpoints instance for batching
@@ -60,7 +60,7 @@ class Endpoints<TInstance extends IEndpoints = IEndpoints> {
   /**
    * @constructor
    */
-  constructor(apiClient: ApiClient) {
+  constructor(apiClient: TClient) {
     this.apiClient = apiClient;
 
     apiClient.setEndpoints(this);
