@@ -30,12 +30,12 @@ export interface IAuthStore {
 
 export interface IApiClientParams {
   apiDomain: string;
-  userStore: IConstructableStore<{ user: IUser } & IStore>;
+  userStore: IConstructableStore<{ user: IUser | null } & IStore>;
   authStore: IConstructableStore<IAuthStore & IStore>;
   isProd?: boolean;
   isClient?: boolean; // is client side (true - SPA, false - SSR backend)
   lang?: string;
-  onShowError?: () => Promise<void> | void;
+  onShowError?: ((error: IBaseException) => Promise<void> | void) | undefined;
   headers?: Record<string, any>;
   params: {
     errorConnectionMsg?: string;
@@ -111,7 +111,7 @@ class ApiClient {
   /**
    * @private
    */
-  private readonly onShowError: ((error: IBaseException) => Promise<void> | void) | undefined;
+  private readonly onShowError: IApiClientParams['onShowError'];
 
   /**
    * @private
