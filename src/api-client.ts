@@ -22,8 +22,13 @@ export interface IJwtPayload extends JwtPayload {
   roles?: string[];
 }
 
+export interface ISignOutParams {
+  shouldRefreshPage?: boolean;
+  onSuccess?: () => void | Promise<void>;
+}
+
 export interface IAuthStore {
-  signOut: (shouldRefreshPage?: boolean) => Promise<void> | void;
+  signOut: (params?: ISignOutParams) => Promise<void> | void;
   setShouldRefresh?: (shouldRefresh: boolean) => void;
   setFetching?: (isFetching: boolean) => void;
 }
@@ -348,7 +353,7 @@ class ApiClient {
       if (payloadUserId !== currentUserId) {
         // Maybe access token not exist, need logout
         await this.disableRenewAuthTokens(() =>
-          this.storeManager.getStore(this.authStore)!.signOut(true),
+          this.storeManager.getStore(this.authStore)!.signOut({ shouldRefreshPage: true }),
         );
       }
 
