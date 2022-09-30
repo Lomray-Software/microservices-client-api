@@ -34,10 +34,13 @@ interface IEndpointsCreateHandlerOptions
 
 type TBatchReturn<T> = { -readonly [P in keyof T]: Awaited<T[P]> };
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface IEndpoints {}
+
 /**
  * Backend API endpoints
  */
-class Endpoints {
+class Endpoints<TInstance extends IEndpoints> {
   /**
    * API client
    */
@@ -47,7 +50,7 @@ class Endpoints {
    * Endpoints instance for batching
    * @private
    */
-  protected batchingInstance: Endpoints;
+  protected batchingInstance: TInstance;
 
   /**
    * @constructor
@@ -94,7 +97,7 @@ class Endpoints {
    * Send batch request
    */
   public async batch<T extends readonly unknown[] | []>(
-    callback: (api: Endpoints['batchingInstance']) => T,
+    callback: (api: TInstance) => T,
   ): Promise<TBatchReturn<T>> {
     if (!this.batchingInstance) {
       // @ts-ignore
