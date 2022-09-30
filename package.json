@@ -1,0 +1,73 @@
+{
+  "name": "@lomray/microservices-client-api",
+  "version": "1.0.0",
+  "description": "Package contains microservices API client.",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "keywords": [
+    "js",
+    "microservice",
+    "api",
+    "endpoints",
+    "client"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Lomray-Software/microservices-client-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Lomray-Software/microservices-client-api/issues"
+  },
+  "homepage": "https://github.com/Lomray-Software/microservices-client-api",
+  "author": "Mikhail Yarmaliuk",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "rollup -c && cp package.json lib/package.json",
+    "release": "npm run build && cd lib && npm publish",
+    "lint:check": "eslint --ext '.ts,.tsx' 'src/**/*.{ts,tsx,*.ts,*tsx}'",
+    "lint:format": "eslint --fix --ext '.ts,.tsx' 'src/**/*.{ts,tsx,*.ts,*tsx}'",
+    "ts:check": "tsc --project ./tsconfig.json --skipLibCheck --noemit",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "jwt-decode": "^3.1.2"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
+    "@lomray/eslint-config": "^2.0.1",
+    "@lomray/prettier-config": "^1.2.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@types/lodash": "^4.14.182",
+    "@zerollup/ts-transform-paths": "^1.7.18",
+    "eslint": "8.21.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
+    "rollup": "^2.79.1",
+    "rollup-plugin-folder-input": "^1.0.1",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-ts": "^3.0.2",
+    "semantic-release": "^19.0.5",
+    "ttypescript": "^1.5.13",
+    "typescript": "^4.7.4"
+  },
+  "peerDependencies": {
+    "@lomray/client-helpers": "^1.0.1",
+    "@lomray/microservices-types": "^1.6.2",
+    "@lomray/react-mobx-manager": "*",
+    "axios": "^0.27.2",
+    "lodash": "^4.17.21",
+    "universal-cookie": "^4.0.4"
+  },
+  "bundledDependencies": [
+    "tslib"
+  ]
+}
