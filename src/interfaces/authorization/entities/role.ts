@@ -1,6 +1,6 @@
 import type { IEntity } from '@lomray/microservices-types';
 
-enum Role {
+export enum Role {
   guest = 'guest',
   user = 'user',
   admin = 'admin',
@@ -9,12 +9,10 @@ enum Role {
 /**
  * Role
  */
-interface IRole extends IEntity {
+export interface IRole extends IEntity {
   alias: Role;
   parentAlias: Role | null;
   name: string;
   createdAt: string;
   updatedAt: string;
 }
-
-export { IRole, Role };
