@@ -91,8 +91,11 @@ class Endpoints<TInstance extends IEndpoints = IEndpoints, TClient extends ApiCl
       method: string,
       { isCached, isSkipRenew }: IEndpointsCreateHandlerConfig = {},
     ) =>
-    (params?: TInput, options?: IEndpointsCreateHandlerOptions) =>
-      this.sendRequest<TInput, TOutput>(method, params, {
+    <TI extends TInput = TInput, TO extends TOutput = TOutput>(
+      params?: TI,
+      options?: IEndpointsCreateHandlerOptions,
+    ) =>
+      this.sendRequest<TI, TO>(method, params, {
         isCached,
         isSkipRenew,
         ...options,
