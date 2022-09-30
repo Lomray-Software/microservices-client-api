@@ -22,13 +22,8 @@ export interface IJwtPayload extends JwtPayload {
   roles?: string[];
 }
 
-export interface ISignOutParams {
-  shouldRefreshPage?: boolean;
-  onSuccess?: () => void | Promise<void>;
-}
-
 export interface IAuthStore {
-  signOut: (params?: ISignOutParams) => Promise<void> | void;
+  signOut: (onSuccess?: (code?: 401 | 405) => void | Promise<void>) => Promise<void> | void;
   setShouldRefresh?: (shouldRefresh: boolean) => void;
   setFetching?: (isFetching: boolean) => void;
 }
@@ -40,8 +35,9 @@ export interface IApiClientParams {
   isProd?: boolean;
   isClient?: boolean; // is client side (true - SPA, false - SSR backend)
   lang?: string;
-  onShowError?: ((error: IBaseException) => Promise<void> | void) | undefined;
-  onError?: ((error: IBaseException) => Promise<void> | void) | undefined;
+  onShowError?: (error: IBaseException) => Promise<void> | void;
+  onError?: (error: IBaseException) => Promise<void> | void;
+  onSignOut?: (code?: 401 | 405) => Promise<void> | void;
   headers?: Record<string, any>;
   params: {
     errorConnectionMsg?: string;
@@ -127,6 +123,11 @@ class ApiClient {
   /**
    * @protected
    */
+  protected readonly onSignOut: IApiClientParams['onSignOut'];
+
+  /**
+   * @protected
+   */
   protected readonly params: IApiClientParams['params'];
 
   /**
@@ -151,6 +152,7 @@ class ApiClient {
     isProd,
     onError,
     onShowError,
+    onSignOut,
     headers,
     params,
   }: IApiClientParams) {
@@ -161,6 +163,7 @@ class ApiClient {
     this.isProd = isProd;
     this.onError = onError;
     this.onShowError = onShowError;
+    this.onSignOut = onSignOut;
     this.headers = headers;
     this.lang = lang;
     this.params = params || {};
@@ -353,7 +356,7 @@ class ApiClient {
       if (payloadUserId !== currentUserId) {
         // Maybe access token not exist, need logout
         await this.disableRenewAuthTokens(() =>
-          this.storeManager.getStore(this.authStore)!.signOut({ shouldRefreshPage: true }),
+          this.storeManager.getStore(this.authStore)!.signOut(() => this.onSignOut?.(405)),
         );
       }
 
@@ -388,7 +391,9 @@ class ApiClient {
     }
 
     // Failed to renew tokens - clear user store
-    await this.disableRenewAuthTokens(() => this.storeManager.getStore(this.authStore)!.signOut());
+    await this.disableRenewAuthTokens(() =>
+      this.storeManager.getStore(this.authStore)!.signOut(() => this.onSignOut?.(401)),
+    );
 
     return false;
   }
