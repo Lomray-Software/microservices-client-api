@@ -94,10 +94,11 @@ class Endpoints {
    * Send batch request
    */
   public async batch<T extends readonly unknown[] | []>(
-    callback: (api: Endpoints) => T,
+    callback: (api: Endpoints['batchingInstance']) => T,
   ): Promise<TBatchReturn<T>> {
     if (!this.batchingInstance) {
-      this.batchingInstance = Object.assign(new Endpoints(this.apiClient), {
+      // @ts-ignore
+      this.batchingInstance = Object.assign(new this.constructor(this.apiClient), {
         sendRequest: this.sendBatchRequest,
       });
     }
