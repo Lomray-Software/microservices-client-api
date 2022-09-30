@@ -17,4 +17,6 @@ interface IIdentityProvider extends IEntity {
   updatedAt: string;
 }
 
-export { IIdentityProvider, IdProvider };
+export type { IIdentityProvider };
+
+export { IdProvider };
