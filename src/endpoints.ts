@@ -40,7 +40,7 @@ interface IEndpoints {}
 /**
  * Backend API endpoints
  */
-class Endpoints<TInstance extends IEndpoints> {
+class Endpoints<TInstance extends IEndpoints = IEndpoints> {
   /**
    * API client
    */
