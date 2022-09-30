@@ -13,3 +13,4 @@
 ## This package contains:
  - API Client (axios)
  - Endpoints (microservices)
+ - API interfaces

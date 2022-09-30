@@ -1,11 +1,11 @@
 module.exports = {
   branches: [
     'prod',
-    {
-      name: 'staging',
-      prerelease: 'beta',
-      channel: 'beta',
-    },
+    // {
+    //   name: 'staging',
+    //   prerelease: 'beta',
+    //   channel: 'beta',
+    // },
   ],
   plugins: [
     '@semantic-release/commit-analyzer',
