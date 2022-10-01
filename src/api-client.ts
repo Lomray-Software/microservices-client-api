@@ -5,10 +5,10 @@ import type { AxiosError, AxiosRequestConfig } from 'axios';
 import axios from 'axios';
 import type { JwtPayload } from 'jwt-decode';
 import JwtDecode from 'jwt-decode';
-import Cookies from 'universal-cookie';
 import type Endpoints from './endpoints';
 import { TokenCreateReturnType } from './interfaces/authentication/methods/token/renew';
 import type IUser from './interfaces/users/entities/user';
+import type { IStorage } from './storages/i-storage';
 
 export interface IApiClientReqOptions {
   isCached?: boolean;
@@ -32,6 +32,7 @@ export interface IApiClientParams {
   apiDomain: string;
   userStore: IConstructableStore<{ user: IUser | null } & IStore>;
   authStore: IConstructableStore<IAuthStore & IStore>;
+  storage: IStorage;
   accessTokenType?: TokenCreateReturnType;
   isClient?: boolean; // is client side (true - SPA, false - SSR backend)
   lang?: string;
@@ -67,6 +68,11 @@ class ApiClient {
    * @protected
    */
   protected storeManager: Manager;
+
+  /**
+   * @private
+   */
+  protected readonly storage: IApiClientParams['storage'];
 
   /**
    * Client language
@@ -147,6 +153,7 @@ class ApiClient {
     apiDomain,
     userStore,
     authStore,
+    storage,
     isClient,
     lang,
     onError,
@@ -160,6 +167,7 @@ class ApiClient {
     this.userStore = userStore;
     this.authStore = authStore;
     this.isClient = isClient;
+    this.storage = storage;
     this.accessTokenType = accessTokenType || TokenCreateReturnType.directly;
     this.onError = onError;
     this.onShowError = onShowError;
@@ -216,41 +224,47 @@ class ApiClient {
    * Set user access token
    * NOTE: only for development mode
    */
-  public setAccessToken(token: string | null | undefined): void | Promise<void> {
+  public async setAccessToken(
+    token: string | null | undefined,
+  ): Promise<string | undefined | void> {
     if (this.accessTokenType === TokenCreateReturnType.cookies || token === undefined) {
       return;
     }
 
-    const cookies = new Cookies();
-
     if (token === null) {
-      cookies.remove(ApiClient.ACCESS_TOKEN_KEY);
+      await this.storage.deleteItem(ApiClient.ACCESS_TOKEN_KEY, {
+        isAccess: true,
+      });
 
       return;
     }
 
-    cookies.set(ApiClient.ACCESS_TOKEN_KEY, token);
+    return this.storage.setItem(ApiClient.ACCESS_TOKEN_KEY, token, {
+      isAccess: true,
+    });
   }
 
   /**
    * Set user refresh token
    */
-  public setRefreshToken(token: string | null): void | Promise<void> {
-    if (token === null) {
-      localStorage.removeItem(ApiClient.REFRESH_TOKEN_KEY);
+  public async setRefreshToken(token: string | null): Promise<void> {
+    if (!token) {
+      await this.storage.deleteItem(ApiClient.REFRESH_TOKEN_KEY);
 
       return;
     }
 
-    localStorage.setItem(ApiClient.REFRESH_TOKEN_KEY, token);
+    await this.storage.setItem(ApiClient.REFRESH_TOKEN_KEY, token);
   }
 
   /**
    * Get access token
    * @protected
    */
-  protected getAccessToken(): string | undefined | Promise<undefined | string> {
-    return new Cookies().get(ApiClient.ACCESS_TOKEN_KEY) as string;
+  protected getAccessToken(): Promise<undefined | string | null> | string | null {
+    return this.storage.getItem(ApiClient.ACCESS_TOKEN_KEY, {
+      isAccess: true,
+    });
   }
 
   /**
@@ -258,7 +272,7 @@ class ApiClient {
    * @protected
    */
   protected getRefreshToken(): string | null | Promise<undefined | string> {
-    return localStorage.getItem(ApiClient.REFRESH_TOKEN_KEY);
+    return this.storage.getItem(ApiClient.REFRESH_TOKEN_KEY);
   }
 
   /**
