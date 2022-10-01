@@ -36,7 +36,10 @@ class CookieCombined implements IStorage {
   /**
    * @inheritDoc
    */
-  public deleteItem(name: string, options: IStorageOptions): Promise<string | undefined> | void {
+  public deleteItem(
+    name: string,
+    options: IStorageOptions = {},
+  ): Promise<string | undefined> | void {
     if (options.isAccess) {
       return this.cookie.remove(name, this.options);
     }
@@ -49,7 +52,7 @@ class CookieCombined implements IStorage {
    */
   public getItem(
     name: string,
-    options: IStorageOptions,
+    options: IStorageOptions = {},
   ): Promise<string | undefined> | string | null {
     if (options.isAccess) {
       return this.cookie.get(name, this.options);
@@ -64,7 +67,7 @@ class CookieCombined implements IStorage {
   public setItem(
     name: string,
     value: string,
-    options: IStorageOptions,
+    options: IStorageOptions = {},
   ): Promise<string | undefined> | void {
     if (options.isAccess) {
       if (value === null) {
