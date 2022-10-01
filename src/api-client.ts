@@ -370,6 +370,10 @@ class ApiClient {
    * @protected
    */
   protected async updateAuthTokens(error: IBaseException): Promise<boolean> {
+    if (![401, 405].includes(error.status)) {
+      return false;
+    }
+
     // Method not allowed
     if (error.status === 405 && error.code === -33501) {
       const payloadUserId = error.payload?.['userId'];
@@ -382,10 +386,6 @@ class ApiClient {
         );
       }
 
-      return false;
-    }
-
-    if (error.status !== 401) {
       return false;
     }
 
@@ -486,6 +486,14 @@ class ApiClient {
     const { request = {}, isSkipRenew = false, shouldShowErrors = true } = options;
 
     try {
+      // hold this request (this is parallel request) and wait until previous request refresh auth tokens
+      if (this.hasAuthRefresh) {
+        await waitFor(
+          () => !this.hasAuthRefresh,
+          () => true,
+        );
+      }
+
       const { data } = await axios.request<IMicroserviceResponse<TResponse>>({
         baseURL: this.apiDomain,
         method: 'POST',
