@@ -1,5 +1,3 @@
-import type { JwtPayload } from 'jwt-decode';
-import JwtDecode from 'jwt-decode';
 import type { IApiClientParams } from './api-client';
 import ApiClientDefault from './api-client';
 
@@ -49,23 +47,6 @@ class ApiClient extends ApiClientDefault {
   }
 
   /**
-   * @private
-   */
-  protected async getHeaders(): Promise<Record<string, any> | undefined> {
-    // do not pass this to axios
-    if (this.headers?.host) {
-      delete this.headers.host;
-    }
-
-    const token = await this.getAuthToken();
-
-    return {
-      ...(this.headers || {}),
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    };
-  }
-
-  /**
    * Set user access token
    */
   public async setAccessToken(token: string | null): Promise<void> {
@@ -95,21 +76,15 @@ class ApiClient extends ApiClientDefault {
    * Get auth token
    * @private
    */
-  private getAuthToken(): Promise<string | undefined> {
+  protected getAccessToken(): Promise<string | undefined> {
     return this.secureStorage.getItem(ApiClient.ACCESS_TOKEN_KEY, this.keychainOptions);
   }
 
   /**
-   * Get auth token id
+   * @protected
    */
-  public async getAuthTokenId(): Promise<string | undefined> {
-    const token = await this.getAuthToken();
-
-    if (token) {
-      return JwtDecode<JwtPayload>(token).jti;
-    }
-
-    return undefined;
+  protected getRefreshToken(): Promise<string | undefined> {
+    return this.secureStorage.getItem(ApiClient.REFRESH_TOKEN_KEY, this.keychainOptions);
   }
 }
 

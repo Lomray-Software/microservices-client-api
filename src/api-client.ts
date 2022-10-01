@@ -106,11 +106,6 @@ class ApiClient {
   protected readonly isClient: boolean | undefined;
 
   /**
-   * @protected
-   */
-  protected readonly isProd: boolean | undefined;
-
-  /**
    * @private
    */
   protected readonly accessTokenType: TokenCreateReturnType;
@@ -184,10 +179,7 @@ class ApiClient {
   /**
    * @private
    */
-  protected getHeaders():
-    | Record<string, any>
-    | undefined
-    | Promise<Record<string, any> | undefined> {
+  protected async getHeaders(): Promise<Record<string, any> | undefined> {
     // do not pass this to axios
     if (this.headers?.host) {
       delete this.headers.host;
@@ -195,7 +187,7 @@ class ApiClient {
 
     // add authentication token only for development (if cookie not pass with request)
     if (this.accessTokenType === TokenCreateReturnType.directly && this.isClient) {
-      const token: string | undefined = new Cookies().get(ApiClient.ACCESS_TOKEN_KEY);
+      const token = await this.getAccessToken();
 
       return {
         ...(this.headers || {}),
@@ -224,7 +216,7 @@ class ApiClient {
    * Set user access token
    * NOTE: only for development mode
    */
-  public setAccessToken(token: string | null | undefined): void {
+  public setAccessToken(token: string | null | undefined): void | Promise<void> {
     if (this.accessTokenType === TokenCreateReturnType.cookies || token === undefined) {
       return;
     }
@@ -243,7 +235,7 @@ class ApiClient {
   /**
    * Set user refresh token
    */
-  public setRefreshToken(token: string | null): void {
+  public setRefreshToken(token: string | null): void | Promise<void> {
     if (token === null) {
       localStorage.removeItem(ApiClient.REFRESH_TOKEN_KEY);
 
@@ -254,18 +246,33 @@ class ApiClient {
   }
 
   /**
+   * Get access token
+   * @protected
+   */
+  protected getAccessToken(): string | undefined | Promise<undefined | string> {
+    return new Cookies().get(ApiClient.ACCESS_TOKEN_KEY) as string;
+  }
+
+  /**
    * Get refresh token
    * @protected
    */
-  protected static getRefreshToken(): string | null {
+  protected getRefreshToken(): string | null | Promise<undefined | string> {
     return localStorage.getItem(ApiClient.REFRESH_TOKEN_KEY);
   }
 
   /**
    * Get refresh token payload
    */
-  public static getRefreshTokenPayload(newToken?: string): IJwtPayload {
-    const token = newToken ?? ApiClient.getRefreshToken();
+  public async getTokenPayload({
+    type,
+    newToken,
+  }: {
+    type?: 'access' | 'refresh';
+    newToken?: string;
+  }): Promise<IJwtPayload> {
+    const token =
+      newToken ?? (type === 'access' ? await this.getAccessToken() : await this.getRefreshToken());
 
     if (token) {
       return JwtDecode<IJwtPayload>(token);
@@ -321,7 +328,7 @@ class ApiClient {
       this.renewTokenData.resetTimerId = setTimeout(() => {
         this.renewTokenData.attempts = 0;
       }, 10000);
-      const refresh = ApiClient.getRefreshToken();
+      const refresh = await this.getRefreshToken();
 
       if (refresh) {
         const { result } = await this.endpoints.authentication.token.renew(
@@ -333,9 +340,7 @@ class ApiClient {
         );
 
         if (result?.refresh) {
-          // eslint-disable-next-line @typescript-eslint/await-thenable
           await this.setAccessToken(result.access);
-          // eslint-disable-next-line @typescript-eslint/await-thenable
           await this.setRefreshToken(result.refresh);
 
           return true;
