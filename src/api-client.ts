@@ -5,6 +5,10 @@ import type { AxiosError, AxiosRequestConfig } from 'axios';
 import axios from 'axios';
 import type { JwtPayload } from 'jwt-decode';
 import JwtDecode from 'jwt-decode';
+import type {
+  ITokenRenewInput,
+  ITokenRenewOutput,
+} from './interfaces/authentication/methods/token/renew';
 import { TokenCreateReturnType } from './interfaces/authentication/methods/token/renew';
 import type IUser from './interfaces/users/entities/user';
 import type { IStorage } from './storages/i-storage';
@@ -23,10 +27,7 @@ export interface IJwtPayload extends JwtPayload {
 
 export interface IAuthStore {
   signOut: (onSuccess?: (code?: 401 | 405) => void | Promise<void>) => Promise<void> | void;
-  renewTokens: (params: {
-    refresh: string;
-    returnType: TokenCreateReturnType;
-  }) => Promise<{ result: { access?: string; refresh: string } }>;
+  renewTokens: (params: ITokenRenewInput) => Promise<ITokenRenewOutput | undefined>;
   setShouldRefresh?: (shouldRefresh: boolean) => void;
   setFetching?: (isFetching: boolean) => void;
 }
@@ -335,7 +336,7 @@ class ApiClient {
       const refresh = await this.getRefreshToken();
 
       if (refresh) {
-        const { result } = await this.storeManager.getStore(this.authStore)!.renewTokens({
+        const result = await this.storeManager.getStore(this.authStore)!.renewTokens({
           refresh,
           returnType: this.accessTokenType,
         });
