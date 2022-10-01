@@ -5,7 +5,6 @@ import type { AxiosError, AxiosRequestConfig } from 'axios';
 import axios from 'axios';
 import type { JwtPayload } from 'jwt-decode';
 import JwtDecode from 'jwt-decode';
-import type Endpoints from './endpoints';
 import { TokenCreateReturnType } from './interfaces/authentication/methods/token/renew';
 import type IUser from './interfaces/users/entities/user';
 import type { IStorage } from './storages/i-storage';
@@ -24,6 +23,10 @@ export interface IJwtPayload extends JwtPayload {
 
 export interface IAuthStore {
   signOut: (onSuccess?: (code?: 401 | 405) => void | Promise<void>) => Promise<void> | void;
+  renewTokens: (params: {
+    refresh: string;
+    returnType: TokenCreateReturnType;
+  }) => Promise<{ result: { access?: string; refresh: string } }>;
   setShouldRefresh?: (shouldRefresh: boolean) => void;
   setFetching?: (isFetching: boolean) => void;
 }
@@ -56,12 +59,6 @@ export type TReqData<TRequest> =
 class ApiClient {
   static ACCESS_TOKEN_KEY = 'jwt-access';
   static REFRESH_TOKEN_KEY = 'refresh-token';
-
-  /**
-   * API Endpoints
-   * @protected
-   */
-  protected endpoints: Endpoints;
 
   /**
    * Mobx store manager
@@ -207,13 +204,6 @@ class ApiClient {
   }
 
   /**
-   * Set API endpoints
-   */
-  public setEndpoints(endpoints: Endpoints): void {
-    this.endpoints = endpoints;
-  }
-
-  /**
    * Set store manager
    */
   public setStoreManager(manager: Manager): void {
@@ -345,13 +335,10 @@ class ApiClient {
       const refresh = await this.getRefreshToken();
 
       if (refresh) {
-        const { result } = await this.endpoints.authentication.token.renew(
-          {
-            refresh,
-            returnType: this.accessTokenType,
-          },
-          { shouldShowErrors: false },
-        );
+        const { result } = await this.storeManager.getStore(this.authStore)!.renewTokens({
+          refresh,
+          returnType: this.accessTokenType,
+        });
 
         if (result?.refresh) {
           await this.setAccessToken(result.access);

@@ -62,8 +62,6 @@ class Endpoints<TInstance extends IEndpoints = IEndpoints, TClient extends ApiCl
    */
   constructor(apiClient: TClient) {
     this.apiClient = apiClient;
-
-    apiClient.setEndpoints(this);
   }
 
   /**
