@@ -1,6 +1,6 @@
 import waitFor from '@lomray/client-helpers/helpers/wait-for';
 import type { IBaseException, IMicroserviceResponse } from '@lomray/microservices-types';
-import type { IConstructableStore, Manager, IStore } from '@lomray/react-mobx-manager';
+import type { IConstructableStore, IStore, Manager } from '@lomray/react-mobx-manager';
 import type { AxiosError, AxiosRequestConfig } from 'axios';
 import axios from 'axios';
 import type { JwtPayload } from 'jwt-decode';
@@ -32,7 +32,7 @@ export interface IApiClientParams {
   apiDomain: string;
   userStore: IConstructableStore<{ user: IUser | null } & IStore>;
   authStore: IConstructableStore<IAuthStore & IStore>;
-  isProd?: boolean;
+  accessTokenType?: TokenCreateReturnType;
   isClient?: boolean; // is client side (true - SPA, false - SSR backend)
   lang?: string;
   onShowError?: (error: IBaseException) => Promise<void> | void;
@@ -111,6 +111,11 @@ class ApiClient {
   protected readonly isProd: boolean | undefined;
 
   /**
+   * @private
+   */
+  protected readonly accessTokenType: TokenCreateReturnType;
+
+  /**
    * @protected
    */
   protected readonly onError: IApiClientParams['onError'];
@@ -149,18 +154,18 @@ class ApiClient {
     authStore,
     isClient,
     lang,
-    isProd,
     onError,
     onShowError,
     onSignOut,
     headers,
     params,
+    accessTokenType,
   }: IApiClientParams) {
     this.apiDomain = apiDomain;
     this.userStore = userStore;
     this.authStore = authStore;
     this.isClient = isClient;
-    this.isProd = isProd;
+    this.accessTokenType = accessTokenType || TokenCreateReturnType.directly;
     this.onError = onError;
     this.onShowError = onShowError;
     this.onSignOut = onSignOut;
@@ -189,7 +194,7 @@ class ApiClient {
     }
 
     // add authentication token only for development (if cookie not pass with request)
-    if (!this.isProd && this.isClient) {
+    if (this.accessTokenType === TokenCreateReturnType.directly && this.isClient) {
       const token: string | undefined = new Cookies().get(ApiClient.ACCESS_TOKEN_KEY);
 
       return {
@@ -220,7 +225,7 @@ class ApiClient {
    * NOTE: only for development mode
    */
   public setAccessToken(token: string | null | undefined): void {
-    if (this.isProd || token === undefined) {
+    if (this.accessTokenType === TokenCreateReturnType.cookies || token === undefined) {
       return;
     }
 
@@ -322,9 +327,7 @@ class ApiClient {
         const { result } = await this.endpoints.authentication.token.renew(
           {
             refresh,
-            returnType: this.isProd
-              ? TokenCreateReturnType.cookies
-              : TokenCreateReturnType.directly,
+            returnType: this.accessTokenType,
           },
           { shouldShowErrors: false },
         );
