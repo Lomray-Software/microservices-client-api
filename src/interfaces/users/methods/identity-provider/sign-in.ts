@@ -9,6 +9,7 @@ interface IIdentityProviderSignInInput<TIdProvider = IdProvider> {
 
 interface IIdentityProviderSignInOutput {
   user: IUser;
+  isNew: boolean;
   tokens: {
     access: string;
     refresh: string;
