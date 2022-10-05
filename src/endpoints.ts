@@ -55,7 +55,7 @@ interface IEndpoints {}
  * Backend API endpoints
  */
 class Endpoints<
-  TInstance extends IEndpoints = IEndpoints,
+  TBatchInstance extends IEndpoints = IEndpoints,
   TClient extends ApiClient | ApiClientBackend = ApiClient,
 > {
   /**
@@ -67,7 +67,7 @@ class Endpoints<
    * Endpoints instance for batching
    * @private
    */
-  protected batchingInstance: TInstance;
+  protected batchingInstance: TBatchInstance;
 
   /**
    * @constructor
@@ -115,7 +115,7 @@ class Endpoints<
    * Send batch request
    */
   public async batch<T extends readonly unknown[] | []>(
-    callback: (api: TInstance) => T,
+    callback: (api: TBatchInstance) => T,
   ): Promise<TBatchReturn<T>> {
     if (!this.batchingInstance) {
       // @ts-ignore

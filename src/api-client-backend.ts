@@ -8,12 +8,12 @@ interface IInnerRequestParams {
   reqParams?: AxiosRequestConfig;
 }
 
-interface IApplication {
+export interface IApplication {
   sendRequest: <TRequestParams = Record<string, any>, TResponseResult = Record<string, any>>(
     method: string,
     data?: IMicroserviceRequest<TRequestParams | Record<string, any>>['params'],
     params?: IInnerRequestParams,
-  ) => Promise<IMicroserviceResponse<TResponseResult>>;
+  ) => Promise<IMicroserviceResponse<TResponseResult>> | any;
 }
 
 /**
@@ -35,7 +35,7 @@ class ApiClientBackend {
   /**
    * Send request to API
    */
-  public sendRequest<TResponse, TRequest>(
+  public async sendRequest<TResponse, TRequest>(
     reqData: TReqData<TRequest>,
     options: IApiClientReqOptions = {},
   ): Promise<IMicroserviceResponse<TResponse>> {
@@ -46,7 +46,9 @@ class ApiClientBackend {
     const { method, params } = reqData;
     const { request } = options;
 
-    return this.app.sendRequest(method, params, { reqParams: request });
+    const result = await this.app.sendRequest(method, params, { reqParams: request });
+
+    return result.toJSON() as Promise<IMicroserviceResponse<TResponse>>;
   }
 }
 
