@@ -234,6 +234,9 @@ class Endpoints<
       remove: this.createHandler<IAttachmentRemoveInput, IAttachmentRemoveOutput>(
         'attachments.attachment.remove',
       ),
+      view: this.createHandler<IQuery<IAttachment>, IView<IAttachment>>(
+        'attachments.attachment.view',
+      ),
     },
     attachmentEntity: {
       create: this.createHandler<ICreate<IAttachmentEntity>, IView<IAttachmentEntity>>(
@@ -244,6 +247,9 @@ class Endpoints<
       ),
       remove: this.createHandler<IQuery<IAttachmentEntity>, IRemove<IAttachmentEntity>>(
         'attachments.attachment-entity.remove',
+      ),
+      view: this.createHandler<IQuery<IAttachmentEntity>, IView<IAttachmentEntity>>(
+        'attachments.attachment-entity.view',
       ),
     },
   };
