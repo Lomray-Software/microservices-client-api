@@ -20,11 +20,13 @@ export type IAttachmentFormat = {
 
 export interface IAttachment extends IEntity {
   id: string;
-  userId: string;
+  userId: string | null;
   url: string;
   alt: string;
   type: string;
   formats: { [key in Formats]: IAttachmentFormat };
   meta: IAttachmentMeta;
   attachmentEntities: IAttachmentEntity[];
+  createdAt?: string;
+  updatedAt?: string;
 }
