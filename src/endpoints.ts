@@ -21,6 +21,14 @@ import type {
   IUserRoleViewInput,
   IUserRoleViewOutput,
 } from './interfaces/authorization/methods/user-role/view';
+import type {
+  IEmailSendInput,
+  IEmailSendOutput,
+} from './interfaces/notifications/methods/email/send';
+import type {
+  IPhoneSendInput,
+  IPhoneSendOutput,
+} from './interfaces/notifications/methods/phone/send';
 import type { IIdentityProvider } from './interfaces/users/entities/identity-provider';
 import type IProfile from './interfaces/users/entities/profile';
 import type IUser from './interfaces/users/entities/user';
@@ -237,6 +245,18 @@ class Endpoints<
       remove: this.createHandler<IQuery<IAttachmentEntity>, IRemove<IAttachmentEntity>>(
         'attachments.attachment-entity.remove',
       ),
+    },
+  };
+
+  /**
+   * Notification microservice
+   */
+  notification = {
+    email: {
+      send: this.createHandler<IEmailSendInput, IEmailSendOutput>('notification.email.send'),
+    },
+    phone: {
+      send: this.createHandler<IPhoneSendInput, IPhoneSendOutput>('notification.phone.send'),
     },
   };
 }
