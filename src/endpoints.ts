@@ -1,6 +1,7 @@
 import type { IQuery, ICreate, IView, IList, IRemove, IUpdate } from '@lomray/microservices-types';
 import type { IApiClientReqOptions } from './api-client';
 import type ApiClient from './api-client';
+import type ApiClientBackend from './api-client-backend';
 import type { IAttachment } from './interfaces/attachments/entities/attachment';
 import type IAttachmentEntity from './interfaces/attachments/entities/attachment-entity';
 import type { IAttachmentCreateInput } from './interfaces/attachments/methods/attachment/create';
@@ -45,7 +46,10 @@ interface IEndpoints {}
 /**
  * Backend API endpoints
  */
-class Endpoints<TInstance extends IEndpoints = IEndpoints, TClient extends ApiClient = ApiClient> {
+class Endpoints<
+  TInstance extends IEndpoints = IEndpoints,
+  TClient extends ApiClient | ApiClientBackend = ApiClient,
+> {
   /**
    * API client
    */
