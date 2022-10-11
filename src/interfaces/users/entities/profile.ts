@@ -8,6 +8,7 @@ interface IProfile extends IEntity {
   gender: string;
   photo: string;
   birthDay: string;
+  location: string;
   params: {
     isEmailValid?: boolean;
     isPhoneVerified?: boolean;
