@@ -180,7 +180,7 @@ class Endpoints<
       remove: this.createHandler<IQuery<IUserRole>, IRemove<IUserRole>>(
         'authorization.user-role.remove',
       ),
-      create: this.createHandler<ICreate<IUserRole>, IView<IUserRole>>(
+      assign: this.createHandler<ICreate<IUserRole>, IView<IUserRole>>(
         'authorization.user-role.assign',
       ),
     },
