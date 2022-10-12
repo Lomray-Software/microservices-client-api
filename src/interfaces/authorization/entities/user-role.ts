@@ -6,7 +6,7 @@ import type Role from '../../../constants/role';
  */
 interface IUserRole<TRole = Role> extends IEntity {
   userId: string;
-  roleAlias: TRole;
+  roleAlias: TRole | string;
   createdAt: string;
   updatedAt: string;
 }
