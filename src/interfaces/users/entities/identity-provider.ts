@@ -6,10 +6,10 @@ import type IdProvider from '../../../constants/id-provider';
  */
 export interface IIdentityProvider<TIdProvider = IdProvider> extends IEntity {
   userId: string;
-  provider: TIdProvider;
-  identifier: string;
-  type: string;
-  params: Record<string, any>;
-  createdAt: string;
-  updatedAt: string;
+  provider?: TIdProvider;
+  identifier?: string;
+  type?: string;
+  params?: Record<string, any>;
+  createdAt?: string;
+  updatedAt?: string;
 }

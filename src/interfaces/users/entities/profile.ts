@@ -5,15 +5,15 @@ import type { IEntity } from '@lomray/microservices-types';
  */
 interface IProfile extends IEntity {
   userId: string;
-  gender: string;
-  photo: string;
-  birthDay: string;
-  location: string;
-  params: {
+  gender?: string;
+  photo?: string;
+  birthDay?: string;
+  location?: string;
+  params?: {
     isEmailValid?: boolean;
     isPhoneVerified?: boolean;
   };
-  updatedAt: string;
+  updatedAt?: string;
 }
 
 export default IProfile;

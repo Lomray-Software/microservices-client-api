@@ -34,7 +34,7 @@ export interface IAuthStore {
 
 export interface IApiClientParams {
   apiDomain: string;
-  userStore: IConstructableStore<{ user: IUser | null } & IStore>;
+  userStore: IConstructableStore<{ user: Pick<IUser, 'id'> | null } & IStore>;
   authStore: IConstructableStore<IAuthStore & IStore>;
   storage: IStorage;
   accessTokenType?: TokenCreateReturnType;
@@ -44,7 +44,7 @@ export interface IApiClientParams {
   onError?: (error: IBaseException) => Promise<void> | void;
   onSignOut?: (code?: 401 | 405) => Promise<void> | void;
   headers?: Record<string, any>;
-  params: {
+  params?: {
     errorConnectionMsg?: string;
     errorInternetMsg?: string;
   };
@@ -132,7 +132,7 @@ class ApiClient {
   /**
    * @protected
    */
-  protected readonly params: IApiClientParams['params'];
+  protected readonly params: NonNullable<IApiClientParams['params']>;
 
   /**
    * @protected

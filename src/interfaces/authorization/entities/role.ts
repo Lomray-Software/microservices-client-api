@@ -5,9 +5,9 @@ import type Role from '../../../constants/role';
  * Role
  */
 export interface IRole<TRole = Role> extends IEntity {
-  alias: TRole;
-  parentAlias: TRole | null;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
+  alias?: TRole;
+  parentAlias?: TRole | null;
+  name?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }

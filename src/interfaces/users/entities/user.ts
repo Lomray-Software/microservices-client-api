@@ -8,12 +8,12 @@ import type IProfile from './profile';
  */
 interface IUser<TRole = Role> extends IEntity {
   id: string;
-  firstName: string;
-  lastName: string;
-  middleName: string;
-  email: string;
-  phone: string;
-  username: string;
+  firstName?: string;
+  lastName?: string;
+  middleName?: string;
+  email?: string;
+  phone?: string | null;
+  username?: string;
   createdAt?: string;
   updatedAt?: string;
   deletedAt?: string;

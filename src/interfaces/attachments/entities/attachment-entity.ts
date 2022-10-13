@@ -2,10 +2,10 @@ import type { IEntity } from '@lomray/microservices-types';
 
 interface IAttachmentEntity extends IEntity {
   id: string;
-  entityId: string;
-  attachmentId: string;
-  type: string;
-  microservice: string;
+  entityId?: string;
+  attachmentId?: string;
+  type?: string;
+  microservice?: string;
   order?: number;
   createdAt?: number;
 }
