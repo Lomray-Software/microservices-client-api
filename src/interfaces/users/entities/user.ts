@@ -6,7 +6,7 @@ import type IProfile from './profile';
 /**
  * User entity
  */
-interface IUser<TRole = Role> extends IEntity {
+interface IUser<TRole = Role | string> extends IEntity {
   id: string;
   firstName?: string;
   lastName?: string;
