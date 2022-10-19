@@ -185,7 +185,7 @@ class ApiClient {
   /**
    * @private
    */
-  protected async getHeaders(): Promise<Record<string, any> | undefined> {
+  public async getHeaders(): Promise<Record<string, any> | undefined> {
     // do not pass this to axios
     if (this.headers?.host) {
       delete this.headers.host;
