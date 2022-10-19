@@ -12,7 +12,7 @@ class User {
   /**
    * Get user avatar or default image
    */
-  static getAvatar(user: IUser | null, format: Formats = Formats.medium): string | undefined {
+  static getAvatarUrl(user: IUser | null, format: Formats = Formats.medium): string | undefined {
     const uri =
       user?.avatar?.formats?.[format]?.url ??
       AttachmentEntity.getAnyAttachmentFormat(user?.avatar)?.url;
