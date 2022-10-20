@@ -9,7 +9,7 @@ import type {
   IBaseException,
   IValidationErrorFields,
 } from '@lomray/microservices-types';
-import type { FormikErrors, FormikHelpers } from 'formik';
+import type { FormikErrors } from 'formik';
 import type { IApiClientReqOptions } from './api-client';
 import type ApiClient from './api-client';
 import type ApiClientBackend from './api-client-backend';
@@ -171,11 +171,11 @@ class Endpoints<
    * Convert API validation error response to key value object
    * Use in formik (setErrors)
    */
-  public formatValidationError = <TFormValue, TResValues>(
+  public formatValidationError<TFormValue, TResValues>(
     error: IBaseException | IBaseException[],
     map: Partial<Record<keyof TResValues, keyof TFormValue>> = {},
     isOnlyMessage = false,
-  ): IValidationErrors<TFormValue> => {
+  ): IValidationErrors<TFormValue> {
     const groupErrors = !Array.isArray(error) ? [error] : error;
     const fields = groupErrors.reduce((errRes: Partial<TFormValue>, err) => {
       if (err?.status !== 422 || !Array.isArray(err?.payload)) {
@@ -210,36 +210,7 @@ class Endpoints<
     }
 
     return result as IValidationErrors<TFormValue>;
-  };
-
-  /**
-   * Set errors for fields and main error also adding notification for success
-   */
-  public handleStateForm = <TFormValue>(
-    result: IValidationErrors<TFormValue> | boolean,
-    values: TFormValue,
-    helpers: {
-      setError?: (message?: string | null) => void;
-      setErrors: (errors: FormikErrors<TFormValue>) => void;
-      resetForm?: FormikHelpers<TFormValue>['resetForm'];
-    },
-  ): void => {
-    const { resetForm, setErrors, setError } = helpers;
-
-    if (typeof result === 'boolean') {
-      resetForm?.({ values });
-
-      return;
-    }
-
-    const { fields, message } = result;
-
-    if (fields) {
-      setErrors(fields);
-    } else {
-      setError?.(message);
-    }
-  };
+  }
 
   /**
    * Authentication microservice
