@@ -33,6 +33,14 @@ class ApiClientBackend {
   }
 
   /**
+   * Get current language
+   * NOTE: need implement
+   */
+  public getLanguage(): undefined {
+    return undefined;
+  }
+
+  /**
    * Send request to API
    */
   public async sendRequest<TResponse, TRequest>(

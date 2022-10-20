@@ -120,6 +120,7 @@ class ApiClient {
   protected readonly onError: IApiClientParams['onError'];
 
   /**
+   * Callback for show notification with error
    * @protected
    */
   protected readonly onShowError: IApiClientParams['onShowError'];
@@ -180,6 +181,13 @@ class ApiClient {
    */
   public setLanguage(lang: string): void {
     this.lang = lang;
+  }
+
+  /**
+   * Get language
+   */
+  public getLanguage(): string | undefined {
+    return this.lang;
   }
 
   /**

@@ -1,4 +1,15 @@
-import type { IQuery, ICreate, IView, IList, IRemove, IUpdate } from '@lomray/microservices-types';
+import ucfirst from '@lomray/client-helpers/helpers/ucfirst';
+import type {
+  IQuery,
+  ICreate,
+  IView,
+  IList,
+  IRemove,
+  IUpdate,
+  IBaseException,
+  IValidationErrorFields,
+} from '@lomray/microservices-types';
+import type { FormikErrors, FormikHelpers } from 'formik';
 import type { IApiClientReqOptions } from './api-client';
 import type ApiClient from './api-client';
 import type ApiClientBackend from './api-client-backend';
@@ -47,6 +58,11 @@ interface IEndpointsCreateHandlerOptions
   extends Omit<IApiClientReqOptions, 'isCached' | 'isSkipRenew'> {}
 
 type TBatchReturn<T> = { -readonly [P in keyof T]: Awaited<T[P]> };
+
+export interface IValidationErrors<TFormValue> {
+  fields?: FormikErrors<TFormValue>;
+  message?: string;
+}
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface IEndpoints {}
@@ -150,6 +166,80 @@ class Endpoints<
       return obj;
     }) as never;
   }
+
+  /**
+   * Convert API validation error response to key value object
+   * Use in formik (setErrors)
+   */
+  public formatValidationError = <TFormValue, TResValues>(
+    error: IBaseException | IBaseException[],
+    map: Partial<Record<keyof TResValues, keyof TFormValue>> = {},
+    isOnlyMessage = false,
+  ): IValidationErrors<TFormValue> => {
+    const groupErrors = !Array.isArray(error) ? [error] : error;
+    const fields = groupErrors.reduce((errRes: Partial<TFormValue>, err) => {
+      if (err?.status !== 422 || !Array.isArray(err?.payload)) {
+        return errRes;
+      }
+
+      return {
+        ...(errRes ?? {}),
+        ...err.payload.reduce(
+          (res, { property, constraints }) => ({
+            ...res,
+            [map?.[property] ?? property]: ucfirst(
+              Object.values(constraints)
+                .at(0)
+                // remove field name from begin
+                ?.replace(new RegExp(`^${property} `), '') ?? '',
+              this.apiClient.getLanguage(),
+            ),
+          }),
+          {} as IValidationErrorFields,
+        ),
+      };
+    }, undefined);
+
+    const result = {
+      fields,
+      message: fields === undefined ? groupErrors.at(0)?.message : undefined,
+    };
+
+    if (isOnlyMessage) {
+      return { message: result.message ?? (Object.values(fields ?? {})?.[0] as string) };
+    }
+
+    return result as IValidationErrors<TFormValue>;
+  };
+
+  /**
+   * Set errors for fields and main error also adding notification for success
+   */
+  public handleStateForm = <TFormValue>(
+    result: IValidationErrors<TFormValue> | boolean,
+    values: TFormValue,
+    helpers: {
+      setError?: (message?: string | null) => void;
+      setErrors: (errors: FormikErrors<TFormValue>) => void;
+      resetForm?: FormikHelpers<TFormValue>['resetForm'];
+    },
+  ): void => {
+    const { resetForm, setErrors, setError } = helpers;
+
+    if (typeof result === 'boolean') {
+      resetForm?.({ values });
+
+      return;
+    }
+
+    const { fields, message } = result;
+
+    if (fields) {
+      setErrors(fields);
+    } else {
+      setError?.(message);
+    }
+  };
 
   /**
    * Authentication microservice
