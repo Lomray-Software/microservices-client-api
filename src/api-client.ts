@@ -18,6 +18,7 @@ export interface IApiClientReqOptions {
   isSkipRenew?: boolean;
   shouldShowErrors?: boolean;
   request?: AxiosRequestConfig;
+  isRepeat?: boolean;
 }
 
 export interface IJwtPayload extends JwtPayload {
@@ -44,6 +45,7 @@ export interface IApiClientParams {
   onError?: (error: IBaseException) => Promise<void> | void;
   onSignOut?: (code?: 401 | 405) => Promise<void> | void;
   headers?: Record<string, any>;
+  defaultAccessTokenExp?: number; // use only in case when storage is cookies and httpOnly mode
   params?: {
     errorConnectionMsg?: string;
     errorInternetMsg?: string;
@@ -146,6 +148,19 @@ class ApiClient {
   protected readonly authStore: IApiClientParams['authStore'];
 
   /**
+   * Default access token expiration
+   * NOTE: use only in case when storage is cookies and httpOnly mode enabled (production website)
+   * @protected
+   */
+  protected defaultAccessTokenExp: number;
+
+  /**
+   * Access token expiration
+   * @protected
+   */
+  protected accessTokenExp?: number;
+
+  /**
    * @constructor
    */
   constructor({
@@ -161,6 +176,7 @@ class ApiClient {
     headers,
     params,
     accessTokenType,
+    defaultAccessTokenExp,
   }: IApiClientParams) {
     this.apiDomain = apiDomain;
     this.userStore = userStore;
@@ -168,6 +184,7 @@ class ApiClient {
     this.isClient = isClient;
     this.storage = storage;
     this.accessTokenType = accessTokenType || TokenCreateReturnType.directly;
+    this.defaultAccessTokenExp = defaultAccessTokenExp || 1200; // default 20 min
     this.onError = onError;
     this.onShowError = onShowError;
     this.onSignOut = onSignOut;
@@ -221,7 +238,8 @@ class ApiClient {
 
   /**
    * Set user access token
-   * NOTE: only for development mode
+   * NOTE: if storage = 'cookies' only for development mode,
+   * for websites in production, access token has httpOnly flag and installed via API
    */
   public async setAccessToken(
     token: string | null | undefined,
@@ -237,6 +255,10 @@ class ApiClient {
 
       return;
     }
+
+    this.accessTokenExp =
+      (await this.getTokenPayload({ newToken: token })).exp ??
+      this.getTimestamp() + this.defaultAccessTokenExp;
 
     return this.storage.setItem(ApiClient.ACCESS_TOKEN_KEY, token, {
       isAccess: true,
@@ -275,7 +297,7 @@ class ApiClient {
   }
 
   /**
-   * Get refresh token payload
+   * Get token payload
    */
   public async getTokenPayload({
     type,
@@ -292,6 +314,14 @@ class ApiClient {
     }
 
     return {};
+  }
+
+  /**
+   * Get current timestamp
+   * @protected
+   */
+  protected getTimestamp(): number {
+    return Math.floor(Date.now() / 1000);
   }
 
   /**
@@ -441,6 +471,23 @@ class ApiClient {
   }
 
   /**
+   * Check access token expired and renew tokens
+   * @protected
+   */
+  protected checkTokenExpired(): Promise<boolean> {
+    if (!this.accessTokenExp || this.getTimestamp() < this.accessTokenExp) {
+      return Promise.resolve(true);
+    }
+
+    return this.updateAuthTokens({
+      code: 401,
+      status: 0,
+      service: '',
+      message: 'access token expired, manual renew access token',
+    });
+  }
+
+  /**
    * Handle backend response
    * @protected
    */
@@ -479,9 +526,18 @@ class ApiClient {
     reqData: TReqData<TRequest>,
     options: IApiClientReqOptions = {},
   ): Promise<IMicroserviceResponse<TResponse>> {
-    const { request = {}, isSkipRenew = false, shouldShowErrors = true } = options;
+    const {
+      request = {},
+      isSkipRenew = false,
+      shouldShowErrors = true,
+      isRepeat = false,
+    } = options;
 
     try {
+      if (!isRepeat && !(await this.checkTokenExpired())) {
+        throw new Error('Session has expired. Please login again.');
+      }
+
       const { data } = await axios.request<IMicroserviceResponse<TResponse>>({
         baseURL: this.apiDomain,
         method: 'POST',
@@ -495,7 +551,7 @@ class ApiClient {
 
       // repeat request after update auth tokens
       if (res === 401) {
-        return this.sendRequest(reqData, options);
+        return this.sendRequest(reqData, { ...options, isRepeat: true });
       }
 
       return res;
