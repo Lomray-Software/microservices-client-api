@@ -45,7 +45,7 @@ export interface IApiClientParams {
   onError?: (error: IBaseException) => Promise<void> | void;
   onSignOut?: (code?: 401 | 405) => Promise<void> | void;
   headers?: Record<string, any>;
-  defaultAccessTokenExp?: number; // use only in case when storage is cookies and httpOnly mode
+  defaultAccessTokenExp?: number; // use only in case when storage is cookies and httpOnly mode, in sec
   params?: {
     errorConnectionMsg?: string;
     errorInternetMsg?: string;
@@ -62,6 +62,7 @@ export type TReqData<TRequest> =
 class ApiClient {
   static ACCESS_TOKEN_KEY = 'jwt-access';
   static REFRESH_TOKEN_KEY = 'refresh-token';
+  static EXP_ACCESS_TOKEN_KEY = 'exp-access-token';
 
   /**
    * Mobx store manager
@@ -237,6 +238,15 @@ class ApiClient {
   }
 
   /**
+   * Set access token expiration
+   * @protected
+   */
+  protected setAccessTokenExp(exp?: number): void {
+    this.accessTokenExp = exp;
+    void this.storage.setItem(ApiClient.EXP_ACCESS_TOKEN_KEY, String(this.accessTokenExp));
+  }
+
+  /**
    * Set user access token
    * NOTE: if storage = 'cookies' only for development mode,
    * for websites in production, access token has httpOnly flag and installed via API
@@ -248,17 +258,18 @@ class ApiClient {
       return;
     }
 
+    this.setAccessTokenExp(
+      token
+        ? (await this.getTokenPayload({ newToken: token })).exp ??
+            this.getTimestamp() + this.defaultAccessTokenExp
+        : undefined,
+    );
+
     if (token === null) {
-      await this.storage.deleteItem(ApiClient.ACCESS_TOKEN_KEY, {
+      return this.storage.deleteItem(ApiClient.ACCESS_TOKEN_KEY, {
         isAccess: true,
       });
-
-      return;
     }
-
-    this.accessTokenExp =
-      (await this.getTokenPayload({ newToken: token })).exp ??
-      this.getTimestamp() + this.defaultAccessTokenExp;
 
     return this.storage.setItem(ApiClient.ACCESS_TOKEN_KEY, token, {
       isAccess: true,
@@ -474,9 +485,18 @@ class ApiClient {
    * Check access token expired and renew tokens
    * @protected
    */
-  protected checkTokenExpired(): Promise<boolean> {
+  protected async checkTokenExpired(): Promise<boolean> {
+    this.accessTokenExp =
+      // get expiration or restore from storage (e.g. after app reload)
+      this.accessTokenExp ?? Number(await this.storage.getItem(ApiClient.EXP_ACCESS_TOKEN_KEY));
+    console.log(
+      this.accessTokenExp,
+      this.getTimestamp(),
+      this.getTimestamp() < this.accessTokenExp,
+    );
+
     if (!this.accessTokenExp || this.getTimestamp() < this.accessTokenExp) {
-      return Promise.resolve(true);
+      return true;
     }
 
     return this.updateAuthTokens({
