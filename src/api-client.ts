@@ -495,8 +495,8 @@ class ApiClient {
     }
 
     return this.updateAuthTokens({
-      code: 401,
-      status: 0,
+      status: 401,
+      code: 0,
       service: '',
       message: 'access token expired, manual renew access token',
     });
@@ -549,7 +549,7 @@ class ApiClient {
     } = options;
 
     try {
-      if (!isRepeat && !(await this.checkTokenExpired())) {
+      if (!isSkipRenew && !isRepeat && !(await this.checkTokenExpired())) {
         throw new Error('Session has expired. Please login again.');
       }
 
