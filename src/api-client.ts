@@ -489,11 +489,6 @@ class ApiClient {
     this.accessTokenExp =
       // get expiration or restore from storage (e.g. after app reload)
       this.accessTokenExp ?? Number(await this.storage.getItem(ApiClient.EXP_ACCESS_TOKEN_KEY));
-    console.log(
-      this.accessTokenExp,
-      this.getTimestamp(),
-      this.getTimestamp() < this.accessTokenExp,
-    );
 
     if (!this.accessTokenExp || this.getTimestamp() < this.accessTokenExp) {
       return true;
