@@ -1,6 +1,6 @@
 import type { IEntity } from '@lomray/microservices-types';
 import type Role from '../../../constants/role';
-import type { IAttachment } from '../../attachments/entities/attachment';
+import type { IFile } from '../../files/entities/file';
 import type IProfile from './profile';
 
 /**
@@ -18,7 +18,7 @@ interface IUser<TRole = Role | string> extends IEntity {
   updatedAt?: string;
   deletedAt?: string;
   profile?: IProfile;
-  avatar?: IAttachment;
+  avatar?: IFile;
   role?: TRole;
 }
 

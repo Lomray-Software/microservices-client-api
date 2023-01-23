@@ -13,13 +13,6 @@ import type { FormikErrors } from 'formik';
 import type { IApiClientReqOptions } from './api-client';
 import type ApiClient from './api-client';
 import type ApiClientBackend from './api-client-backend';
-import type { IAttachment } from './interfaces/attachments/entities/attachment';
-import type IAttachmentEntity from './interfaces/attachments/entities/attachment-entity';
-import type { IAttachmentCreateInput } from './interfaces/attachments/methods/attachment/create';
-import type {
-  IAttachmentRemoveInput,
-  IAttachmentRemoveOutput,
-} from './interfaces/attachments/methods/attachment/remove';
 import type IToken from './interfaces/authentication/entities/token';
 import type ICookiesRemoveOutput from './interfaces/authentication/methods/cookies/remove';
 import type {
@@ -32,6 +25,10 @@ import type {
   IUserRoleViewInput,
   IUserRoleViewOutput,
 } from './interfaces/authorization/methods/user-role/view';
+import type { IFile } from './interfaces/files/entities/file';
+import type IFileEntity from './interfaces/files/entities/file-entity';
+import type { IFileCreateInput } from './interfaces/files/methods/file/create';
+import type { IFileRemoveInput, IFileRemoveOutput } from './interfaces/files/methods/file/remove';
 import type {
   IEmailSendInput,
   IEmailSendOutput,
@@ -282,36 +279,26 @@ class Endpoints<
   };
 
   /**
-   * Attachments microservice
+   * Files microservice
    */
-  attachments = {
-    attachment: {
-      list: this.createHandler<IQuery<IAttachment>, IList<IAttachment>>(
-        'attachments.attachment.list',
-      ),
-      create: this.createHandler<IAttachmentCreateInput, IView<IAttachment>>(
-        'attachments.attachment.create',
-      ),
-      remove: this.createHandler<IAttachmentRemoveInput, IAttachmentRemoveOutput>(
-        'attachments.attachment.remove',
-      ),
-      view: this.createHandler<IQuery<IAttachment>, IView<IAttachment>>(
-        'attachments.attachment.view',
-      ),
+  files = {
+    file: {
+      list: this.createHandler<IQuery<IFile>, IList<IFile>>('files.file.list'),
+      create: this.createHandler<IFileCreateInput, IView<IFile>>('files.file.create'),
+      remove: this.createHandler<IFileRemoveInput, IFileRemoveOutput>('files.file.remove'),
+      view: this.createHandler<IQuery<IFile>, IView<IFile>>('files.file.view'),
     },
-    attachmentEntity: {
-      create: this.createHandler<ICreate<IAttachmentEntity>, IView<IAttachmentEntity>>(
-        'attachments.attachment-entity.create',
+    fileEntity: {
+      create: this.createHandler<ICreate<IFileEntity>, IView<IFileEntity>>(
+        'files.file-entity.create',
       ),
-      update: this.createHandler<IUpdate<IAttachmentEntity>, IUpdate<IAttachmentEntity>>(
-        'attachments.attachment-entity.update',
+      update: this.createHandler<IUpdate<IFileEntity>, IUpdate<IFileEntity>>(
+        'files.file-entity.update',
       ),
-      remove: this.createHandler<IQuery<IAttachmentEntity>, IRemove<IAttachmentEntity>>(
-        'attachments.attachment-entity.remove',
+      remove: this.createHandler<IQuery<IFileEntity>, IRemove<IFileEntity>>(
+        'files.file-entity.remove',
       ),
-      view: this.createHandler<IQuery<IAttachmentEntity>, IView<IAttachmentEntity>>(
-        'attachments.attachment-entity.view',
-      ),
+      view: this.createHandler<IQuery<IFileEntity>, IView<IFileEntity>>('files.file-entity.view'),
     },
   };
 

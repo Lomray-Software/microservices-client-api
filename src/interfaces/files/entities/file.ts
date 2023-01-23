@@ -1,8 +1,8 @@
 import type { IEntity } from '@lomray/microservices-types';
 import type Formats from '../../../constants/formats';
-import type IAttachmentEntity from './attachment-entity';
+import type IFileEntity from './file-entity';
 
-interface IAttachmentMeta {
+interface IFileMeta {
   mime: string;
   size?: number;
   width?: number;
@@ -10,7 +10,7 @@ interface IAttachmentMeta {
   hasWebp: boolean;
 }
 
-export type IAttachmentFormat = {
+export type IImageFormat = {
   url: string;
   width: number;
   height: number;
@@ -18,15 +18,15 @@ export type IAttachmentFormat = {
   hasWebp?: boolean;
 };
 
-export interface IAttachment extends IEntity {
+export interface IFile extends IEntity {
   id: string;
   userId?: string | null;
   url?: string;
   alt?: string;
   type?: string;
-  formats?: { [key in Formats]: IAttachmentFormat };
-  meta?: IAttachmentMeta;
-  attachmentEntities?: IAttachmentEntity[];
+  formats?: { [key in Formats]: IImageFormat };
+  meta?: IFileMeta;
+  fileEntities?: IFileEntity[];
   createdAt?: string;
   updatedAt?: string;
 }

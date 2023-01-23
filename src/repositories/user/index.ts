@@ -1,9 +1,9 @@
 import type { IJsonQuery, IQuery } from '@lomray/microservices-types';
 import Formats from '../../constants/formats';
 import type Endpoints from '../../endpoints';
-import type { IAttachment } from '../../interfaces/attachments/entities/attachment';
+import type { IFile } from '../../interfaces/files/entities/file';
 import type IUser from '../../interfaces/users/entities/user';
-import AttachmentEntity from '../attachment';
+import FileEntity from '../file';
 
 /**
  * User entity
@@ -14,8 +14,7 @@ class User {
    */
   static getAvatarUrl(user: IUser | null, format: Formats = Formats.medium): string | undefined {
     const uri =
-      user?.avatar?.formats?.[format]?.url ??
-      AttachmentEntity.getAnyAttachmentFormat(user?.avatar)?.url;
+      user?.avatar?.formats?.[format]?.url ?? FileEntity.getAnyFileFormat(user?.avatar)?.url;
 
     return uri || user?.profile?.photo;
   }
@@ -32,16 +31,16 @@ class User {
   /**
    * Assign avatars to users
    */
-  static assignAvatars(users: IUser[], avatars: IAttachment[]): void {
-    AttachmentEntity.assignEntitiesAttachments(users, avatars, (user, attachments) => {
-      user.avatar = attachments?.[0];
+  static assignAvatars(users: IUser[], avatars: IFile[]): void {
+    FileEntity.assignEntitiesFiles(users, avatars, (user, files) => {
+      user.avatar = files?.[0];
     });
   }
 
   /**
    * Get a list of avatar for a user
    */
-  static assignAvatar = (user: IUser, avatar?: IAttachment | IAttachment[] | null): void => {
+  static assignAvatar = (user: IUser, avatar?: IFile | IFile[] | null): void => {
     user.avatar = Array.isArray(avatar) ? avatar[avatar.length - 1] : avatar || undefined;
   };
 
@@ -65,18 +64,18 @@ class User {
           ...(userId ? { where: { id: userId } } : {}),
         },
       }),
-      batchApi.attachments.attachment.list({
+      batchApi.files.file.list({
         query: {
-          attributes: ['id', 'formats', 'attachmentEntities.order'],
-          relations: ['attachmentEntities'],
+          attributes: ['id', 'formats', 'fileEntities.order'],
+          relations: ['fileEntities'],
           where: {
             // try to get only first image
             and: [
               {
-                'attachmentEntities.entityId': userId,
+                'fileEntities.entityId': userId,
               },
               {
-                'attachmentEntities.order': 1,
+                'fileEntities.order': 1,
               },
             ],
           },

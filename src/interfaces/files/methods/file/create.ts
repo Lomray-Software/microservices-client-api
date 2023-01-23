@@ -1,4 +1,4 @@
-export interface IAttachmentCreateInput {
+export interface IFileCreateInput {
   type: string;
   file: string;
   alt?: string;

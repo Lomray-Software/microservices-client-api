@@ -6,13 +6,18 @@ on:
 jobs:
   release:
     name: Release
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18.13.0'
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm i --ignore-scripts
