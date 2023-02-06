@@ -41,12 +41,17 @@ import type { IIdentityProvider } from './interfaces/users/entities/identity-pro
 import type IProfile from './interfaces/users/entities/profile';
 import type IUser from './interfaces/users/entities/user';
 import type {
+  IConfirmCodeSendInput,
+  IConfirmCodeSendOutput,
+} from './interfaces/users/methods/confirm-code/send';
+import type {
   IIdentityProviderSignInInput,
   IIdentityProviderSignInOutput,
 } from './interfaces/users/methods/identity-provider/sign-in';
 import type IChangePassword from './interfaces/users/methods/user/change-password';
 import type { ISignInInput, ISignInOutput } from './interfaces/users/methods/user/sign-in';
 import type { ISignOutInput, ISignOutOutput } from './interfaces/users/methods/user/sign-out';
+import type { ISignUpInput, ISignUpOutput } from './interfaces/users/methods/user/sign-up';
 
 interface IEndpointsCreateHandlerConfig
   extends Pick<IApiClientReqOptions, 'isCached' | 'isSkipRenew'> {}
@@ -257,10 +262,16 @@ class Endpoints<
         'users.user.change-password',
       ),
       create: this.createHandler<ICreate<IUser>, IView<IUser>>('users.user.create'),
+      signUp: this.createHandler<ISignUpInput, ISignUpOutput>('users.user.sign-up'),
       signIn: this.createHandler<ISignInInput, ISignInOutput>('users.user.sign-in'),
       signOut: this.createHandler<ISignOutInput, ISignOutOutput>('users.user.sign-out', {
         isSkipRenew: true,
       }),
+    },
+    confirmCode: {
+      create: this.createHandler<IConfirmCodeSendInput, IConfirmCodeSendOutput>(
+        'users.confirm-code.send',
+      ),
     },
     profile: {
       update: this.createHandler<IUpdate<IProfile>, IView<IProfile>>('users.profile.update'),
