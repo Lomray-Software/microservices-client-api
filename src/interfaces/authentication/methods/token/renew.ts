@@ -1,7 +1,4 @@
-enum TokenCreateReturnType {
-  cookies = 'cookies',
-  directly = 'directly',
-}
+import type TokenCreateReturnType from '../../../../constants/token-return-type';
 
 interface ITokenRenewInput {
   access?: string; // also, available through cookies
@@ -15,5 +12,3 @@ interface ITokenRenewOutput {
 }
 
 export type { ITokenRenewInput, ITokenRenewOutput };
-
-export { TokenCreateReturnType };

@@ -16,6 +16,10 @@ import type ApiClientBackend from './api-client-backend';
 import type IToken from './interfaces/authentication/entities/token';
 import type ICookiesRemoveOutput from './interfaces/authentication/methods/cookies/remove';
 import type {
+  ITokenCreateInput,
+  ITokenCreateOutput,
+} from './interfaces/authentication/methods/token/create';
+import type {
   ITokenRenewInput,
   ITokenRenewOutput,
 } from './interfaces/authentication/methods/token/renew';
@@ -48,6 +52,10 @@ import type {
   IIdentityProviderSignInInput,
   IIdentityProviderSignInOutput,
 } from './interfaces/users/methods/identity-provider/sign-in';
+import type {
+  IChangeLoginInput,
+  IChangeLoginOutput,
+} from './interfaces/users/methods/user/change-login';
 import type IChangePassword from './interfaces/users/methods/user/change-password';
 import type { ISignInInput, ISignInOutput } from './interfaces/users/methods/user/sign-in';
 import type { ISignOutInput, ISignOutOutput } from './interfaces/users/methods/user/sign-out';
@@ -223,6 +231,9 @@ class Endpoints<
         isSkipRenew: true,
       }),
       update: this.createHandler<IUpdate<IToken>, IView<IToken>>('authentication.token.update'),
+      create: this.createHandler<ITokenCreateInput, ITokenCreateOutput>(
+        'authentication.token.create',
+      ),
     },
     cookies: {
       remove: this.createHandler<never, ICookiesRemoveOutput>('authentication.cookies.remove', {
@@ -260,6 +271,9 @@ class Endpoints<
       update: this.createHandler<IUpdate<IUser>, IView<IUser>>('users.user.update'),
       changePassword: this.createHandler<IChangePassword, IView<IUser>>(
         'users.user.change-password',
+      ),
+      changeLogin: this.createHandler<IChangeLoginInput, IChangeLoginOutput>(
+        'users.user.change-login',
       ),
       create: this.createHandler<ICreate<IUser>, IView<IUser>>('users.user.create'),
       signUp: this.createHandler<ISignUpInput, ISignUpOutput>('users.user.sign-up'),

@@ -5,11 +5,11 @@ import type { AxiosError, AxiosRequestConfig } from 'axios';
 import axios from 'axios';
 import type { JwtPayload } from 'jwt-decode';
 import JwtDecode from 'jwt-decode';
+import TokenCreateReturnType from './constants/token-return-type';
 import type {
   ITokenRenewInput,
   ITokenRenewOutput,
 } from './interfaces/authentication/methods/token/renew';
-import { TokenCreateReturnType } from './interfaces/authentication/methods/token/renew';
 import type IUser from './interfaces/users/entities/user';
 import type { IStorage } from './storages/i-storage';
 
