@@ -289,6 +289,7 @@ class Endpoints<
     },
     profile: {
       update: this.createHandler<IUpdate<IProfile>, IView<IProfile>>('users.profile.update'),
+      view: this.createHandler<IQuery<IProfile>, IView<IProfile>>('users.profile.view'),
     },
     identityProvider: {
       signIn: this.createHandler<IIdentityProviderSignInInput, IIdentityProviderSignInOutput>(
