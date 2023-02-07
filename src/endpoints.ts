@@ -283,7 +283,7 @@ class Endpoints<
       }),
     },
     confirmCode: {
-      create: this.createHandler<IConfirmCodeSendInput, IConfirmCodeSendOutput>(
+      send: this.createHandler<IConfirmCodeSendInput, IConfirmCodeSendOutput>(
         'users.confirm-code.send',
       ),
     },
