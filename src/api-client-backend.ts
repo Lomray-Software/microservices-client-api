@@ -5,6 +5,7 @@ import type { IApiClientReqOptions, TReqData } from './api-client';
 interface IInnerRequestParams {
   shouldGenerateId?: boolean;
   reqId?: string | number;
+  isThrowError?: boolean;
   reqParams?: AxiosRequestConfig;
 }
 
@@ -54,7 +55,10 @@ class ApiClientBackend {
     const { method, params } = reqData;
     const { request } = options;
 
-    const result = await this.app.sendRequest(method, params, { reqParams: request });
+    const result = await this.app.sendRequest(method, params, {
+      reqParams: request,
+      isThrowError: false,
+    });
 
     return result.toJSON() as Promise<IMicroserviceResponse<TResponse>>;
   }
