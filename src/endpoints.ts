@@ -60,6 +60,10 @@ import type {
   IChangePasswordInput,
   IChangePasswordOutput,
 } from './interfaces/users/methods/user/change-password';
+import type {
+  ICheckUsernameInput,
+  ICheckUsernameOutput,
+} from './interfaces/users/methods/user/check-username';
 import type { ISignInInput, ISignInOutput } from './interfaces/users/methods/user/sign-in';
 import type { ISignOutInput, ISignOutOutput } from './interfaces/users/methods/user/sign-out';
 import type { ISignUpInput, ISignUpOutput } from './interfaces/users/methods/user/sign-up';
@@ -277,6 +281,9 @@ class Endpoints<
       ),
       changeLogin: this.createHandler<IChangeLoginInput, IChangeLoginOutput>(
         'users.user.change-login',
+      ),
+      checkUsername: this.createHandler<ICheckUsernameInput, ICheckUsernameOutput>(
+        'users.user.check-username',
       ),
       create: this.createHandler<ICreate<IUser>, IView<IUser>>('users.user.create'),
       signUp: this.createHandler<ISignUpInput, ISignUpOutput>('users.user.sign-up'),
