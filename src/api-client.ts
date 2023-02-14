@@ -24,6 +24,7 @@ export interface IApiClientReqOptions {
 export interface IJwtPayload extends JwtPayload {
   userId?: string;
   roles?: string[];
+  accessExpiresIn?: number;
 }
 
 export interface IAuthStore {
@@ -45,7 +46,6 @@ export interface IApiClientParams {
   onError?: (error: IBaseException) => Promise<void> | void;
   onSignOut?: (code?: 401 | 405) => Promise<void> | void;
   headers?: Record<string, any>;
-  defaultAccessTokenExp?: number; // use only in case when storage is cookies and httpOnly mode, in sec
   params?: {
     errorConnectionMsg?: string;
     errorInternetMsg?: string;
@@ -149,13 +149,6 @@ class ApiClient {
   protected readonly authStore: IApiClientParams['authStore'];
 
   /**
-   * Default access token expiration
-   * NOTE: use only in case when storage is cookies and httpOnly mode enabled (production website)
-   * @protected
-   */
-  protected defaultAccessTokenExp: number;
-
-  /**
    * Access token expiration
    * @protected
    */
@@ -177,7 +170,6 @@ class ApiClient {
     headers,
     params,
     accessTokenType,
-    defaultAccessTokenExp,
   }: IApiClientParams) {
     this.apiDomain = apiDomain;
     this.userStore = userStore;
@@ -185,7 +177,6 @@ class ApiClient {
     this.isClient = isClient;
     this.storage = storage;
     this.accessTokenType = accessTokenType || TokenCreateReturnType.directly;
-    this.defaultAccessTokenExp = defaultAccessTokenExp || 1200; // default 20 min
     this.onError = onError;
     this.onShowError = onShowError;
     this.onSignOut = onSignOut;
@@ -251,27 +242,20 @@ class ApiClient {
    * NOTE: if storage = 'cookies' only for development mode,
    * for websites in production, access token has httpOnly flag and installed via API
    */
-  public async setAccessToken(
-    token: string | null | undefined,
-  ): Promise<string | undefined | void> {
+  public async setAccessToken(token: string | null | undefined): Promise<void> {
     if (this.accessTokenType === TokenCreateReturnType.cookies || token === undefined) {
       return;
     }
 
-    this.setAccessTokenExp(
-      token
-        ? (await this.getTokenPayload({ newToken: token })).exp ??
-            this.getTimestamp() + this.defaultAccessTokenExp
-        : undefined,
-    );
-
     if (token === null) {
-      return this.storage.deleteItem(ApiClient.ACCESS_TOKEN_KEY, {
+      await this.storage.deleteItem(ApiClient.ACCESS_TOKEN_KEY, {
         isAccess: true,
       });
+
+      return;
     }
 
-    return this.storage.setItem(ApiClient.ACCESS_TOKEN_KEY, token, {
+    await this.storage.setItem(ApiClient.ACCESS_TOKEN_KEY, token, {
       isAccess: true,
     });
   }
@@ -287,6 +271,11 @@ class ApiClient {
     }
 
     await this.storage.setItem(ApiClient.REFRESH_TOKEN_KEY, token);
+
+    // set auth token expiration
+    const sec = (await this.getTokenPayload({ type: 'refresh', newToken: token }))?.accessExpiresIn;
+
+    this.setAccessTokenExp(sec ? sec + this.getTimestamp() : undefined);
   }
 
   /**
@@ -482,7 +471,7 @@ class ApiClient {
   }
 
   /**
-   * Check access token expired and renew tokens
+   * Check auth token expired and renew tokens
    * @protected
    */
   protected async checkTokenExpired(): Promise<boolean> {
