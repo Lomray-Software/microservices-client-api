@@ -330,7 +330,7 @@ class ApiClient {
    */
   protected static makeBeautifulError(error: IBaseException): void {
     const { message } = error;
-    const parts = /Endpoint\sexception\s.+\):(.+)/.exec(message);
+    const parts = /Endpoint\sexception\s[^:]+\):\s?(.+)/.exec(message);
 
     error.message = parts?.[1] ?? parts?.[0] ?? message;
     error.rawMessage = message;

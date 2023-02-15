@@ -13,6 +13,7 @@ import type { FormikErrors } from 'formik';
 import type { IApiClientReqOptions } from './api-client';
 import type ApiClient from './api-client';
 import type ApiClientBackend from './api-client-backend';
+import ErrorType from './constants/error-type';
 import type IToken from './interfaces/authentication/entities/token';
 import type ICookiesRemoveOutput from './interfaces/authentication/methods/cookies/remove';
 import type {
@@ -185,6 +186,30 @@ class Endpoints<
   }
 
   /**
+   * Convert backend error messages to client message
+   */
+  public getFormattedErrorMessage(message?: string): string | undefined {
+    if (!message) {
+      return;
+    }
+
+    const groups = /"(\w+)\((\w+)\):(\w+)"/.exec(message);
+
+    if (groups?.length !== 3) {
+      return message;
+    }
+
+    switch (groups[1]) {
+      case ErrorType.unique:
+        return `Value for field ${groups[2]} already taken`;
+      case ErrorType.pk:
+        return 'This entry already exists';
+    }
+
+    return message;
+  }
+
+  /**
    * Convert API validation error response to key value object
    * Use in formik (setErrors)
    */
@@ -205,8 +230,7 @@ class Endpoints<
           (res, { property, constraints }) => ({
             ...res,
             [map?.[property] ?? property]: ucfirst(
-              Object.values(constraints)
-                .at(0)
+              Object.values(constraints)[0]
                 // remove field name from begin
                 ?.replace(new RegExp(`^${property} `), '') ?? '',
               this.apiClient.getLanguage(),
@@ -219,7 +243,8 @@ class Endpoints<
 
     const result = {
       fields,
-      message: fields === undefined ? groupErrors.at(0)?.message : undefined,
+      message:
+        fields === undefined ? this.getFormattedErrorMessage(groupErrors[0]?.message) : undefined,
     };
 
     if (isOnlyMessage) {
