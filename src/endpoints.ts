@@ -193,15 +193,19 @@ class Endpoints<
       return;
     }
 
-    const groups = /"(\w+)\((\w+)\):(\w+)"/.exec(message);
+    const res = /"(?<entity>\w+)\((?<type>\w+)\):(?<field>\w+)"/.exec(message);
 
-    if (groups?.length !== 3) {
+    if (!res?.groups?.type) {
       return message;
     }
 
-    switch (groups[1]) {
+    const {
+      groups: { type, field },
+    } = res;
+
+    switch (type) {
       case ErrorType.unique:
-        return `Value for field ${groups[2]} already taken`;
+        return `Value for field ${field} already taken`;
       case ErrorType.pk:
         return 'This entry already exists';
     }
