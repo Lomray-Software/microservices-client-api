@@ -6,7 +6,7 @@ interface IChangePasswordInput {
   oldPassword?: string;
   confirmBy?: ConfirmBy;
   confirmCode?: string;
-  allowByAdmin: boolean;
+  allowByAdmin?: boolean;
 }
 
 interface IChangePasswordOutput {
