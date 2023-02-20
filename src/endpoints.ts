@@ -69,13 +69,13 @@ import type { ISignInInput, ISignInOutput } from './interfaces/users/methods/use
 import type { ISignOutInput, ISignOutOutput } from './interfaces/users/methods/user/sign-out';
 import type { ISignUpInput, ISignUpOutput } from './interfaces/users/methods/user/sign-up';
 
-interface IEndpointsCreateHandlerConfig
+export interface IEndpointsCreateHandlerConfig
   extends Pick<IApiClientReqOptions, 'isCached' | 'isSkipRenew'> {}
 
-interface IEndpointsCreateHandlerOptions
+export interface IEndpointsCreateHandlerOptions
   extends Omit<IApiClientReqOptions, 'isCached' | 'isSkipRenew'> {}
 
-type TBatchReturn<T> = { -readonly [P in keyof T]: Awaited<T[P]> };
+export type TBatchReturn<T> = { -readonly [P in keyof T]: Awaited<T[P]> };
 
 export interface IValidationErrors<TFormValue> {
   fields?: FormikErrors<TFormValue>;
