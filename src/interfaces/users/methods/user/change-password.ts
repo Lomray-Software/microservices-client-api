@@ -1,7 +1,8 @@
 import type ConfirmBy from '../../../../constants/confirm-by';
 
 interface IChangePasswordInput {
-  userId: string;
+  userId?: string;
+  login?: string;
   newPassword: string;
   oldPassword?: string;
   confirmBy?: ConfirmBy;
