@@ -234,6 +234,13 @@ class ApiClient {
    */
   protected setAccessTokenExp(exp?: number): void {
     this.accessTokenExp = exp;
+
+    if (!exp) {
+      void this.storage.deleteItem(ApiClient.EXP_ACCESS_TOKEN_KEY);
+
+      return;
+    }
+
     void this.storage.setItem(ApiClient.EXP_ACCESS_TOKEN_KEY, String(this.accessTokenExp));
   }
 
@@ -248,6 +255,8 @@ class ApiClient {
     }
 
     if (token === null) {
+      this.setAccessTokenExp(undefined);
+
       await this.storage.deleteItem(ApiClient.ACCESS_TOKEN_KEY, {
         isAccess: true,
       });
