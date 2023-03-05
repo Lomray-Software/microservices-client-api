@@ -274,6 +274,8 @@ class ApiClient {
    */
   public async setRefreshToken(token: string | null): Promise<void> {
     if (!token) {
+      this.setAccessTokenExp(undefined);
+
       await this.storage.deleteItem(ApiClient.REFRESH_TOKEN_KEY);
 
       return;
