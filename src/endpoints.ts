@@ -34,6 +34,7 @@ import type { IFile } from './interfaces/files/entities/file';
 import type IFileEntity from './interfaces/files/entities/file-entity';
 import type { IFileCreateInput } from './interfaces/files/methods/file/create';
 import type { IFileRemoveInput, IFileRemoveOutput } from './interfaces/files/methods/file/remove';
+import type { INotice } from './interfaces/notifications/entities/notice';
 import type {
   IEmailSendInput,
   IEmailSendOutput,
@@ -376,6 +377,12 @@ class Endpoints<
     },
     phone: {
       send: this.createHandler<IPhoneSendInput, IPhoneSendOutput>('notification.phone.send'),
+    },
+    notice: {
+      list: this.createHandler<IQuery<INotice>, IList<INotice>>('notification.notice.list'),
+      view: this.createHandler<IQuery<INotice>, IView<INotice>>('notification.notice.view'),
+      create: this.createHandler<ICreate<INotice>, IView<INotice>>('notification.notice.create'),
+      remove: this.createHandler<IQuery<INotice>, IRemove<INotice>>('notification.notice.remove'),
     },
   };
 }
