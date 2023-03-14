@@ -1,5 +1,10 @@
 import type { IEntity } from '@lomray/microservices-types';
 
+export interface IProfileParams {
+  isEmailValid?: boolean;
+  isPhoneVerified?: boolean;
+}
+
 /**
  * User profile
  */
@@ -9,10 +14,7 @@ interface IProfile extends IEntity {
   photo?: string;
   birthDay?: string;
   location?: string;
-  params?: {
-    isEmailValid?: boolean;
-    isPhoneVerified?: boolean;
-  };
+  params?: IProfileParams;
   updatedAt?: string;
 }
 
