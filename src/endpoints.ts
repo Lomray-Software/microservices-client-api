@@ -6,6 +6,7 @@ import type {
   IList,
   IRemove,
   IUpdate,
+  ICount,
   IBaseException,
   IValidationErrorFields,
 } from '@lomray/microservices-types';
@@ -305,6 +306,7 @@ class Endpoints<
       list: this.createHandler<IQuery<IUser>, IList<IUser>>('users.user.list'),
       me: this.createHandler<IQuery<IUser>, IView<IUser>>('users.user.me'),
       view: this.createHandler<IQuery<IUser>, IView<IUser>>('users.user.view'),
+      count: this.createHandler<IQuery<IUser>, ICount>('users.user.count'),
       update: this.createHandler<IUpdate<IUser>, IView<IUser>>('users.user.update'),
       changePassword: this.createHandler<IChangePasswordInput, IChangePasswordOutput>(
         'users.user.change-password',
