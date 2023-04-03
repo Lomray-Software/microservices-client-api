@@ -1,6 +1,7 @@
 import type { IEntity } from '@lomray/microservices-types';
 import type Role from '../../../constants/role';
 import type { IFile } from '../../files/entities/file';
+import type { IIdentityProvider } from './identity-provider';
 import type IProfile from './profile';
 
 /**
@@ -18,8 +19,9 @@ interface IUser<TRole = Role | string> extends IEntity {
   updatedAt?: string;
   deletedAt?: string;
   profile?: IProfile;
-  avatar?: IFile;
   role?: TRole;
+  identityProviders?: IIdentityProvider[];
+  avatar?: IFile; // NOTE: set on client side
 }
 
 export default IUser;
