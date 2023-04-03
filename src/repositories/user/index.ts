@@ -16,7 +16,7 @@ class User {
     const uri =
       user?.avatar?.formats?.[format]?.url ?? FileEntity.getAnyFileFormat(user?.avatar)?.url;
 
-    return uri || user?.profile?.photo;
+    return uri || user?.profile?.photo || undefined;
   }
 
   /**
