@@ -12,8 +12,8 @@ export interface IMethodFilter extends IEntity {
   filterId: number;
   operator?: FilterOperator;
   roleAlias?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt?: string;
+  updatedAt?: string;
   filter?: IFilter;
   method?: IMethod;
   role?: IRole;
