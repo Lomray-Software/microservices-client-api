@@ -25,6 +25,12 @@ import type {
   ITokenRenewInput,
   ITokenRenewOutput,
 } from './interfaces/authentication/methods/token/renew';
+import type { ICondition } from './interfaces/authorization/entities/condition';
+import type { IFilter } from './interfaces/authorization/entities/filter';
+import type { IMethod } from './interfaces/authorization/entities/method';
+import type { IMethodFilter } from './interfaces/authorization/entities/method-filter';
+import type { IModel } from './interfaces/authorization/entities/model';
+import type { IRole } from './interfaces/authorization/entities/role';
 import type IUserRole from './interfaces/authorization/entities/user-role';
 import type IUserRoleMyOutput from './interfaces/authorization/methods/user-role/my';
 import type {
@@ -295,6 +301,70 @@ class Endpoints<
       assign: this.createHandler<ICreate<IUserRole>, IView<IUserRole>>(
         'authorization.user-role.assign',
       ),
+    },
+    endpointFilter: {
+      list: this.createHandler<IQuery<IMethodFilter>, IList<IMethodFilter>>(
+        'authorization.endpoint-filter.create',
+      ),
+      create: this.createHandler<ICreate<IMethodFilter>, IView<IMethodFilter>>(
+        'authorization.endpoint-filter.create',
+      ),
+      update: this.createHandler<IUpdate<IMethodFilter>, IView<IMethodFilter>>(
+        'authorization.endpoint-filter.update',
+      ),
+      remove: this.createHandler<IQuery<IMethodFilter>, IRemove<IMethodFilter>>(
+        'authorization.endpoint-filter.remove',
+      ),
+      view: this.createHandler<IQuery<IMethodFilter>, IView<IMethodFilter>>(
+        'authorization.endpoint-filter.view',
+      ),
+    },
+    condition: {
+      list: this.createHandler<IQuery<ICondition>, IList<ICondition>>(
+        'authorization.condition.create',
+      ),
+      create: this.createHandler<ICreate<ICondition>, IView<ICondition>>(
+        'authorization.condition.create',
+      ),
+      update: this.createHandler<IUpdate<ICondition>, IView<ICondition>>(
+        'authorization.condition.update',
+      ),
+      remove: this.createHandler<IQuery<ICondition>, IRemove<ICondition>>(
+        'authorization.condition.remove',
+      ),
+      view: this.createHandler<IQuery<ICondition>, IView<ICondition>>(
+        'authorization.condition.view',
+      ),
+    },
+    endpoint: {
+      list: this.createHandler<IQuery<IMethod>, IList<IMethod>>('authorization.endpoint.create'),
+      create: this.createHandler<ICreate<IMethod>, IView<IMethod>>('authorization.endpoint.create'),
+      update: this.createHandler<IUpdate<IMethod>, IView<IMethod>>('authorization.endpoint.update'),
+      remove: this.createHandler<IQuery<IMethod>, IRemove<IMethod>>(
+        'authorization.endpoint.remove',
+      ),
+      view: this.createHandler<IQuery<IMethod>, IView<IMethod>>('authorization.endpoint.view'),
+    },
+    filter: {
+      list: this.createHandler<IQuery<IFilter>, IList<IFilter>>('authorization.filter.create'),
+      create: this.createHandler<ICreate<IFilter>, IView<IFilter>>('authorization.filter.create'),
+      update: this.createHandler<IUpdate<IFilter>, IView<IFilter>>('authorization.filter.update'),
+      remove: this.createHandler<IQuery<IFilter>, IRemove<IFilter>>('authorization.filter.remove'),
+      view: this.createHandler<IQuery<IFilter>, IView<IFilter>>('authorization.filter.view'),
+    },
+    model: {
+      list: this.createHandler<IQuery<IModel>, IList<IModel>>('authorization.model.create'),
+      create: this.createHandler<ICreate<IModel>, IView<IModel>>('authorization.model.create'),
+      update: this.createHandler<IUpdate<IModel>, IView<IModel>>('authorization.model.update'),
+      remove: this.createHandler<IQuery<IModel>, IRemove<IModel>>('authorization.model.remove'),
+      view: this.createHandler<IQuery<IModel>, IView<IModel>>('authorization.model.view'),
+    },
+    role: {
+      list: this.createHandler<IQuery<IRole>, IList<IRole>>('authorization.role.create'),
+      create: this.createHandler<ICreate<IRole>, IView<IRole>>('authorization.role.create'),
+      update: this.createHandler<IUpdate<IRole>, IView<IRole>>('authorization.role.update'),
+      remove: this.createHandler<IQuery<IRole>, IRemove<IRole>>('authorization.role.remove'),
+      view: this.createHandler<IQuery<IRole>, IView<IRole>>('authorization.role.view'),
     },
   };
 
