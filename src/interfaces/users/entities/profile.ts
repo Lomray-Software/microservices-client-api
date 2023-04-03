@@ -11,9 +11,9 @@ export interface IProfileParams {
 interface IProfile extends IEntity {
   userId: string;
   gender?: string;
-  photo?: string;
-  birthDay?: string;
-  location?: string;
+  photo?: string | null;
+  birthDay?: string | null;
+  location?: string | null;
   params?: IProfileParams;
   updatedAt?: string;
 }
