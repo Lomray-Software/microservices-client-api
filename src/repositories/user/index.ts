@@ -12,7 +12,10 @@ class User {
   /**
    * Get user avatar or default image
    */
-  static getAvatarUrl(user: IUser | null, format: Formats = Formats.medium): string | undefined {
+  static getAvatarUrl(
+    user: IUser | null,
+    format: Formats = Formats.medium,
+  ): string | null | undefined {
     const uri =
       user?.avatar?.formats?.[format]?.url ?? FileEntity.getAnyFileFormat(user?.avatar)?.url;
 
