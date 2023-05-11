@@ -393,6 +393,7 @@ class Endpoints<
       signOut: this.createHandler<ISignOutInput, ISignOutOutput>('users.user.sign-out', {
         isSkipRenew: true,
       }),
+      remove: this.createHandler<IQuery<IUser>, IRemove<IUser>>('users.user.remove'),
     },
     confirmCode: {
       send: this.createHandler<IConfirmCodeSendInput, IConfirmCodeSendOutput>(
