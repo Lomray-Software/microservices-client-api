@@ -62,7 +62,7 @@
   },
   "peerDependencies": {
     "@lomray/client-helpers": ">=1.1.2",
-    "@lomray/microservices-types": ">=1.11.2",
+    "@lomray/microservices-types": ">=1.12.0",
     "@lomray/react-mobx-manager": "*",
     "axios": "^0.27.2",
     "lodash": "^4.17.21"
