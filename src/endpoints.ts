@@ -9,6 +9,7 @@ import type {
   ICount,
   IBaseException,
   IValidationErrorFields,
+  IRestore,
 } from '@lomray/microservices-types';
 import type { FormikErrors } from 'formik';
 import type { IApiClientReqOptions } from './api-client';
@@ -394,6 +395,7 @@ class Endpoints<
         isSkipRenew: true,
       }),
       remove: this.createHandler<IQuery<IUser>, IRemove<IUser>>('users.user.remove'),
+      restore: this.createHandler<IQuery<IUser>, IRestore<IUser>>('users.user.restore'),
     },
     confirmCode: {
       send: this.createHandler<IConfirmCodeSendInput, IConfirmCodeSendOutput>(
