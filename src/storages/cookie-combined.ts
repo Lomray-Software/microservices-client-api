@@ -1,3 +1,4 @@
+import WINDOW_OBJ from '../constants/window';
 import type { IStorage, IStorageOptions } from './i-storage';
 
 interface ICookieCombinedParams {
@@ -44,7 +45,7 @@ class CookieCombined implements IStorage {
       return this.cookie.remove(name, this.options);
     }
 
-    return localStorage.removeItem(name);
+    return WINDOW_OBJ.localStorage?.removeItem(name);
   }
 
   /**
@@ -58,7 +59,7 @@ class CookieCombined implements IStorage {
       return this.cookie.get(name, this.options);
     }
 
-    return localStorage.getItem(name);
+    return WINDOW_OBJ.localStorage?.getItem(name);
   }
 
   /**
@@ -77,7 +78,7 @@ class CookieCombined implements IStorage {
       return this.cookie.set(name, value, this.options);
     }
 
-    return localStorage.setItem(name, value);
+    return WINDOW_OBJ.localStorage?.setItem(name, value);
   }
 }
 
