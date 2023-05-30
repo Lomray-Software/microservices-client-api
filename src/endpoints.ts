@@ -38,6 +38,8 @@ import type {
   IUserRoleViewInput,
   IUserRoleViewOutput,
 } from './interfaces/authorization/methods/user-role/view';
+import type IComponent from './interfaces/content/entities/component';
+import type ISingleType from './interfaces/content/entities/single-type';
 import type { IFile } from './interfaces/files/entities/file';
 import type IFileEntity from './interfaces/files/entities/file-entity';
 import type { IFileCreateInput } from './interfaces/files/methods/file/create';
@@ -458,6 +460,40 @@ class Endpoints<
       view: this.createHandler<IQuery<INotice>, IView<INotice>>('notification.notice.view'),
       create: this.createHandler<ICreate<INotice>, IView<INotice>>('notification.notice.create'),
       remove: this.createHandler<IQuery<INotice>, IRemove<INotice>>('notification.notice.remove'),
+    },
+  };
+
+  /**
+   * Content microservice
+   */
+  content = {
+    component: {
+      list: this.createHandler<IQuery<IComponent>, IList<IComponent>>('content.component.list'),
+      view: this.createHandler<IQuery<IComponent>, IView<IComponent>>('content.component.view'),
+      create: this.createHandler<ICreate<IComponent>, IView<IComponent>>(
+        'content.component.create',
+      ),
+      update: this.createHandler<IUpdate<IComponent>, IView<IComponent>>(
+        'content.component.update',
+      ),
+      remove: this.createHandler<IQuery<IComponent>, IRemove<IComponent>>(
+        'content.component.remove',
+      ),
+      count: this.createHandler<IQuery<IComponent>, ICount>('content.component.count'),
+    },
+    singleType: {
+      list: this.createHandler<IQuery<ISingleType>, IList<ISingleType>>('content.single-type.list'),
+      view: this.createHandler<IQuery<ISingleType>, IView<ISingleType>>('content.single-type.view'),
+      create: this.createHandler<ICreate<ISingleType>, IView<ISingleType>>(
+        'content.single-type.create',
+      ),
+      update: this.createHandler<IUpdate<ISingleType>, IView<ISingleType>>(
+        'content.single-type.update',
+      ),
+      remove: this.createHandler<IQuery<ISingleType>, IRemove<ISingleType>>(
+        'content.single-type.remove',
+      ),
+      count: this.createHandler<IQuery<ISingleType>, ICount>('content.single-type.count'),
     },
   };
 }
