@@ -2,6 +2,8 @@ import type InputType from 'constants/content/input-type';
 
 /**
  * Interface for single-type value
+ * NOTES: Schema for static single-type data
+ * This entity contain components that declared with the related data to it
  */
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ISingleTypeValue {}
@@ -42,4 +44,4 @@ interface IComponentSchema extends IBaseSchema, Pick<IRelation, 'hasMany'> {
 
 type ISchema = IDefaultSchema | IRelationSchema | IComponentSchema;
 
-export type { ISingleTypeValue, ISchema };
+export type { ISingleTypeValue, ISchema, IBaseSchema, IDefaultSchema, IComponentSchema, IRelation };
