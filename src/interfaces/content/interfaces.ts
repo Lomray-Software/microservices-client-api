@@ -1,3 +1,4 @@
+import type { JQFieldType } from '@lomray/microservices-types';
 import type InputType from 'constants/content/input-type';
 
 /**
@@ -20,6 +21,13 @@ interface IBaseSchema {
 interface IRelation {
   microservice: string;
   entity: string;
+  searchFields: {
+    name: string;
+    insensitive?: boolean;
+    castType?: JQFieldType;
+  }[];
+  idFields: string[];
+  titleFields: string[];
   hasMany: boolean;
 }
 
