@@ -57,6 +57,11 @@ import type {
   IPhoneSendInput,
   IPhoneSendOutput,
 } from './interfaces/notifications/methods/phone/send';
+import type ICustomer from './interfaces/payment-stripe/entities/customer';
+import type {
+  ICustomerCreateInput,
+  ICustomerCreateOutput,
+} from './interfaces/payment-stripe/methods/customer/create';
 import type { IIdentityProvider } from './interfaces/users/entities/identity-provider';
 import type IProfile from './interfaces/users/entities/profile';
 import type IUser from './interfaces/users/entities/user';
@@ -503,6 +508,26 @@ class Endpoints<
         'content.single-type.remove',
       ),
       count: this.createHandler<IQuery<ISingleType>, ICount>('content.single-type.count'),
+    },
+  };
+
+  /**
+   * Payment stripe microservice
+   */
+  paymentStripe = {
+    customer: {
+      list: this.createHandler<IQuery<ICustomer>, IList<ICustomer>>('payment-stripe.customer.list'),
+      view: this.createHandler<IQuery<ICustomer>, IView<ICustomer>>('payment-stripe.customer.view'),
+      update: this.createHandler<IUpdate<ICustomer>, IView<ICustomer>>(
+        'payment-stripe.customer.update',
+      ),
+      remove: this.createHandler<IQuery<ICustomer>, IRemove<ICustomer>>(
+        'payment-stripe.customer.remove',
+      ),
+      count: this.createHandler<IQuery<ICustomer>, ICount>('payment-stripe.customer.count'),
+      create: this.createHandler<ICustomerCreateInput, ICustomerCreateOutput>(
+        'payment-stripe.customer.create',
+      ),
     },
   };
 }
