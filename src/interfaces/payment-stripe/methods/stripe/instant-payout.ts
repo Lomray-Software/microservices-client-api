@@ -1,10 +1,10 @@
-class ICreateInstantPayoutInput {
+class IInstantPayoutInput {
   userId: string;
   amount: number;
 }
 
-class ICreateInstantPayoutOutput {
+class IInstantPayoutOutput {
   isInstantiated: boolean;
 }
 
-export type { ICreateInstantPayoutInput, ICreateInstantPayoutOutput };
+export type { IInstantPayoutInput, IInstantPayoutOutput };
