@@ -57,11 +57,29 @@ import type {
   IPhoneSendInput,
   IPhoneSendOutput,
 } from './interfaces/notifications/methods/phone/send';
+import type IBankAccount from './interfaces/payment-stripe/entities/bank-account';
+import type ICard from './interfaces/payment-stripe/entities/card';
 import type ICustomer from './interfaces/payment-stripe/entities/customer';
+import type IPrice from './interfaces/payment-stripe/entities/price';
+import type IProduct from './interfaces/payment-stripe/entities/product';
+import type ITransaction from './interfaces/payment-stripe/entities/transaction';
+import type {
+  IBankAccountAddInput,
+  IBankAccountAddOutput,
+} from './interfaces/payment-stripe/methods/bank-account/add';
+import type { ICardAddInput, ICardAddOutput } from './interfaces/payment-stripe/methods/card/add';
 import type {
   ICustomerCreateInput,
   ICustomerCreateOutput,
 } from './interfaces/payment-stripe/methods/customer/create';
+import type {
+  IPriceCreateInput,
+  IPriceCreateOutput,
+} from './interfaces/payment-stripe/methods/price/create';
+import type {
+  IProductCreateInput,
+  IProductCreateOutput,
+} from './interfaces/payment-stripe/methods/product/create';
 import type { IIdentityProvider } from './interfaces/users/entities/identity-provider';
 import type IProfile from './interfaces/users/entities/profile';
 import type IUser from './interfaces/users/entities/user';
@@ -527,6 +545,65 @@ class Endpoints<
       count: this.createHandler<IQuery<ICustomer>, ICount>('payment-stripe.customer.count'),
       create: this.createHandler<ICustomerCreateInput, ICustomerCreateOutput>(
         'payment-stripe.customer.create',
+      ),
+    },
+    card: {
+      list: this.createHandler<IQuery<ICard>, IList<ICard>>('payment-stripe.card.list'),
+      view: this.createHandler<IQuery<ICard>, IView<ICard>>('payment-stripe.card.view'),
+      update: this.createHandler<IUpdate<ICard>, IView<ICard>>('payment-stripe.card.update'),
+      remove: this.createHandler<IQuery<ICard>, IRemove<ICard>>('payment-stripe.card.remove'),
+      count: this.createHandler<IQuery<ICard>, ICount>('payment-stripe.card.count'),
+      add: this.createHandler<ICardAddInput, ICardAddOutput>('payment-stripe.card.add'),
+    },
+    bankAccount: {
+      list: this.createHandler<IQuery<IBankAccount>, IList<IBankAccount>>(
+        'payment-stripe.bank-account.list',
+      ),
+      view: this.createHandler<IQuery<IBankAccount>, IView<IBankAccount>>(
+        'payment-stripe.bank-account.view',
+      ),
+      update: this.createHandler<IUpdate<IBankAccount>, IView<IBankAccount>>(
+        'payment-stripe.bank-account.update',
+      ),
+      remove: this.createHandler<IQuery<IBankAccount>, IRemove<IBankAccount>>(
+        'payment-stripe.bank-account.remove',
+      ),
+      count: this.createHandler<IQuery<IBankAccount>, ICount>('payment-stripe.bank-account.count'),
+      add: this.createHandler<IBankAccountAddInput, IBankAccountAddOutput>(
+        'payment-stripe.bank-account.add',
+      ),
+    },
+    transaction: {
+      list: this.createHandler<IQuery<ITransaction>, IList<ITransaction>>(
+        'payment-stripe.transaction.list',
+      ),
+      view: this.createHandler<IQuery<ITransaction>, IView<ITransaction>>(
+        'payment-stripe.transaction.view',
+      ),
+      count: this.createHandler<IQuery<ITransaction>, ICount>('payment-stripe.transaction.count'),
+    },
+    product: {
+      list: this.createHandler<IQuery<IProduct>, IList<IProduct>>('payment-stripe.product.list'),
+      view: this.createHandler<IQuery<IProduct>, IView<IProduct>>('payment-stripe.product.view'),
+      update: this.createHandler<IUpdate<IProduct>, IView<IProduct>>(
+        'payment-stripe.product.update',
+      ),
+      remove: this.createHandler<IQuery<IProduct>, IRemove<IProduct>>(
+        'payment-stripe.product.remove',
+      ),
+      count: this.createHandler<IQuery<IProduct>, ICount>('payment-stripe.product.count'),
+      create: this.createHandler<IProductCreateInput, IProductCreateOutput>(
+        'payment-stripe.product.create',
+      ),
+    },
+    price: {
+      list: this.createHandler<IQuery<IPrice>, IList<IPrice>>('payment-stripe.price.list'),
+      view: this.createHandler<IQuery<IPrice>, IView<IPrice>>('payment-stripe.price.view'),
+      update: this.createHandler<IUpdate<IPrice>, IView<IPrice>>('payment-stripe.price.update'),
+      remove: this.createHandler<IQuery<IPrice>, IRemove<IPrice>>('payment-stripe.price.remove'),
+      count: this.createHandler<IQuery<IPrice>, ICount>('payment-stripe.price.count'),
+      create: this.createHandler<IPriceCreateInput, IPriceCreateOutput>(
+        'payment-stripe.price.create',
       ),
     },
   };
