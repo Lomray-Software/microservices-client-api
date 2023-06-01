@@ -33,6 +33,10 @@ import type { IMethodFilter } from './interfaces/authorization/entities/method-f
 import type { IModel } from './interfaces/authorization/entities/model';
 import type { IRole } from './interfaces/authorization/entities/role';
 import type IUserRole from './interfaces/authorization/entities/user-role';
+import type {
+  ISyncMetadataInput,
+  ISyncMetadataOutput,
+} from './interfaces/authorization/methods/service/sync-metadata';
 import type IUserRoleMyOutput from './interfaces/authorization/methods/user-role/my';
 import type {
   IUserRoleViewInput,
@@ -368,6 +372,11 @@ class Endpoints<
       update: this.createHandler<IUpdate<IRole>, IView<IRole>>('authorization.role.update'),
       remove: this.createHandler<IQuery<IRole>, IRemove<IRole>>('authorization.role.remove'),
       view: this.createHandler<IQuery<IRole>, IView<IRole>>('authorization.role.view'),
+    },
+    service: {
+      syncMetadata: this.createHandler<ISyncMetadataInput, ISyncMetadataOutput>(
+        'authorization.service.sync-metadata',
+      ),
     },
   };
 
