@@ -1,4 +1,4 @@
-import type StripeAccountTypes from 'constants/payment-stripe/stripe-account-types';
+import type StripeAccountTypes from '../../../../constants/payment-stripe/stripe-account-types';
 
 interface IConnectAccountInput {
   userId: string;

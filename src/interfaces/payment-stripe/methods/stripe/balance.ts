@@ -1,4 +1,4 @@
-import type BalanceType from 'constants/payment-stripe/balance-type';
+import type BalanceType from '../../../../constants/payment-stripe/balance-type';
 import type { TBalance } from '../../interfaces';
 
 interface IBalanceInput {

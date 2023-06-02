@@ -1,4 +1,4 @@
-import type TransactionRole from 'constants/payment-stripe/transaction-role';
+import type TransactionRole from '../../../../constants/payment-stripe/transaction-role';
 
 interface IPaymentIntentFeesInput {
   entityCost: number;
