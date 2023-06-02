@@ -1,6 +1,6 @@
 import type StripeAccountTypes from 'constants/payment-stripe/stripe-account-types';
 
-class IConnectAccountInput {
+interface IConnectAccountInput {
   userId: string;
   email: string;
   accountType: StripeAccountTypes;
@@ -8,8 +8,8 @@ class IConnectAccountInput {
   returnUrl: string;
 }
 
-class IConnectAccountOutput {
+interface IConnectAccountOutput {
   accountLink: string;
 }
 
-export type { IConnectAccountInput, IConnectAccountOutput };
+export { IConnectAccountInput, IConnectAccountOutput };

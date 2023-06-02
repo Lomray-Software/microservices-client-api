@@ -3,12 +3,12 @@ interface IPayoutEntity {
   userId: string;
 }
 
-class IPayoutInput {
+interface IPayoutInput {
   entities: IPayoutEntity[];
 }
 
-class IPayoutOutput {
+interface IPayoutOutput {
   isComplete: boolean;
 }
 
-export type { IPayoutInput, IPayoutOutput };
+export { IPayoutInput, IPayoutOutput };

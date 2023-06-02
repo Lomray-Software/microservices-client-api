@@ -1,12 +1,12 @@
 import type BalanceType from 'constants/payment-stripe/balance-type';
 import type { TBalance } from '../../interfaces';
 
-class IBalanceInput {
+interface IBalanceInput {
   userId: string;
 }
 
-class IBalanceOutput {
+interface IBalanceOutput {
   balance: Record<BalanceType, TBalance>;
 }
 
-export type { IBalanceInput, IBalanceOutput };
+export { IBalanceInput, IBalanceOutput };

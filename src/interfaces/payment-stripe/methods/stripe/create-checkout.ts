@@ -1,12 +1,12 @@
-class ICreateCheckoutInput {
+interface ICreateCheckoutInput {
   priceId: string;
   userId: string;
   successUrl: string;
   cancelUrl: string;
 }
 
-class ICreateCheckoutOutput {
+interface ICreateCheckoutOutput {
   redirectUrl: string | null;
 }
 
-export type { ICreateCheckoutInput, ICreateCheckoutOutput };
+export { ICreateCheckoutInput, ICreateCheckoutOutput };

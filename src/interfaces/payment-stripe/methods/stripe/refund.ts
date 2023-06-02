@@ -1,9 +1,9 @@
-class IRefundInput {
+interface IRefundInput {
   transactionId: string;
 }
 
-class IRefundOutput {
+interface IRefundOutput {
   isInstantiated: boolean;
 }
 
-export type { IRefundInput, IRefundOutput };
+export { IRefundInput, IRefundOutput };

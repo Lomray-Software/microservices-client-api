@@ -1,9 +1,9 @@
-class ISetupIntentInput {
+interface ISetupIntentInput {
   userId: string;
 }
 
-class ISetupIntentOutput {
+interface ISetupIntentOutput {
   clientSecretToken: string | null;
 }
 
-export type { ISetupIntentInput, ISetupIntentOutput };
+export { ISetupIntentInput, ISetupIntentOutput };

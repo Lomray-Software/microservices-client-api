@@ -1,7 +1,7 @@
 import type TransactionRole from 'constants/payment-stripe/transaction-role';
 import type ITransaction from '../../entities/transaction';
 
-class ICreatePaymentIntentInput {
+interface ICreatePaymentIntentInput {
   userId: string;
   receiverId: string;
   entityCost: number;
@@ -14,8 +14,8 @@ class ICreatePaymentIntentInput {
   extraReceiverRevenuePercent?: number;
 }
 
-class ICreatePaymentIntentOutput {
+interface ICreatePaymentIntentOutput {
   transaction: [ITransaction, ITransaction];
 }
 
-export type { ICreatePaymentIntentInput, ICreatePaymentIntentOutput };
+export { ICreatePaymentIntentInput, ICreatePaymentIntentOutput };

@@ -1,6 +1,6 @@
 import type TransactionRole from 'constants/payment-stripe/transaction-role';
 
-class IPaymentIntentFeesInput {
+interface IPaymentIntentFeesInput {
   entityCost: number;
   feesPayer?: TransactionRole;
   applicationPaymentPercent?: number;
@@ -8,11 +8,11 @@ class IPaymentIntentFeesInput {
   extraReceiverRevenuePercent?: number;
 }
 
-class IPaymentIntentFeesOutput {
+interface IPaymentIntentFeesOutput {
   paymentProviderFee: number;
   applicationFee: number;
   userAmount: number;
   receiverRevenue: number;
 }
 
-export type { IPaymentIntentFeesInput, IPaymentIntentFeesOutput };
+export { IPaymentIntentFeesInput, IPaymentIntentFeesOutput };

@@ -1,10 +1,10 @@
-class IInstantPayoutInput {
+interface IInstantPayoutInput {
   userId: string;
   amount: number;
 }
 
-class IInstantPayoutOutput {
+interface IInstantPayoutOutput {
   isInstantiated: boolean;
 }
 
-export type { IInstantPayoutInput, IInstantPayoutOutput };
+export { IInstantPayoutInput, IInstantPayoutOutput };
