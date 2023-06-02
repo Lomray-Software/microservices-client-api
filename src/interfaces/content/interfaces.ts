@@ -1,5 +1,5 @@
 import type { JQFieldType } from '@lomray/microservices-types';
-import type InputType from 'constants/content/input-type';
+import type InputType from '../../constants/content/input-type';
 
 /**
  * Interface for single-type value
