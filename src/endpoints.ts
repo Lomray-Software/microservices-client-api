@@ -80,6 +80,46 @@ import type {
   IProductCreateInput,
   IProductCreateOutput,
 } from './interfaces/payment-stripe/methods/product/create';
+import type {
+  IConnectAccountLinkInput,
+  IConnectAccountLinkOutput,
+} from './interfaces/payment-stripe/methods/stripe/account-link';
+import type {
+  IBalanceInput,
+  IBalanceOutput,
+} from './interfaces/payment-stripe/methods/stripe/balance';
+import type {
+  IConnectAccountInput,
+  IConnectAccountOutput,
+} from './interfaces/payment-stripe/methods/stripe/connect-account';
+import type {
+  ICreateCheckoutInput,
+  ICreateCheckoutOutput,
+} from './interfaces/payment-stripe/methods/stripe/create-checkout';
+import type {
+  ICreatePaymentIntentInput,
+  ICreatePaymentIntentOutput,
+} from './interfaces/payment-stripe/methods/stripe/create-payment-intent';
+import type {
+  IInstantPayoutInput,
+  IInstantPayoutOutput,
+} from './interfaces/payment-stripe/methods/stripe/instant-payout';
+import type {
+  IPaymentIntentFeesInput,
+  IPaymentIntentFeesOutput,
+} from './interfaces/payment-stripe/methods/stripe/payment-intent-fees';
+import type {
+  IPayoutInput,
+  IPayoutOutput,
+} from './interfaces/payment-stripe/methods/stripe/payout';
+import type {
+  IRefundInput,
+  IRefundOutput,
+} from './interfaces/payment-stripe/methods/stripe/refund';
+import type {
+  ISetupIntentInput,
+  ISetupIntentOutput,
+} from './interfaces/payment-stripe/methods/stripe/setup-intent';
 import type { IIdentityProvider } from './interfaces/users/entities/identity-provider';
 import type IProfile from './interfaces/users/entities/profile';
 import type IUser from './interfaces/users/entities/user';
@@ -604,6 +644,33 @@ class Endpoints<
       count: this.createHandler<IQuery<IPrice>, ICount>('payment-stripe.price.count'),
       create: this.createHandler<IPriceCreateInput, IPriceCreateOutput>(
         'payment-stripe.price.create',
+      ),
+    },
+    stripe: {
+      accountLink: this.createHandler<IConnectAccountLinkInput, IConnectAccountLinkOutput>(
+        'payment-stripe.stripe.account-link',
+      ),
+      balance: this.createHandler<IBalanceInput, IBalanceOutput>('payment-stripe.stripe.balance'),
+      connectAccount: this.createHandler<IConnectAccountInput, IConnectAccountOutput>(
+        'payment-stripe.stripe.connect-account',
+      ),
+      createCheckout: this.createHandler<ICreateCheckoutInput, ICreateCheckoutOutput>(
+        'payment-stripe.stripe.create-checkout',
+      ),
+      createPaymentIntent: this.createHandler<
+        ICreatePaymentIntentInput,
+        ICreatePaymentIntentOutput
+      >('payment-stripe.stripe.create-payment-intent'),
+      instantPayout: this.createHandler<IInstantPayoutInput, IInstantPayoutOutput>(
+        'payment-stripe.stripe.instant-payout',
+      ),
+      paymentIntentFees: this.createHandler<IPaymentIntentFeesInput, IPaymentIntentFeesOutput>(
+        'payment-stripe.stripe.payment-intent-fees',
+      ),
+      payout: this.createHandler<IPayoutInput, IPayoutOutput>('payment-stripe.stripe.payout'),
+      refund: this.createHandler<IRefundInput, IRefundOutput>('payment-stripe.stripe.refund'),
+      setupIntent: this.createHandler<ISetupIntentInput, ISetupIntentOutput>(
+        'payment-stripe.stripe.setup-intent',
       ),
     },
   };
