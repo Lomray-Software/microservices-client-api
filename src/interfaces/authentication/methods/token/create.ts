@@ -10,11 +10,11 @@ interface ITokenCreateInput {
   returnType: TokenCreateReturnType;
 }
 
-class ITokenCreateOutput {
+interface ITokenCreateOutput {
   access?: string;
   refresh?: string;
   token?: string;
   payload?: { cookies: Record<string, any>[] };
 }
 
-export type { ITokenCreateInput, ITokenCreateOutput };
+export { ITokenCreateInput, ITokenCreateOutput };

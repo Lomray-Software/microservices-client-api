@@ -16,4 +16,4 @@ interface IIdentityProviderSignInOutput {
   };
 }
 
-export type { IIdentityProviderSignInInput, IIdentityProviderSignInOutput };
+export { IIdentityProviderSignInInput, IIdentityProviderSignInOutput };

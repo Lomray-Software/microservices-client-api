@@ -1,8 +1,8 @@
-class ICheckUsernameInput {
+interface ICheckUsernameInput {
   username: string;
 }
 
-class ICheckUsernameOutput {
+interface ICheckUsernameOutput {
   isUnique: boolean;
 }
 
