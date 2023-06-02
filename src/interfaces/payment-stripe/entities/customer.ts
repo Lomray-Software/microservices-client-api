@@ -1,5 +1,5 @@
 import type { IEntity } from '@lomray/microservices-types';
-import type StripeAccountTypes from 'constants/payment-stripe/stripe-account-types';
+import type StripeAccountTypes from '../../../constants/payment-stripe/stripe-account-types';
 import type { TCapabilitiesStatus } from '../interfaces';
 import type IBankAccount from './bank-account';
 import type ICard from './card';
