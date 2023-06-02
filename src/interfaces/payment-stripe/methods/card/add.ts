@@ -1,6 +1,6 @@
 import type ICard from '../../entities/card';
 
-class ICardAddInput {
+interface ICardAddInput {
   userId: string;
   expired: string;
   holderName: string;
@@ -10,8 +10,8 @@ class ICardAddInput {
   isDefault?: boolean;
 }
 
-class ICardAddOutput {
+interface ICardAddOutput {
   entity: ICard;
 }
 
-export type { ICardAddInput, ICardAddOutput };
+export { ICardAddInput, ICardAddOutput };

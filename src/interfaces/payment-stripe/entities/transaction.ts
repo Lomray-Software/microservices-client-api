@@ -1,9 +1,9 @@
 import type { IEntity } from '@lomray/microservices-types';
-import type StripeCheckoutStatus from 'constants/payment-stripe/stripe-checkout-status';
-import type StripeTransactionStatus from 'constants/payment-stripe/stripe-transaction-status';
-import type TransactionRole from 'constants/payment-stripe/transaction-role';
-import type TransactionStatus from 'constants/payment-stripe/transaction-status';
-import type TransactionType from 'constants/payment-stripe/transaction-type';
+import type StripeCheckoutStatus from '../../../constants/payment-stripe/stripe-checkout-status';
+import type StripeTransactionStatus from '../../../constants/payment-stripe/stripe-transaction-status';
+import type TransactionRole from '../../../constants/payment-stripe/transaction-role';
+import type TransactionStatus from '../../../constants/payment-stripe/transaction-status';
+import type TransactionType from '../../../constants/payment-stripe/transaction-type';
 import type ICustomer from './customer';
 import type IProduct from './product';
 

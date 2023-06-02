@@ -1,11 +1,11 @@
-class IConnectAccountLinkInput {
+interface IConnectAccountLinkInput {
   userId: string;
   refreshUrl: string;
   returnUrl: string;
 }
 
-class IConnectAccountLinkOutput {
+interface IConnectAccountLinkOutput {
   accountLink: string;
 }
 
-export type { IConnectAccountLinkInput, IConnectAccountLinkOutput };
+export { IConnectAccountLinkInput, IConnectAccountLinkOutput };

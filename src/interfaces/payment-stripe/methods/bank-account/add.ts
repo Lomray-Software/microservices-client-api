@@ -1,6 +1,6 @@
 import type IBankAccount from '../../entities/bank-account';
 
-class IBankAccountAddInput {
+interface IBankAccountAddInput {
   userId: string;
   lastDigits: string;
   holderName?: string | null;
@@ -8,8 +8,8 @@ class IBankAccountAddInput {
   bankAccountId?: string;
 }
 
-class IBankAccountAddOutput {
+interface IBankAccountAddOutput {
   entity: IBankAccount;
 }
 
-export type { IBankAccountAddInput, IBankAccountAddOutput };
+export { IBankAccountAddInput, IBankAccountAddOutput };

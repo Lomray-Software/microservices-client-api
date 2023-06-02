@@ -4,8 +4,8 @@ interface ICustomerCreateInput {
   userId: string;
 }
 
-class ICustomerCreateOutput {
+interface ICustomerCreateOutput {
   entity: ICustomer;
 }
 
-export type { ICustomerCreateInput, ICustomerCreateOutput };
+export { ICustomerCreateInput, ICustomerCreateOutput };

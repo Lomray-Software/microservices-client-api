@@ -1,14 +1,14 @@
 import type IPrice from '../../entities/price';
 
-class IPriceCreateInput {
+interface IPriceCreateInput {
   productId: string;
   currency: string;
   userId: string;
   unitAmount: number;
 }
 
-class IPriceCreateOutput {
+interface IPriceCreateOutput {
   entity: IPrice;
 }
 
-export type { IPriceCreateInput, IPriceCreateOutput };
+export { IPriceCreateInput, IPriceCreateOutput };

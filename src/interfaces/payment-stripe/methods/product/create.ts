@@ -1,6 +1,6 @@
 import type IProduct from '../../entities/product';
 
-class IProductCreateInput {
+interface IProductCreateInput {
   entityId: string;
   name: string;
   userId: string;
@@ -8,8 +8,8 @@ class IProductCreateInput {
   images?: string[];
 }
 
-class IProductCreateOutput {
+interface IProductCreateOutput {
   entity: IProduct;
 }
 
-export type { IProductCreateInput, IProductCreateOutput };
+export { IProductCreateInput, IProductCreateOutput };
