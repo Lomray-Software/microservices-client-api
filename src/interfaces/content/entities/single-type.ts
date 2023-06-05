@@ -8,6 +8,7 @@ import type IComponent from './component';
  */
 interface ISingleType extends IEntity {
   id: string;
+  title?: string;
   alias?: string;
   value?: ISingleTypeValue;
   createdAt?: Date;
