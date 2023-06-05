@@ -37,6 +37,13 @@ interface IRelation {
 interface IDefaultSchema extends IBaseSchema {}
 
 /**
+ * Text input type options
+ */
+interface ILongTextSchema extends IDefaultSchema {
+  isLong: true;
+}
+
+/**
  * Relation input types: Relation, Media
  */
 interface IRelationSchema extends IBaseSchema {
@@ -44,13 +51,21 @@ interface IRelationSchema extends IBaseSchema {
 }
 
 /**
- * Custom input type: Component
+ * Relation input types: Media
  */
-interface IComponentSchema extends IBaseSchema, Pick<IRelation, 'hasMany'> {
-  id: string;
+interface IFileSchema extends IRelationSchema {
+  isFiles: true;
 }
 
-type ISchema = IDefaultSchema | IRelationSchema | IComponentSchema;
+/**
+ * Custom input type: Component
+ */
+interface IComponentSchema extends IBaseSchema {
+  id: string;
+  hasMany: boolean;
+}
+
+type ISchema = IDefaultSchema | IRelationSchema | IComponentSchema | IFileSchema | ILongTextSchema;
 
 export type {
   ISingleTypeValue,
@@ -60,4 +75,6 @@ export type {
   IRelationSchema,
   IComponentSchema,
   IRelation,
+  IFileSchema,
+  ILongTextSchema,
 };
