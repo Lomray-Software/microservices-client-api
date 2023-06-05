@@ -52,4 +52,12 @@ interface IComponentSchema extends IBaseSchema, Pick<IRelation, 'hasMany'> {
 
 type ISchema = IDefaultSchema | IRelationSchema | IComponentSchema;
 
-export type { ISingleTypeValue, ISchema, IBaseSchema, IDefaultSchema, IComponentSchema, IRelation };
+export type {
+  ISingleTypeValue,
+  ISchema,
+  IBaseSchema,
+  IDefaultSchema,
+  IRelationSchema,
+  IComponentSchema,
+  IRelation,
+};
