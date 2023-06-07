@@ -2,12 +2,14 @@ import type ICard from '../../entities/card';
 
 interface ICardAddInput {
   userId: string;
-  expired: string;
-  holderName: string;
   lastDigits: string;
+  expired: string;
   funding: string;
-  cardId: string;
+  brand: string;
+  holderName?: string;
   isDefault?: boolean;
+  cardId?: string;
+  paymentMethodId?: string;
 }
 
 interface ICardAddOutput {
