@@ -53,14 +53,20 @@ class User {
       userId,
       imgSize = Formats.medium,
       extraAttr = [],
-    }: { userId?: string; imgSize?: Formats; extraAttr?: IJsonQuery<IUser>['attributes'] } = {},
+      extraRelations = [],
+    }: {
+      userId?: string;
+      imgSize?: Formats;
+      extraAttr?: IJsonQuery<IUser>['attributes'];
+      extraRelations?: IJsonQuery<IUser>['relations'];
+    } = {},
   ): Promise<IUser | undefined> => {
     // Get user and his avatar
     const [{ result, error }, { result: resultAvatar }] = await api.batch((batchApi) => [
       batchApi.users.user[userId ? 'view' : 'me']<IQuery<IUser>>({
         query: {
           attributes: ['id', 'firstName', 'lastName', 'username', 'profile.photo', ...extraAttr],
-          relations: ['profile'],
+          relations: ['profile', ...extraRelations],
           ...(userId ? { where: { id: userId } } : {}),
         },
       }),
