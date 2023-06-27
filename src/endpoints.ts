@@ -228,6 +228,7 @@ class Endpoints<
    */
   public async batch<T extends readonly unknown[] | []>(
     callback: (api: TBatchInstance) => T,
+    options?: IApiClientReqOptions,
   ): Promise<TBatchReturn<T>> {
     if (!this.batchingInstance) {
       // @ts-ignore
@@ -251,7 +252,7 @@ class Endpoints<
       { requests: [], mapping: {} },
     ) as { requests: Record<string, any>[]; mapping: Record<number, number> };
 
-    const result = await this.apiClient.sendRequest(requests as never);
+    const result = await this.apiClient.sendRequest(requests as never, options);
 
     // combine backend response and other values in the same order
     return data.map((obj, i) => {
