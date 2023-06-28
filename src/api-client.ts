@@ -293,7 +293,7 @@ class ApiClient {
    * Get access token
    * @protected
    */
-  protected getAccessToken(): Promise<undefined | string | null> | string | null {
+  public getAccessToken(): Promise<undefined | string | null> | string | null {
     return this.storage.getItem(ApiClient.ACCESS_TOKEN_KEY, {
       isAccess: true,
     });
