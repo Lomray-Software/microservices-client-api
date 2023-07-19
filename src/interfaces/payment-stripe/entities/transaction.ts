@@ -30,8 +30,11 @@ interface ITransaction extends IEntity {
   cardId?: string | null;
   paymentMethodId?: string | null;
   entityId?: string;
+  // Smallest currency unit amount
   amount?: number;
+  // Smallest currency unit tax
   tax?: number;
+  // Smallest currency unit fee
   fee?: number;
   status?: TransactionStatus;
   params?: IParams;
