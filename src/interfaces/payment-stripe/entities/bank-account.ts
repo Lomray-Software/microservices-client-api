@@ -18,6 +18,7 @@ interface IBankAccount extends IEntity {
   isInstantPayoutAllowed?: boolean;
   params?: IParams;
   createdAt?: Date;
+  updatedAt?: Date;
   customer?: ICustomer;
 }
 

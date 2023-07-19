@@ -27,6 +27,8 @@ interface ICustomer extends IEntity {
   customerId: string;
   userId?: string;
   params?: IParams;
+  createdAt?: Date;
+  updatedAt?: Date;
   transactions?: ITransaction[];
   cards?: ICard[];
   bankAccounts?: IBankAccount[];

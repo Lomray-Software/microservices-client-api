@@ -35,6 +35,8 @@ interface ITransaction extends IEntity {
   fee?: number;
   status?: TransactionStatus;
   params?: IParams;
+  createdAt?: Date;
+  updatedAt?: Date;
   product?: IProduct;
   customer?: ICustomer;
 }
