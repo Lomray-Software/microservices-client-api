@@ -13,8 +13,8 @@ interface IParams {
   errorMessage?: string;
   // Application and stripe fees payer
   feesPayer?: TransactionRole;
-  // PaymentIntent charge transfer id, must exist for refund
-  transferId?: string;
+  // PaymentIntent charge id, must exist for refund
+  chargeId?: string;
 }
 
 /**
