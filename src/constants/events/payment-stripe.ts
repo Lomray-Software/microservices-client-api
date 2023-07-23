@@ -9,6 +9,10 @@ enum Event {
   PaymentIntentError = 'event.payment-stripe.provider.payment-intent-error',
   PaymentIntentInProcess = 'event.payment-stripe.provider.payment-intent-in-process',
   PaymentIntentSuccess = 'event.payment-stripe.provider.payment-intent-success',
+  RefundSuccess = 'event.payment-stripe.provider.refund-success',
+  RefundInProcess = 'event.payment-stripe.provider.refund-in-process',
+  RefundFailed = 'event.payment-stripe.provider.refund-failed',
+  RefundCanceled = 'event.payment-stripe.provider.refund-canceled',
 }
 
 export default Event;
