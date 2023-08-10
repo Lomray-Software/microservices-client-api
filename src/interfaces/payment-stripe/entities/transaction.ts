@@ -15,6 +15,9 @@ interface IParams {
   feesPayer?: TransactionRole;
   // PaymentIntent charge id, must exist for refund
   chargeId?: string;
+  // Decomposed fees
+  applicationFee?: number;
+  paymentProviderFee?: number;
 }
 
 /**
