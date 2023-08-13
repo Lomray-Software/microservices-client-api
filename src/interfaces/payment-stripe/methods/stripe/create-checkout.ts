@@ -3,6 +3,7 @@ interface ICreateCheckoutInput {
   userId: string;
   successUrl: string;
   cancelUrl: string;
+  isAllowPromoCode?: boolean;
 }
 
 interface ICreateCheckoutOutput {
