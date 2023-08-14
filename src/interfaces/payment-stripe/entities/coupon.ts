@@ -1,5 +1,5 @@
 import type { IEntity } from '@lomray/microservices-types';
-import type { TCouponDuration } from '../interfaces';
+import type CouponDuration from '../../../constants/payment-stripe/coupon-duration';
 import type IProduct from './product';
 import type IPromoCode from './promo-code';
 
@@ -12,7 +12,7 @@ interface ICoupon extends IEntity {
   name?: string | null;
   amountOff?: number | null;
   percentOff?: number | null;
-  duration?: TCouponDuration;
+  duration?: CouponDuration;
   durationInMonths?: number | null;
   maxRedemptions?: number | null;
   createdAt?: Date;

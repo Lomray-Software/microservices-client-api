@@ -1,8 +1,9 @@
+import type CouponDuration from '../../../../constants/payment-stripe/coupon-duration';
 import type ICoupon from '../../entities/coupon';
-import type { TCouponDuration, TCurrency } from '../../interfaces';
+import type { TCurrency } from '../../interfaces';
 
 interface ICreateCouponInput {
-  duration: TCouponDuration;
+  duration: CouponDuration;
   products: string[];
   userId?: string;
   name?: string;
