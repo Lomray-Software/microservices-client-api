@@ -18,6 +18,10 @@ interface IParams {
   // Decomposed fees
   applicationFee?: number;
   paymentProviderFee?: number;
+  extraFee?: number;
+  extraRevenue?: number;
+  // Amount that will charge for instant payout
+  estimatedInstantPayoutFee?: number;
 }
 
 /**
