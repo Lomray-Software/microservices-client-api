@@ -1,5 +1,5 @@
 /**
- * Enum for coupon duration
+ * Сoupon duration
  */
 enum CouponDuration {
   ONES = 'ones',

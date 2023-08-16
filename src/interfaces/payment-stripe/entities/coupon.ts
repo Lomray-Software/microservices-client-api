@@ -18,7 +18,7 @@ interface ICoupon extends IEntity {
   createdAt?: Date;
   updatedAt?: Date;
   products?: IProduct[];
-  promoCodes: IPromoCode[];
+  promoCodes?: IPromoCode[];
 }
 
 export default ICoupon;

@@ -4,6 +4,7 @@ import type { TCurrency } from '../../interfaces';
 
 interface ICreateCouponInput {
   duration: CouponDuration;
+  // TODO change to productIds
   products: string[];
   userId?: string;
   name?: string;
