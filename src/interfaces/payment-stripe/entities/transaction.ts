@@ -22,6 +22,8 @@ interface IParams {
   extraRevenue?: number;
   // Amount that will charge for instant payout
   estimatedInstantPayoutFee?: number;
+  // Original unit entity cost
+  entityCost?: number;
 }
 
 /**
