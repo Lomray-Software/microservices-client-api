@@ -59,15 +59,21 @@ import type {
 } from './interfaces/notifications/methods/phone/send';
 import type IBankAccount from './interfaces/payment-stripe/entities/bank-account';
 import type ICard from './interfaces/payment-stripe/entities/card';
+import type ICoupon from './interfaces/payment-stripe/entities/coupon';
 import type ICustomer from './interfaces/payment-stripe/entities/customer';
 import type IPrice from './interfaces/payment-stripe/entities/price';
 import type IProduct from './interfaces/payment-stripe/entities/product';
+import type IPromoCode from './interfaces/payment-stripe/entities/promo-code';
 import type ITransaction from './interfaces/payment-stripe/entities/transaction';
 import type {
   IBankAccountAddInput,
   IBankAccountAddOutput,
 } from './interfaces/payment-stripe/methods/bank-account/add';
 import type { ICardAddInput, ICardAddOutput } from './interfaces/payment-stripe/methods/card/add';
+import type {
+  ICreateCouponInput,
+  ICreateCouponOutput,
+} from './interfaces/payment-stripe/methods/coupon/create';
 import type {
   ICustomerCreateInput,
   ICustomerCreateOutput,
@@ -673,6 +679,34 @@ class Endpoints<
       setupIntent: this.createHandler<ISetupIntentInput, ISetupIntentOutput>(
         'payment-stripe.stripe.setup-intent',
       ),
+    },
+    promoCode: {
+      create: this.createHandler<ICreate<IPromoCode>, IView<IPromoCode>>(
+        'payment-stripe.promo-code.create',
+      ),
+      list: this.createHandler<IQuery<IPromoCode>, IList<IPromoCode>>(
+        'payment-stripe.promo-code.list',
+      ),
+      view: this.createHandler<IQuery<IPromoCode>, IView<IPromoCode>>(
+        'payment-stripe.promo-code.view',
+      ),
+      update: this.createHandler<IUpdate<IPromoCode>, IView<IPromoCode>>(
+        'payment-stripe.promo-code.update',
+      ),
+      remove: this.createHandler<IQuery<IPromoCode>, IRemove<IPromoCode>>(
+        'payment-stripe.promo-code.remove',
+      ),
+      count: this.createHandler<IQuery<IPromoCode>, ICount>('payment-stripe.promo-code.count'),
+    },
+    coupon: {
+      create: this.createHandler<ICreateCouponInput, ICreateCouponOutput>(
+        'payment-stripe.coupon.create',
+      ),
+      list: this.createHandler<IQuery<ICoupon>, IList<ICoupon>>('payment-stripe.coupon.list'),
+      view: this.createHandler<IQuery<ICoupon>, IView<ICoupon>>('payment-stripe.coupon.view'),
+      update: this.createHandler<IUpdate<ICoupon>, IView<ICoupon>>('payment-stripe.coupon.update'),
+      remove: this.createHandler<IQuery<ICoupon>, IRemove<ICoupon>>('payment-stripe.coupon.remove'),
+      count: this.createHandler<IQuery<ICoupon>, ICount>('payment-stripe.coupon.count'),
     },
   };
 }
