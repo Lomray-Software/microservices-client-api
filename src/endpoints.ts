@@ -64,6 +64,7 @@ import type ICustomer from './interfaces/payment-stripe/entities/customer';
 import type IPrice from './interfaces/payment-stripe/entities/price';
 import type IProduct from './interfaces/payment-stripe/entities/product';
 import type IPromoCode from './interfaces/payment-stripe/entities/promo-code';
+import type IRefund from './interfaces/payment-stripe/entities/refund';
 import type ITransaction from './interfaces/payment-stripe/entities/transaction';
 import type {
   IBankAccountAddInput,
@@ -628,6 +629,11 @@ class Endpoints<
         'payment-stripe.transaction.view',
       ),
       count: this.createHandler<IQuery<ITransaction>, ICount>('payment-stripe.transaction.count'),
+    },
+    refund: {
+      list: this.createHandler<IQuery<IRefund>, IList<IRefund>>('payment-stripe.refund.list'),
+      view: this.createHandler<IQuery<IRefund>, IView<IRefund>>('payment-stripe.refund.view'),
+      count: this.createHandler<IQuery<IRefund>, ICount>('payment-stripe.refund.count'),
     },
     product: {
       list: this.createHandler<IQuery<IProduct>, IList<IProduct>>('payment-stripe.product.list'),
