@@ -12,13 +12,13 @@ interface IParams {
 
 interface IRefund extends IEntity {
   id: string;
-  transactionId: string;
-  amount: number;
-  entityId: string | null;
-  params: IParams;
-  status: TransactionStatus;
-  createdAt: Date;
-  updatedAt: Date;
+  transactionId?: string;
+  amount?: number;
+  entityId?: string | null;
+  params?: IParams;
+  status?: TransactionStatus;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export default IRefund;
