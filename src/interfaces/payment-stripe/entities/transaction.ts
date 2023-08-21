@@ -11,6 +11,10 @@ interface IParams {
   paymentStatus?: StripeTransactionStatus;
   checkoutStatus?: StripeCheckoutStatus;
   errorMessage?: string;
+  // Example: card_declined
+  errorCode?: string;
+  // Example: generic_decline
+  declineCode?: string;
   // Application and stripe fees payer
   feesPayer?: TransactionRole;
   // PaymentIntent charge id, must exist for refund
@@ -22,8 +26,10 @@ interface IParams {
   extraRevenue?: number;
   // Amount that will charge for instant payout
   estimatedInstantPayoutFee?: number;
-  // Original unit entity cost
+  // Original entity cost
   entityCost?: number;
+  // Refunded amount
+  refundedAmount?: number;
 }
 
 /**
