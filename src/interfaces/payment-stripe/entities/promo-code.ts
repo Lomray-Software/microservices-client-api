@@ -7,6 +7,7 @@ import type ICoupon from './coupon';
 interface IPromoCode extends IEntity {
   promoCodeId: string;
   code?: string;
+  maxRedemptions?: number | null;
   couponId?: string;
   createdAt?: Date;
   updatedAt?: Date;
