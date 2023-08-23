@@ -13,6 +13,9 @@ enum Event {
   RefundInProcess = 'event.payment-stripe.provider.refund-in-process',
   RefundFailed = 'event.payment-stripe.provider.refund-failed',
   RefundCanceled = 'event.payment-stripe.provider.refund-canceled',
+  CardRemoved = 'event.payment-stripe.provider.card-removed',
+  CardCreated = 'event.payment-stripe.provider.card-created',
+  CardUpdated = 'event.payment-stripe.provider.card-updated',
 }
 
 export default Event;
