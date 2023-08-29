@@ -1,4 +1,5 @@
 import type { IEntity } from '@lomray/microservices-types';
+import type RefundAmountType from '../../../constants/payment-stripe/refund-amount-type';
 import type TransactionStatus from '../../../constants/payment-stripe/transaction-status';
 
 interface IParams {
@@ -8,6 +9,7 @@ interface IParams {
   reason?: string;
   // Error reason for failed refund
   errorReason?: string;
+  refundAmountType?: RefundAmountType;
 }
 
 interface IRefund extends IEntity {
