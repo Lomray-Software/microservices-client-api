@@ -42,6 +42,8 @@ import type {
   IUserRoleViewInput,
   IUserRoleViewOutput,
 } from './interfaces/authorization/methods/user-role/view';
+import type IArticle from './interfaces/blog/entities/article';
+import type ICategory from './interfaces/blog/entities/category';
 import type IComponent from './interfaces/content/entities/component';
 import type ISingleType from './interfaces/content/entities/single-type';
 import type { IFile } from './interfaces/files/entities/file';
@@ -713,6 +715,28 @@ class Endpoints<
       update: this.createHandler<IUpdate<ICoupon>, IView<ICoupon>>('payment-stripe.coupon.update'),
       remove: this.createHandler<IQuery<ICoupon>, IRemove<ICoupon>>('payment-stripe.coupon.remove'),
       count: this.createHandler<IQuery<ICoupon>, ICount>('payment-stripe.coupon.count'),
+    },
+  };
+
+  /**
+   * Blog microservice
+   */
+  blog = {
+    article: {
+      list: this.createHandler<IQuery<IArticle>, IList<IArticle>>('blog.article.list'),
+      view: this.createHandler<IQuery<IArticle>, IView<IArticle>>('blog.article.view'),
+      create: this.createHandler<ICreate<IArticle>, IView<IArticle>>('blog.article.create'),
+      update: this.createHandler<IUpdate<IArticle>, IView<IArticle>>('blog.article.update'),
+      remove: this.createHandler<IQuery<IArticle>, IRemove<IArticle>>('blog.article.remove'),
+      count: this.createHandler<IQuery<IArticle>, ICount>('blog.article.count'),
+    },
+    category: {
+      list: this.createHandler<IQuery<ICategory>, IList<ICategory>>('blog.category.list'),
+      view: this.createHandler<IQuery<ICategory>, IView<ICategory>>('blog.category.view'),
+      create: this.createHandler<ICreate<ICategory>, IView<ICategory>>('blog.category.create'),
+      update: this.createHandler<IUpdate<ICategory>, IView<ICategory>>('blog.category.update'),
+      remove: this.createHandler<IQuery<ICategory>, IRemove<ICategory>>('blog.category.remove'),
+      count: this.createHandler<IQuery<ICategory>, ICount>('blog.category.count'),
     },
   };
 }
