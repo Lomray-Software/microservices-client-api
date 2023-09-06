@@ -9,6 +9,7 @@ interface IArticle extends IEntity {
   description?: string;
   content?: string;
   publishDate?: string | null;
+  extra?: Record<string, any>;
   createdAt?: Date;
   updatedAt?: Date;
   categories?: ICategory[];
