@@ -543,6 +543,7 @@ class Endpoints<
       create: this.createHandler<ICreate<INotice>, IView<INotice>>('notification.notice.create'),
       remove: this.createHandler<IQuery<INotice>, IRemove<INotice>>('notification.notice.remove'),
       update: this.createHandler<IUpdate<INotice>, IView<INotice>>('notification.notice.update'),
+      count: this.createHandler<IQuery<INotice>, ICount>('notification.notice.count'),
     },
   };
 
