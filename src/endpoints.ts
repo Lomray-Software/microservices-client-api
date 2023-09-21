@@ -545,7 +545,7 @@ class Endpoints<
       remove: this.createHandler<IQuery<INotice>, IRemove<INotice>>('notification.notice.remove'),
       update: this.createHandler<IUpdate<INotice>, IView<INotice>>('notification.notice.update'),
       count: this.createHandler<IQuery<INotice>, ICount>('notification.notice.count'),
-      'hide-all': this.createHandler<void, IHideAllOutput>('notification.notice.hide-all'),
+      hideAll: this.createHandler<void, IHideAllOutput>('notification.notice.hide-all'),
     },
   };
 
