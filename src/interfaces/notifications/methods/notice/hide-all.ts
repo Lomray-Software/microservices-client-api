@@ -5,5 +5,3 @@ export interface IHideAllOutput {
   status: boolean;
   affected?: number;
 }
-
-export default IHideAllOutput;
