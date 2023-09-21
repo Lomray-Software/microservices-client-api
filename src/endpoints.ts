@@ -55,6 +55,7 @@ import type {
   IEmailSendInput,
   IEmailSendOutput,
 } from './interfaces/notifications/methods/email/send';
+import type IHideAllOutput from './interfaces/notifications/methods/notice/hide-all';
 import type {
   IPhoneSendInput,
   IPhoneSendOutput,
@@ -544,6 +545,7 @@ class Endpoints<
       remove: this.createHandler<IQuery<INotice>, IRemove<INotice>>('notification.notice.remove'),
       update: this.createHandler<IUpdate<INotice>, IView<INotice>>('notification.notice.update'),
       count: this.createHandler<IQuery<INotice>, ICount>('notification.notice.count'),
+      'hide-all': this.createHandler<void, IHideAllOutput>('notification.notice.hide-all'),
     },
   };
 
