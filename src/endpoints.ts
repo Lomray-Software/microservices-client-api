@@ -55,7 +55,7 @@ import type {
   IEmailSendInput,
   IEmailSendOutput,
 } from './interfaces/notifications/methods/email/send';
-import type IHideAllOutput from './interfaces/notifications/methods/notice/hide-all';
+import type { IHideAllOutput } from './interfaces/notifications/methods/notice/hide-all';
 import type {
   IPhoneSendInput,
   IPhoneSendOutput,
