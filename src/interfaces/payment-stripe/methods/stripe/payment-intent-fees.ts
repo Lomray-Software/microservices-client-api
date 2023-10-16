@@ -6,6 +6,8 @@ interface IPaymentIntentFeesInput {
   applicationPaymentPercent?: number;
   additionalFeesPercent?: Record<TransactionRole, number>;
   extraReceiverRevenuePercent?: number;
+  shouldEstimateTax?: boolean;
+  withStripeFee?: boolean;
 }
 
 interface IPaymentIntentFeesOutput {
@@ -13,6 +15,8 @@ interface IPaymentIntentFeesOutput {
   applicationFee: number;
   userAmount: number;
   receiverRevenue: number;
+  estimatedTaxPercent?: number;
+  estimatedTax?: number;
 }
 
 export { IPaymentIntentFeesInput, IPaymentIntentFeesOutput };
