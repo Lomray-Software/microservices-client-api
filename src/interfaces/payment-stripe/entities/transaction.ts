@@ -4,10 +4,22 @@ import type StripeTransactionStatus from '../../../constants/payment-stripe/stri
 import type TransactionRole from '../../../constants/payment-stripe/transaction-role';
 import type TransactionStatus from '../../../constants/payment-stripe/transaction-status';
 import type TransactionType from '../../../constants/payment-stripe/transaction-type';
+import type { ITax } from '../interfaces';
 import type ICustomer from './customer';
 import type IProduct from './product';
 
-interface IParams {
+export interface IComputedTax {
+  taxId?: ITax['id'];
+  taxTransactionAmountWithTaxUnit?: ITax['transactionAmountWithTaxUnit'];
+  taxExpiresAt?: ITax['expiresAt'];
+  taxCreatedAt?: ITax['createdAt'];
+  taxTotalAmountUnit?: ITax['totalAmountUnit'];
+  taxBehaviour?: ITax['behaviour'];
+  totalTaxPercent?: ITax['totalTaxPercent'];
+  taxFeeUnit?: number;
+}
+
+export interface IParams extends IComputedTax {
   paymentStatus?: StripeTransactionStatus;
   checkoutStatus?: StripeCheckoutStatus;
   errorMessage?: string;
