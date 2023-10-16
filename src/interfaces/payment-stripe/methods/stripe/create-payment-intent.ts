@@ -12,6 +12,7 @@ interface ICreatePaymentIntentInput {
   feesPayer?: TransactionRole;
   additionalFeesPercent?: Record<TransactionRole, number>;
   extraReceiverRevenuePercent?: number;
+  withTax?: boolean;
 }
 
 interface ICreatePaymentIntentOutput {
