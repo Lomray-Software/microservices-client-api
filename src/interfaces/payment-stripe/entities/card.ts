@@ -12,9 +12,6 @@ export interface IParams {
   setupIntentId?: string;
   // Card issuer name
   issuer?: string | null;
-  // User payment method billing
-  billingCountry?: string | null; // US, BR
-  billingPostalCode?: string | null; // 99301 (US WA)
 }
 
 /**
@@ -30,6 +27,9 @@ interface ICard extends IEntity {
   brand?: string;
   // Issuer country. Example: Card issuer (origin) can be Brazil, but user billing US
   origin?: string | null;
+  // User payment method billing
+  country?: string | null; // US, BR
+  postalCode?: string | null; // 99301 (US WA)
   isInstantPayoutAllowed?: boolean;
   params?: IParams;
   isDefault?: boolean;
