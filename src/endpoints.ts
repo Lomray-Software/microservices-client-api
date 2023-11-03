@@ -62,6 +62,8 @@ import type {
 } from './interfaces/notifications/methods/phone/send';
 import type IBankAccount from './interfaces/payment-stripe/entities/bank-account';
 import type ICard from './interfaces/payment-stripe/entities/card';
+import type ICart from './interfaces/payment-stripe/entities/cart';
+import type ICartProductPrice from './interfaces/payment-stripe/entities/cart-product-price';
 import type ICoupon from './interfaces/payment-stripe/entities/coupon';
 import type ICustomer from './interfaces/payment-stripe/entities/customer';
 import type IPrice from './interfaces/payment-stripe/entities/price';
@@ -102,6 +104,10 @@ import type {
   IConnectAccountInput,
   IConnectAccountOutput,
 } from './interfaces/payment-stripe/methods/stripe/connect-account';
+import type {
+  ICreateCartCheckoutInput,
+  ICreateCartCheckoutOutput,
+} from './interfaces/payment-stripe/methods/stripe/create-cart-checkout';
 import type {
   ICreateCheckoutInput,
   ICreateCheckoutOutput,
@@ -691,6 +697,9 @@ class Endpoints<
       setupIntent: this.createHandler<ISetupIntentInput, ISetupIntentOutput>(
         'payment-stripe.stripe.setup-intent',
       ),
+      createCartCheckout: this.createHandler<ICreateCartCheckoutInput, ICreateCartCheckoutOutput>(
+        'payment-stripe.stripe.create-cart-checkout',
+      ),
     },
     promoCode: {
       create: this.createHandler<ICreate<IPromoCode>, IView<IPromoCode>>(
@@ -719,6 +728,34 @@ class Endpoints<
       update: this.createHandler<IUpdate<ICoupon>, IView<ICoupon>>('payment-stripe.coupon.update'),
       remove: this.createHandler<IQuery<ICoupon>, IRemove<ICoupon>>('payment-stripe.coupon.remove'),
       count: this.createHandler<IQuery<ICoupon>, ICount>('payment-stripe.coupon.count'),
+    },
+    cart: {
+      create: this.createHandler<ICreate<ICart>, IView<ICart>>('payment-stripe.cart.create'),
+      list: this.createHandler<IQuery<ICart>, IList<ICart>>('payment-stripe.cart.list'),
+      view: this.createHandler<IQuery<ICart>, IView<ICart>>('payment-stripe.cart.view'),
+      update: this.createHandler<IUpdate<ICart>, IView<ICart>>('payment-stripe.cart.update'),
+      remove: this.createHandler<IQuery<ICart>, IRemove<ICart>>('payment-stripe.cart.remove'),
+      count: this.createHandler<IQuery<ICart>, ICount>('payment-stripe.cart.count'),
+    },
+    cartProductPrice: {
+      create: this.createHandler<ICreate<ICartProductPrice>, IView<ICartProductPrice>>(
+        'payment-stripe.cart-product-price.create',
+      ),
+      list: this.createHandler<IQuery<ICartProductPrice>, IList<ICartProductPrice>>(
+        'payment-stripe.cart-product-price.list',
+      ),
+      view: this.createHandler<IQuery<ICartProductPrice>, IView<ICartProductPrice>>(
+        'payment-stripe.cart-product-price.view',
+      ),
+      update: this.createHandler<IUpdate<ICartProductPrice>, IView<ICartProductPrice>>(
+        'payment-stripe.cart-product-price.update',
+      ),
+      remove: this.createHandler<IQuery<ICartProductPrice>, IRemove<ICartProductPrice>>(
+        'payment-stripe.cart-product-price.remove',
+      ),
+      count: this.createHandler<IQuery<ICartProductPrice>, ICount>(
+        'payment-stripe.cart-product-price.count',
+      ),
     },
   };
 
