@@ -22,6 +22,8 @@ interface ICard extends IEntity {
   userId?: string;
   lastDigits?: string;
   expired?: string;
+  paymentMethodId?: string | null;
+  fingerprint?: string | null;
   holderName?: string | null;
   funding?: string;
   brand?: string;
