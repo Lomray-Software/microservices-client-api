@@ -16,6 +16,8 @@ enum Event {
   CardRemoved = 'event.payment-stripe.provider.card-removed',
   CardCreated = 'event.payment-stripe.provider.card-created',
   CardUpdated = 'event.payment-stripe.provider.card-updated',
+  CardSoftRemoved = 'event.payment-stripe.provider.card-soft-removed',
+  CardSoftRestored = 'event.payment-stripe.provider.card-soft-restored',
 }
 
 export default Event;
