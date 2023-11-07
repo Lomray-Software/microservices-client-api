@@ -6,6 +6,7 @@ enum Event {
   SetupIntentSucceeded = 'event.payment-stripe.provider.setup-intent-succeeded',
   PaymentMethodUpdated = 'event.payment-stripe.provider.payment-method-updated',
   PaymentMethodRemoved = 'event.payment-stripe.provider.payment-method-removed',
+  PaymentMethodDetach = 'event.payment-stripe.provider.payment-method-detach',
   PaymentIntentError = 'event.payment-stripe.provider.payment-intent-error',
   PaymentIntentInProcess = 'event.payment-stripe.provider.payment-intent-in-process',
   PaymentIntentSuccess = 'event.payment-stripe.provider.payment-intent-success',
@@ -17,7 +18,8 @@ enum Event {
   CardCreated = 'event.payment-stripe.provider.card-created',
   CardUpdated = 'event.payment-stripe.provider.card-updated',
   CardSoftRemoved = 'event.payment-stripe.provider.card-soft-removed',
-  CardSoftRestored = 'event.payment-stripe.provider.card-soft-restored',
+  CardRestored = 'event.payment-stripe.provider.card-restored',
+  CardNotCreatedDuplicated = 'event.payment-stripe.provider.card-not-created-duplicated',
 }
 
 export default Event;
