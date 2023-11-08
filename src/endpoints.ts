@@ -117,6 +117,10 @@ import type {
   ICreatePaymentIntentOutput,
 } from './interfaces/payment-stripe/methods/stripe/create-payment-intent';
 import type {
+  IDashboardLoginLinkInput,
+  IDashboardLoginLinkOutput,
+} from './interfaces/payment-stripe/methods/stripe/dashboard-login-link';
+import type {
   IInstantPayoutInput,
   IInstantPayoutOutput,
 } from './interfaces/payment-stripe/methods/stripe/instant-payout';
@@ -699,6 +703,9 @@ class Endpoints<
       ),
       createCartCheckout: this.createHandler<ICreateCartCheckoutInput, ICreateCartCheckoutOutput>(
         'payment-stripe.stripe.create-cart-checkout',
+      ),
+      dashboardLoginLink: this.createHandler<IDashboardLoginLinkInput, IDashboardLoginLinkOutput>(
+        'payment-stripe.stripe.dashboard-login-link',
       ),
     },
     promoCode: {
