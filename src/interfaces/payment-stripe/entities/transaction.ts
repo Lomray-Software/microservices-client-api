@@ -20,6 +20,11 @@ export interface IComputedTax {
 }
 
 export interface IParams extends IComputedTax {
+  refundedTransactionAmount: number;
+  refundedApplicationFeeAmount: number;
+  // Decomposed fees
+  platformFee: number;
+  stripeFee: number;
   paymentStatus?: StripeTransactionStatus;
   checkoutStatus?: StripeCheckoutStatus;
   errorMessage?: string;
@@ -31,17 +36,12 @@ export interface IParams extends IComputedTax {
   feesPayer?: TransactionRole;
   // PaymentIntent charge id, must exist for refund
   chargeId?: string;
-  // Decomposed fees
-  applicationFee?: number;
-  paymentProviderFee?: number;
   extraFee?: number;
   extraRevenue?: number;
   // Amount that will charge for instant payout
   estimatedInstantPayoutFee?: number;
   // Original entity cost
   entityCost?: number;
-  // Refunded amount
-  refundedAmount?: number;
 }
 
 /**
@@ -50,6 +50,7 @@ export interface IParams extends IComputedTax {
 interface ITransaction extends IEntity {
   id: string;
   transactionId?: string;
+  applicationFeeId?: string | null;
   title?: string;
   userId?: string;
   type?: TransactionType;
