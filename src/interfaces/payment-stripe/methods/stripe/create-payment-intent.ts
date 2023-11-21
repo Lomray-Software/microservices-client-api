@@ -12,6 +12,7 @@ interface IPaymentIntentMetadata
   feesPayer: TransactionRole;
   platformFee: string;
   receiverExtraFee: string;
+  receiverRevenue: string;
   receiverPersonalFee: string;
   senderExtraFee: string;
   senderPersonalFee: string;
