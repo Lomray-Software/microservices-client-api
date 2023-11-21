@@ -5,6 +5,7 @@ interface IRefundInput {
   transactionId: string;
   amount?: number;
   refundAmountType?: RefundAmountType;
+  type?: string;
 }
 
 interface IRefundOutput {
