@@ -1,19 +1,24 @@
 import type TransactionRole from '../../../../constants/payment-stripe/transaction-role';
 import type ITransaction from '../../entities/transaction';
-import type { IComputedTax } from '../../entities/transaction';
+import type { IComputedTax, IParams as ITransactionParams } from '../../entities/transaction';
 
 interface IPaymentIntentMetadata
-  extends Omit<IComputedTax, 'taxTransactionAmountWithTaxUnit' | 'taxTotalAmountUnit'> {
+  extends Omit<IComputedTax, 'taxTransactionAmountWithTaxUnit' | 'taxTotalAmountUnit'>,
+    Pick<ITransactionParams, 'baseFee'> {
   senderId: string;
   receiverId: string;
   entityCost: string;
   cardId: string;
   feesPayer: TransactionRole;
-  applicationFee: string;
+  platformFee: string;
   receiverExtraFee: string;
+  receiverPersonalFee: string;
   senderExtraFee: string;
+  senderPersonalFee: string;
   receiverExtraRevenue: string;
-  paymentProviderFee: string;
+  stripeFee: string;
+  // Total collected fee (includes all fees and tax that collected via application fee)
+  fee: string;
   entityId?: string;
   title?: string;
   taxTransactionAmountWithTax?: number;

@@ -25,6 +25,10 @@ export interface IParams extends IComputedTax {
   // Decomposed fees
   platformFee: number;
   stripeFee: number;
+  baseFee: number;
+  extraFee: number;
+  // Personal user fee. Receiver it's application fees with only debit extra fees. Sender it's application fees with only credit extra fees.
+  personalFee: number;
   paymentStatus?: StripeTransactionStatus;
   checkoutStatus?: StripeCheckoutStatus;
   errorMessage?: string;
@@ -36,7 +40,6 @@ export interface IParams extends IComputedTax {
   feesPayer?: TransactionRole;
   // PaymentIntent charge id, must exist for refund
   chargeId?: string;
-  extraFee?: number;
   extraRevenue?: number;
   // Amount that will charge for instant payout
   estimatedInstantPayoutFee?: number;
@@ -64,6 +67,7 @@ interface ITransaction extends IEntity {
   tax?: number;
   // Smallest currency unit fee
   fee?: number;
+  personalFee?: number;
   status?: TransactionStatus;
   params?: IParams;
   createdAt?: Date;
