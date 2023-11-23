@@ -4,7 +4,8 @@ import type { IComputedTax, IParams as ITransactionParams } from '../../entities
 
 interface IPaymentIntentMetadata
   extends Omit<IComputedTax, 'taxTransactionAmountWithTaxUnit' | 'taxTotalAmountUnit'>,
-    Pick<ITransactionParams, 'baseFee'> {
+    Pick<ITransactionParams, 'baseFee'>,
+    Pick<ITransaction, 'taxTransactionId' | 'taxCalculationId'> {
   senderId: string;
   receiverId: string;
   entityCost: string;
@@ -16,6 +17,7 @@ interface IPaymentIntentMetadata
   senderExtraFee: string;
   senderPersonalFee: string;
   receiverExtraRevenue: string;
+  receiverRevenue: string;
   stripeFee: string;
   // Total collected fee (includes all fees and tax that collected via application fee)
   fee: string;
@@ -25,6 +27,7 @@ interface IPaymentIntentMetadata
   taxTotalAmount?: number;
   taxFee?: number;
   totalTaxPercent?: number;
+  taxAutoCalculateFee?: number;
 }
 
 interface ICreatePaymentIntentInput {
