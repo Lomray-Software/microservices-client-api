@@ -1,6 +1,7 @@
 import type { IEntity } from '@lomray/microservices-types';
 import type Formats from '../../../constants/formats';
 import type IFileEntity from './file-entity';
+import type IFolder from './folder';
 
 interface IFileMeta {
   mime: string;
@@ -21,12 +22,14 @@ export type IImageFormat = {
 export interface IFile extends IEntity {
   id: string;
   userId?: string | null;
+  folderId?: string | null;
   url?: string;
   alt?: string;
   type?: string;
   formats?: { [key in Formats]: IImageFormat };
   meta?: IFileMeta;
-  fileEntities?: IFileEntity[];
   createdAt?: string;
   updatedAt?: string;
+  fileEntities?: IFileEntity[];
+  folder?: IFolder;
 }
