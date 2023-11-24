@@ -48,6 +48,7 @@ import type IComponent from './interfaces/content/entities/component';
 import type ISingleType from './interfaces/content/entities/single-type';
 import type { IFile } from './interfaces/files/entities/file';
 import type IFileEntity from './interfaces/files/entities/file-entity';
+import type IFolder from './interfaces/files/entities/folder';
 import type { IFileCreateInput } from './interfaces/files/methods/file/create';
 import type { IFileRemoveInput, IFileRemoveOutput } from './interfaces/files/methods/file/remove';
 import type { INotice } from './interfaces/notifications/entities/notice';
@@ -535,6 +536,13 @@ class Endpoints<
         'files.file-entity.remove',
       ),
       view: this.createHandler<IQuery<IFileEntity>, IView<IFileEntity>>('files.file-entity.view'),
+    },
+    folder: {
+      create: this.createHandler<ICreate<IFolder>, IView<IFolder>>('files.folder.create'),
+      update: this.createHandler<IUpdate<IFolder>, IUpdate<IFolder>>('files.folder.update'),
+      remove: this.createHandler<IQuery<IFolder>, IRemove<IFolder>>('files.folder.remove'),
+      view: this.createHandler<IQuery<IFolder>, IView<IFolder>>('files.folder.view'),
+      list: this.createHandler<IQuery<IFolder>, IList<IFolder>>('files.folder.list'),
     },
   };
 
