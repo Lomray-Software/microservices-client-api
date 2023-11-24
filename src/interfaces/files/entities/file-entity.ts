@@ -1,4 +1,5 @@
 import type { IEntity } from '@lomray/microservices-types';
+import type { IFile } from './file';
 
 interface IFileEntity extends IEntity {
   id: string;
@@ -8,6 +9,7 @@ interface IFileEntity extends IEntity {
   microservice?: string;
   order?: number;
   createdAt?: number;
+  file?: IFile;
 }
 
 export default IFileEntity;
