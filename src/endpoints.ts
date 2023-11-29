@@ -52,6 +52,7 @@ import type IFolder from './interfaces/files/entities/folder';
 import type { IFileCreateInput } from './interfaces/files/methods/file/create';
 import type { IFileRemoveInput, IFileRemoveOutput } from './interfaces/files/methods/file/remove';
 import type { INotice } from './interfaces/notifications/entities/notice';
+import type ITask from './interfaces/notifications/entities/task';
 import type {
   IEmailSendInput,
   IEmailSendOutput,
@@ -564,6 +565,14 @@ class Endpoints<
       update: this.createHandler<IUpdate<INotice>, IView<INotice>>('notification.notice.update'),
       count: this.createHandler<IQuery<INotice>, ICount>('notification.notice.count'),
       hideAll: this.createHandler<never, IHideAllOutput>('notification.notice.hide-all'),
+    },
+    task: {
+      list: this.createHandler<IQuery<ITask>, IList<ITask>>('notification.task.list'),
+      view: this.createHandler<IQuery<ITask>, IView<ITask>>('notification.task.view'),
+      create: this.createHandler<ICreate<ITask>, IView<ITask>>('notification.task.create'),
+      remove: this.createHandler<IQuery<ITask>, IRemove<ITask>>('notification.task.remove'),
+      update: this.createHandler<IUpdate<ITask>, IView<ITask>>('notification.task.update'),
+      count: this.createHandler<IQuery<ITask>, ICount>('notification.task.count'),
     },
   };
 
