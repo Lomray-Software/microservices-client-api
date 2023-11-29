@@ -54,6 +54,10 @@ import type { IFileRemoveInput, IFileRemoveOutput } from './interfaces/files/met
 import type { INotice } from './interfaces/notifications/entities/notice';
 import type ITask from './interfaces/notifications/entities/task';
 import type {
+  ITaskProcessInput,
+  ITaskProcessOutput,
+} from './interfaces/notifications/jobs/task/process';
+import type {
   IEmailSendInput,
   IEmailSendOutput,
 } from './interfaces/notifications/methods/email/send';
@@ -573,6 +577,13 @@ class Endpoints<
       remove: this.createHandler<IQuery<ITask>, IRemove<ITask>>('notification.task.remove'),
       update: this.createHandler<IUpdate<ITask>, IView<ITask>>('notification.task.update'),
       count: this.createHandler<IQuery<ITask>, ICount>('notification.task.count'),
+    },
+    job: {
+      task: {
+        process: this.createHandler<ITaskProcessInput, ITaskProcessOutput>(
+          'notification.job.task.process',
+        ),
+      },
     },
   };
 
