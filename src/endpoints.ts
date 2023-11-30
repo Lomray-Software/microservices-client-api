@@ -51,7 +51,7 @@ import type IFileEntity from './interfaces/files/entities/file-entity';
 import type IFolder from './interfaces/files/entities/folder';
 import type { IFileCreateInput } from './interfaces/files/methods/file/create';
 import type { IFileRemoveInput, IFileRemoveOutput } from './interfaces/files/methods/file/remove';
-import type { INotice } from './interfaces/notifications/entities/notice';
+import type INotice from './interfaces/notifications/entities/notice';
 import type ITask from './interfaces/notifications/entities/task';
 import type {
   ITaskProcessInput,
