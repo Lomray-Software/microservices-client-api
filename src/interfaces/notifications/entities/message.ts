@@ -11,7 +11,7 @@ export interface IParams {
 }
 
 interface IMessage extends IEntity {
-  id: string;
+  id?: string;
   noticeId?: string | null;
   // Define task relation and message as template for task
   taskId?: string | null;

@@ -12,7 +12,7 @@ export interface IParams {
 }
 
 interface ITask extends IEntity {
-  id: string;
+  id?: string;
   type?: TaskType;
   /**
    * Last target on which task process failed. Retry failed task process from this entity id. Can be presented as any id:
