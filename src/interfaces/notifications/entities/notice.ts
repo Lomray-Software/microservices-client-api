@@ -1,6 +1,13 @@
+import type { IEntity } from '@lomray/microservices-types';
+import type IMessage from './message';
 import type ITask from './task';
 
-export interface INotice {
+export interface IParams {
+  isTemplate?: boolean;
+  [key: string]: any;
+}
+
+interface INotice extends IEntity {
   id: string;
   type?: string;
   userId?: string;
@@ -10,7 +17,10 @@ export interface INotice {
   description?: string;
   isViewed?: boolean;
   isHidden?: boolean;
-  params?: Record<string, any>;
+  params?: IParams;
   createdAt?: Date;
   task?: ITask;
+  messages?: IMessage[];
 }
+
+export default INotice;
