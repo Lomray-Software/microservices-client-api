@@ -3,7 +3,7 @@ import type IMessage from './message';
 import type ITask from './task';
 
 interface IRecipient extends IEntity {
-  userId: string;
+  userId?: string;
   taskId?: string;
   messageId?: string | null;
   createdAt?: Date;

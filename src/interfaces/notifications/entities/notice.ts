@@ -8,7 +8,7 @@ export interface IParams {
 }
 
 interface INotice extends IEntity {
-  id: string;
+  id?: string;
   type?: string;
   userId?: string;
   // Define task relation and notice as template for task
