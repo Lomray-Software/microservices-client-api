@@ -375,6 +375,7 @@ class Endpoints<
       create: this.createHandler<ITokenCreateInput, ITokenCreateOutput>(
         'authentication.token.create',
       ),
+      count: this.createHandler<IQuery<IToken>, ICount>('authentication.token.count'),
     },
     cookies: {
       remove: this.createHandler<never, ICookiesRemoveOutput>('authentication.cookies.remove', {
