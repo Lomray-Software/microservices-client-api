@@ -5,7 +5,7 @@ import type IBankAccount from './bank-account';
 import type ICard from './card';
 import type ITransaction from './transaction';
 
-interface IParams {
+export interface IParams {
   // Payment service account id
   accountType?: StripeAccountTypes;
   // Payment service account id
@@ -18,6 +18,8 @@ interface IParams {
   isPayoutEnabled?: boolean;
   // If user have card that can be used for payment intent charges
   hasDefaultPaymentMethod?: boolean;
+  // Used for contact platform with user connect account
+  accountSupportPhoneNumber?: string | null;
 }
 
 /**
