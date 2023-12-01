@@ -11,12 +11,15 @@ interface IPaymentIntentFeesInput {
 }
 
 interface IPaymentIntentFeesOutput {
-  paymentProviderFee: number;
-  applicationFee: number;
-  userAmount: number;
-  receiverRevenue: number;
+  stripeUnitFee: number;
+  platformUnitFee: number;
+  userUnitAmount: number;
+  receiverUnitRevenue: number;
+  receiverAdditionalFee: number;
+  senderAdditionalFee: number;
+  extraReceiverUnitRevenue: number;
+  estimatedTaxUnit?: number;
   estimatedTaxPercent?: number;
-  estimatedTax?: number;
 }
 
 export { IPaymentIntentFeesInput, IPaymentIntentFeesOutput };
