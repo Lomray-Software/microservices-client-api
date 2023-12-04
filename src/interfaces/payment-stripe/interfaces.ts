@@ -7,7 +7,7 @@ type TCurrency = 'usd' | 'eur';
 type TBalance = Record<TCurrency, number>;
 
 interface IFees {
-  stableUnit: number;
+  stablePaymentUnit: number;
   paymentPercent: number;
 }
 
