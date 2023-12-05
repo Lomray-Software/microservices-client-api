@@ -1,6 +1,6 @@
 import type { IEntity } from '@lomray/microservices-types';
 import type RefundAmountType from '../../../constants/payment-stripe/refund-amount-type';
-import type TransactionStatus from '../../../constants/payment-stripe/transaction-status';
+import type RefundStatus from '../../../constants/payment-stripe/refund-status';
 
 interface IParams {
   // Example: re_3NhW8PAmQ4asS8PS0QPP80ER
@@ -18,7 +18,7 @@ interface IRefund extends IEntity {
   amount?: number;
   entityId?: string | null;
   params?: IParams;
-  status?: TransactionStatus;
+  status?: RefundStatus; // RefundStatus.INITIAL
   createdAt?: Date;
   updatedAt?: Date;
 }

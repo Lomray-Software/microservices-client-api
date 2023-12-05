@@ -1,4 +1,5 @@
 import type { IEntity } from '@lomray/microservices-types';
+import type ChargeRefundStatus from '../../../constants/payment-stripe/charge-refund-status';
 import type StripeCheckoutStatus from '../../../constants/payment-stripe/stripe-checkout-status';
 import type StripeTransactionStatus from '../../../constants/payment-stripe/stripe-transaction-status';
 import type TransactionRole from '../../../constants/payment-stripe/transaction-role';
@@ -82,6 +83,10 @@ interface ITransaction extends IEntity {
   // Represents a single attempt to move money into Platform Stripe account. Required for refunds, reversals, fees
   chargeId?: string | null;
   applicationFeeId?: string | null;
+  // If transaction was fail refund on second partial refund - this status indicate real refund state.
+  chargeRefundStatus?: ChargeRefundStatus;
+  // Does transaction was disputed. Chargeback or injury occur.
+  isDisputed?: boolean;
   title?: string;
   userId?: string;
   type?: TransactionType;
