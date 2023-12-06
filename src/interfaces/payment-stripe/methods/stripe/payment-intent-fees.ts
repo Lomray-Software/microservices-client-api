@@ -13,7 +13,7 @@ interface IPaymentIntentFeesInput {
 interface IPaymentIntentFeesOutput {
   stripeFee: number;
   platformFee: number;
-  userUnitAmount: number;
+  userAmount: number;
   receiverRevenue: number;
   receiverAdditionalFee: number;
   senderAdditionalFee: number;
