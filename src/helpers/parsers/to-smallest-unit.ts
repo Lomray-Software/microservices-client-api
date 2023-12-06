@@ -6,7 +6,11 @@
  * 3. 1.9849444429999 equals 198
  * @TODO: Cover by unit tests
  */
-const toSmallestUnit = (amount: number | string): number | undefined => {
+const toSmallestUnit = (amount?: number | string): number | undefined => {
+  if (!amount) {
+    return;
+  }
+
   const parsedAmount = typeof amount === 'string' ? Number(amount) : amount;
 
   if (parsedAmount < 0) {

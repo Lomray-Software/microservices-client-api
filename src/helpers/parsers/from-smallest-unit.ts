@@ -2,7 +2,11 @@
  * Returns number from the smallest unit
  * @description For instance: 10099 (the smallest unit) equals 100.99 (float)
  */
-const fromSmallestUnit = (smallestUnitAmount: string | number): number | undefined => {
+const fromSmallestUnit = (smallestUnitAmount?: string | number): number | undefined => {
+  if (!smallestUnitAmount) {
+    return;
+  }
+
   const parsedAmount =
     typeof smallestUnitAmount === 'string' ? Number(smallestUnitAmount) : smallestUnitAmount;
 
