@@ -8,7 +8,9 @@ type TBalance = Record<TCurrency, number>;
 
 interface IFees {
   stablePaymentUnit: number;
+  stableDisputeFeeUnit: number;
   paymentPercent: number;
+  instantPayoutPercent: number;
 }
 
 interface ITax {
@@ -26,8 +28,10 @@ interface ITax {
 interface ITaxes {
   // Estimated default tax percent
   defaultPercent: number;
-  // Stable cost unit for automatic compute tax
+  // Create tax transaction fee
   stableUnit: number;
+  // Tax auto Stripe calculation fee
+  autoCalculateFeeUnit: number;
 }
 
 export { TCapabilitiesStatus, TCurrency, TBalance, IFees, ITax, ITaxes };
