@@ -8,7 +8,7 @@ interface IRefundInput {
 }
 
 interface IRefundOutput {
-  isRefundRecognized: boolean;
+  isRecognized: boolean;
 }
 
 export { IRefundInput, IRefundOutput };
