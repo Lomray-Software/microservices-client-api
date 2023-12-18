@@ -2,7 +2,13 @@ import type { IEntity } from '@lomray/microservices-types';
 import type RefundAmountType from '../../../constants/payment-stripe/refund-amount-type';
 import type RefundStatus from '../../../constants/payment-stripe/refund-status';
 
-interface IParams {
+export interface IRefundMetadata {
+  entityId?: string;
+  refundAmountType?: RefundAmountType;
+  type?: string;
+}
+
+export interface IParams {
   // Example: re_3NhW8PAmQ4asS8PS0QPP80ER
   refundId?: string;
   // Reason for the refund, either user-provided
@@ -18,7 +24,7 @@ interface IRefund extends IEntity {
   amount?: number;
   entityId?: string | null;
   params?: IParams;
-  status?: RefundStatus; // RefundStatus.INITIAL
+  status?: RefundStatus; // Default RefundStatus.INITIAL
   createdAt?: Date;
   updatedAt?: Date;
 }

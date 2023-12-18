@@ -1,5 +1,4 @@
 import type RefundAmountType from '../../../../constants/payment-stripe/refund-amount-type';
-import type Refund from '../../entities/refund';
 
 interface IRefundInput {
   transactionId: string;
@@ -9,7 +8,7 @@ interface IRefundInput {
 }
 
 interface IRefundOutput {
-  entity: Refund;
+  isRefundRecognized: boolean;
 }
 
 export { IRefundInput, IRefundOutput };
