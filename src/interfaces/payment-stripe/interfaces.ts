@@ -6,6 +6,15 @@ type TCurrency = 'usd' | 'eur';
 
 type TBalance = Record<TCurrency, number>;
 
+type TRefundErrorReason =
+  | 'charge_for_pending_refund_disputed'
+  | 'declined'
+  | 'expired_or_canceled_card'
+  | 'insufficient_funds'
+  | 'lost_or_stolen_card'
+  | 'merchant_request'
+  | 'unknown';
+
 interface IFees {
   stablePaymentUnit: number;
   stableDisputeFeeUnit: number;
@@ -34,4 +43,4 @@ interface ITaxes {
   autoCalculateFeeUnit: number;
 }
 
-export { TCapabilitiesStatus, TCurrency, TBalance, IFees, ITax, ITaxes };
+export { TCapabilitiesStatus, TCurrency, TBalance, IFees, ITax, ITaxes, TRefundErrorReason };
