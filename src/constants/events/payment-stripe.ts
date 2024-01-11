@@ -26,6 +26,8 @@ enum Event {
   RefundUpdated = 'event.payment-stripe.provider.refund-updated',
   DisputeCreated = 'event.payment-stripe.provider.dispute-created',
   DisputeUpdated = 'event.payment-stripe.provider.dispute-updated',
+  PayoutCreated = 'event.payment-stripe.provider.payout-created',
+  PayoutUpdated = 'event.payment-stripe.provider.payout-updated',
 }
 
 export default Event;
