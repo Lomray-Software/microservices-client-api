@@ -12,7 +12,10 @@ class User {
   /**
    * Get user avatar or default image
    */
-  static getAvatarUrl(user: IUser | null, format: Formats = Formats.medium): string | undefined {
+  public static getAvatarUrl(
+    user: IUser | null,
+    format: Formats = Formats.medium,
+  ): string | undefined {
     const uri =
       user?.avatar?.formats?.[format]?.url ?? FileEntity.getAnyFileFormat(user?.avatar)?.url;
 
@@ -22,7 +25,7 @@ class User {
   /**
    * Get user avatar
    */
-  static getName(user?: IUser | null): string {
+  public static getName(user?: IUser | null): string {
     const { firstName, lastName } = user || {};
 
     return [firstName, lastName].join(' ');
@@ -31,7 +34,7 @@ class User {
   /**
    * Assign avatars to users
    */
-  static assignAvatars(users: IUser[], avatars: IFile[]): void {
+  public static assignAvatars(users: IUser[], avatars: IFile[]): void {
     FileEntity.assignEntitiesFiles(users, avatars, (user, files) => {
       user.avatar = files?.[0];
     });
@@ -40,14 +43,14 @@ class User {
   /**
    * Get a list of avatar for a user
    */
-  static assignAvatar = (user: IUser, avatar?: IFile | IFile[] | null): void => {
+  public static assignAvatar = (user: IUser, avatar?: IFile | IFile[] | null): void => {
     user.avatar = Array.isArray(avatar) ? avatar[avatar.length - 1] : avatar || undefined;
   };
 
   /**
    * Request user
    */
-  static requestUser = async (
+  public static requestUser = async (
     api: Endpoints<Endpoints>,
     {
       userId,
