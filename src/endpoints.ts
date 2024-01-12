@@ -72,6 +72,7 @@ import type ICart from './interfaces/payment-stripe/entities/cart';
 import type ICartProductPrice from './interfaces/payment-stripe/entities/cart-product-price';
 import type ICoupon from './interfaces/payment-stripe/entities/coupon';
 import type ICustomer from './interfaces/payment-stripe/entities/customer';
+import type IPayout from './interfaces/payment-stripe/entities/payout';
 import type IPrice from './interfaces/payment-stripe/entities/price';
 import type IProduct from './interfaces/payment-stripe/entities/product';
 import type IPromoCode from './interfaces/payment-stripe/entities/promo-code';
@@ -640,6 +641,13 @@ class Endpoints<
       create: this.createHandler<ICustomerCreateInput, ICustomerCreateOutput>(
         'payment-stripe.customer.create',
       ),
+    },
+    payout: {
+      list: this.createHandler<IQuery<IPayout>, IList<IPayout>>('payment-stripe.payout.list'),
+      view: this.createHandler<IQuery<IPayout>, IView<IPayout>>('payment-stripe.payout.view'),
+      update: this.createHandler<IUpdate<IPayout>, IView<IPayout>>('payment-stripe.payout.update'),
+      remove: this.createHandler<IQuery<IPayout>, IRemove<IPayout>>('payment-stripe.payout.remove'),
+      count: this.createHandler<IQuery<IPayout>, ICount>('payment-stripe.payout.count'),
     },
     card: {
       list: this.createHandler<IQuery<ICard>, IList<ICard>>('payment-stripe.card.list'),
