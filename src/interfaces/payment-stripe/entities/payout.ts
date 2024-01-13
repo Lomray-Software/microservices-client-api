@@ -21,6 +21,8 @@ interface IPayout extends IEntity {
   amount?: number;
   // Id of the bank account or card the payout is sent to.
   destination?: string;
+  // Microservice entity
+  entityId?: string | null;
   // The method used to send this payout
   method?: PayoutMethod;
   type?: PayoutType;
@@ -37,6 +39,7 @@ interface IPayout extends IEntity {
   description?: string | null;
   // Date that you can expect the payout to arrive in the bank. This factors in delays to account for weekends or bank holidays
   arrivalDate?: Date;
+  registeredAt?: Date;
   params?: IParams;
   createdAt?: Date;
   updatedAt?: Date;
