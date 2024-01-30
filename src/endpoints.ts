@@ -140,10 +140,6 @@ import type {
   IPayoutOutput,
 } from './interfaces/payment-stripe/methods/stripe/payout';
 import type {
-  IRefundInput,
-  IRefundOutput,
-} from './interfaces/payment-stripe/methods/stripe/refund';
-import type {
   ISetupIntentInput,
   ISetupIntentOutput,
 } from './interfaces/payment-stripe/methods/stripe/setup-intent';
@@ -735,7 +731,6 @@ class Endpoints<
         'payment-stripe.stripe.payment-intent-fees',
       ),
       payout: this.createHandler<IPayoutInput, IPayoutOutput>('payment-stripe.stripe.payout'),
-      refund: this.createHandler<IRefundInput, IRefundOutput>('payment-stripe.stripe.refund'),
       setupIntent: this.createHandler<ISetupIntentInput, ISetupIntentOutput>(
         'payment-stripe.stripe.setup-intent',
       ),
