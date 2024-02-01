@@ -208,17 +208,12 @@ class ApiClient {
       delete this.headers.host;
     }
 
-    // add authentication token only for development (if cookie not pass with request)
-    if (this.accessTokenType === TokenCreateReturnType.directly && this.isClient) {
-      const token = await this.getAccessToken();
+    const token = await this.getAccessToken();
 
-      return {
-        ...(this.headers || {}),
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      };
-    }
-
-    return this.headers;
+    return {
+      ...(this.headers || {}),
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    };
   }
 
   /**
