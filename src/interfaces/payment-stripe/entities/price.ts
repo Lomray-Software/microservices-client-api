@@ -10,6 +10,8 @@ interface IPrice extends IEntity {
   userId?: string;
   currency?: string;
   unitAmount?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
   product?: IProduct;
 }
 
