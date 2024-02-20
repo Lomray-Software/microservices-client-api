@@ -527,8 +527,8 @@ class ApiClient {
           if (
             // if tokens were renewed
             isRenewed ||
-            // if tokens were not renewed and method is guest allowed and error code related to not exists token
-            (!isRenewed && isGuestAllowed && error.code === UnauthorizedCode.TOKEN_NOT_EXIST)
+            // if tokens were not renewed, because token not exist in db and method is allowed for guest
+            (!isRenewed && error.code === UnauthorizedCode.TOKEN_NOT_EXIST && isGuestAllowed)
           ) {
             // repeat previous request
             return 401;
