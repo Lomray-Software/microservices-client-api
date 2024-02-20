@@ -529,6 +529,7 @@ class ApiClient {
 
         // if api should renew tokens
         if (!isSkipRenew) {
+          // If renew will fail, user will be sign outed, but for guest allowed request should be repeated
           const isRenewed = await this.updateAuthTokens(error);
 
           // If repeat request attempt is 0, and tokens were not renewed and method is guest allowed, or are tokens were renewed
