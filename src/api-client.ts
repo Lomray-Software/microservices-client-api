@@ -5,6 +5,7 @@ import type { AxiosError, AxiosRequestConfig } from 'axios';
 import axios from 'axios';
 import type { JwtPayload } from 'jwt-decode';
 import JwtDecode from 'jwt-decode';
+import UnauthorizedCode from './constants/authentication/unauthorized-code';
 import TokenCreateReturnType from './constants/token-return-type';
 import type {
   ITokenRenewInput,
@@ -518,13 +519,17 @@ class ApiClient {
         await this.onError?.(error);
         ApiClient.makeBeautifulError(error);
 
-        // if api should renew tokens and error status is 401
-        if (!isSkipRenew && error.status === 401) {
+        // if api should renew tokens
+        if (!isSkipRenew) {
           // if renew will fail, user will be sign outed, but for guest allowed request should be repeated
           const isRenewed = await this.updateAuthTokens(error);
 
-          // if tokens were not renewed and method is guest allowed, or are tokens were renewed
-          if (isRenewed || (!isRenewed && isGuestAllowed)) {
+          if (
+            // if tokens were renewed
+            isRenewed ||
+            // if tokens were not renewed and method is guest allowed and error code related to not exists token
+            (!isRenewed && isGuestAllowed && error.code === UnauthorizedCode.TOKEN_NOT_EXIST)
+          ) {
             // repeat previous request
             return 401;
           }
