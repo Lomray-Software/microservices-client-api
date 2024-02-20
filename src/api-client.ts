@@ -106,15 +106,6 @@ class ApiClient {
   };
 
   /**
-   * Repeat request
-   * @protected
-   */
-  protected repeatRequestData: { attempts: number; resetTimerId: NodeJS.Timeout | null } = {
-    attempts: 0,
-    resetTimerId: null,
-  };
-
-  /**
    * @protected
    */
   protected readonly apiDomain: string;
@@ -532,13 +523,8 @@ class ApiClient {
           // If renew will fail, user will be sign outed, but for guest allowed request should be repeated
           const isRenewed = await this.updateAuthTokens(error);
 
-          // If repeat request attempt is 0, and tokens were not renewed and method is guest allowed, or are tokens were renewed
-          if (!this.repeatRequestData.attempts && ((!isRenewed && isGuestAllowed) || isRenewed)) {
-            this.repeatRequestData.attempts += 1;
-            this.repeatRequestData.resetTimerId = setTimeout(() => {
-              this.repeatRequestData.attempts = 0;
-            }, 10000);
-
+          // If tokens were not renewed and method is guest allowed, or are tokens were renewed
+          if ((!isRenewed && isGuestAllowed) || isRenewed) {
             // repeat previous request
             return 401;
           }
