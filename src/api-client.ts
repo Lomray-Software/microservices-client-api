@@ -524,7 +524,7 @@ class ApiClient {
           const isRenewed = await this.updateAuthTokens(error);
 
           // If tokens were not renewed and method is guest allowed, or are tokens were renewed
-          if ((!isRenewed && isGuestAllowed) || isRenewed) {
+          if (isRenewed || (!isRenewed && isGuestAllowed)) {
             // repeat previous request
             return 401;
           }
@@ -551,6 +551,7 @@ class ApiClient {
       isSkipRenew = false,
       shouldShowErrors = true,
       isRepeat = false,
+      isGuestAllowed = true,
     } = options;
 
     try {
@@ -567,7 +568,11 @@ class ApiClient {
         data: reqData,
       });
 
-      const res = await this.handleResponse(data, { isSkipRenew, shouldShowErrors });
+      const res = await this.handleResponse(data, {
+        isSkipRenew,
+        shouldShowErrors,
+        isGuestAllowed,
+      });
 
       // repeat request after update auth tokens
       if (res === 401) {
