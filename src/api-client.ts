@@ -519,7 +519,7 @@ class ApiClient {
         ApiClient.makeBeautifulError(error);
 
         // if api should renew tokens and error status is 401
-        if (!isSkipRenew && response.status === 401) {
+        if (!isSkipRenew && error.status === 401) {
           // if renew will fail, user will be sign outed, but for guest allowed request should be repeated
           const isRenewed = await this.updateAuthTokens(error);
 
