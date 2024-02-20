@@ -19,6 +19,9 @@ export interface IApiClientReqOptions {
   shouldShowErrors?: boolean;
   request?: AxiosRequestConfig;
   isRepeat?: boolean;
+  // Is endpoint allowed for guest
+  // @TODO: Compose logic in middlewares
+  isGuestAllowed?: boolean;
 }
 
 export interface IJwtPayload extends JwtPayload {
@@ -98,6 +101,15 @@ class ApiClient {
    * @protected
    */
   protected renewTokenData: { attempts: number; resetTimerId: NodeJS.Timeout | null } = {
+    attempts: 0,
+    resetTimerId: null,
+  };
+
+  /**
+   * Repeat request
+   * @protected
+   */
+  protected repeatRequestData: { attempts: number; resetTimerId: NodeJS.Timeout | null } = {
     attempts: 0,
     resetTimerId: null,
   };
@@ -503,7 +515,7 @@ class ApiClient {
    */
   protected async handleResponse<TResponse>(
     res: TResponse,
-    { shouldShowErrors, isSkipRenew }: IApiClientReqOptions,
+    { shouldShowErrors, isSkipRenew, isGuestAllowed }: IApiClientReqOptions,
   ): Promise<TResponse | 401> {
     const responses = Array.isArray(res) ? res : [res];
 
@@ -515,9 +527,20 @@ class ApiClient {
         await this.onError?.(error);
         ApiClient.makeBeautifulError(error);
 
-        if (!isSkipRenew && (await this.updateAuthTokens(error))) {
-          // repeat previous request
-          return 401;
+        // if api should renew tokens
+        if (!isSkipRenew) {
+          const isRenewed = await this.updateAuthTokens(error);
+
+          // If repeat request attempt is 0, and tokens were not renewed and method is guest allowed, or are tokens were renewed
+          if (!this.repeatRequestData.attempts && ((!isRenewed && isGuestAllowed) || isRenewed)) {
+            this.repeatRequestData.attempts += 1;
+            this.repeatRequestData.resetTimerId = setTimeout(() => {
+              this.repeatRequestData.attempts = 0;
+            }, 10000);
+
+            // repeat previous request
+            return 401;
+          }
         }
 
         if (shouldShowErrors && this.isClient) {
