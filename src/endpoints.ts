@@ -171,7 +171,7 @@ import type { ISignOutInput, ISignOutOutput } from './interfaces/users/methods/u
 import type { ISignUpInput, ISignUpOutput } from './interfaces/users/methods/user/sign-up';
 
 export interface IEndpointsCreateHandlerConfig
-  extends Pick<IApiClientReqOptions, 'isCached' | 'isSkipRenew'> {}
+  extends Pick<IApiClientReqOptions, 'isCached' | 'isSkipRenew' | 'isGuestAllowed'> {}
 
 export interface IEndpointsCreateHandlerOptions
   extends Omit<IApiClientReqOptions, 'isCached' | 'isSkipRenew'> {}
