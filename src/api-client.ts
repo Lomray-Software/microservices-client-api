@@ -5,6 +5,7 @@ import type { AxiosError, AxiosRequestConfig } from 'axios';
 import axios from 'axios';
 import type { JwtPayload } from 'jwt-decode';
 import JwtDecode from 'jwt-decode';
+import UnauthorizedCode from './constants/authentication/unauthorized-code';
 import TokenCreateReturnType from './constants/token-return-type';
 import type {
   ITokenRenewInput,
@@ -19,6 +20,9 @@ export interface IApiClientReqOptions {
   shouldShowErrors?: boolean;
   request?: AxiosRequestConfig;
   isRepeat?: boolean;
+  // Is endpoint allowed for guest
+  // @TODO: Compose logic in middlewares
+  isGuestAllowed?: boolean;
 }
 
 export interface IJwtPayload extends JwtPayload {
@@ -503,7 +507,7 @@ class ApiClient {
    */
   protected async handleResponse<TResponse>(
     res: TResponse,
-    { shouldShowErrors, isSkipRenew }: IApiClientReqOptions,
+    { shouldShowErrors, isSkipRenew, isGuestAllowed }: IApiClientReqOptions,
   ): Promise<TResponse | 401> {
     const responses = Array.isArray(res) ? res : [res];
 
@@ -515,9 +519,20 @@ class ApiClient {
         await this.onError?.(error);
         ApiClient.makeBeautifulError(error);
 
-        if (!isSkipRenew && (await this.updateAuthTokens(error))) {
-          // repeat previous request
-          return 401;
+        // if api should renew tokens
+        if (!isSkipRenew) {
+          // if renew will fail, user will be sign outed, but for guest allowed request should be repeated
+          const isRenewed = await this.updateAuthTokens(error);
+
+          if (
+            // if tokens were renewed
+            isRenewed ||
+            // if tokens were not renewed, because token not exist in db and method is allowed for guest
+            (!isRenewed && error.code === UnauthorizedCode.TOKEN_NOT_EXIST && isGuestAllowed)
+          ) {
+            // repeat previous request
+            return 401;
+          }
         }
 
         if (shouldShowErrors && this.isClient) {
@@ -541,6 +556,7 @@ class ApiClient {
       isSkipRenew = false,
       shouldShowErrors = true,
       isRepeat = false,
+      isGuestAllowed = false,
     } = options;
 
     try {
@@ -557,7 +573,11 @@ class ApiClient {
         data: reqData,
       });
 
-      const res = await this.handleResponse(data, { isSkipRenew, shouldShowErrors });
+      const res = await this.handleResponse(data, {
+        isSkipRenew,
+        shouldShowErrors,
+        isGuestAllowed,
+      });
 
       // repeat request after update auth tokens
       if (res === 401) {
