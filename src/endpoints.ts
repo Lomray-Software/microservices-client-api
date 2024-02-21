@@ -234,7 +234,7 @@ class Endpoints<
   protected createHandler =
     <TInput, TOutput>(
       method: string,
-      { isCached, isSkipRenew }: IEndpointsCreateHandlerConfig = {},
+      { isCached, isSkipRenew, isGuestAllowed }: IEndpointsCreateHandlerConfig = {},
     ) =>
     <TI extends TInput = TInput, TO extends TOutput = TOutput>(
       params?: TI,
@@ -243,6 +243,7 @@ class Endpoints<
       this.sendRequest<TI, TO>(method, params, {
         isCached,
         isSkipRenew,
+        isGuestAllowed,
         ...options,
       });
 
