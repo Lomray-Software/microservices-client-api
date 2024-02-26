@@ -564,7 +564,9 @@ class Endpoints<
     notice: {
       list: this.createHandler<IQuery<INotice>, IList<INotice>>('notification.notice.list'),
       view: this.createHandler<IQuery<INotice>, IView<INotice>>('notification.notice.view'),
-      create: this.createHandler<ICreate<INotice>, IView<INotice>>('notification.notice.create'),
+      create: this.createHandler<ICreate<INotice | INotice[]>, IView<INotice | INotice[]>>(
+        'notification.notice.create',
+      ),
       remove: this.createHandler<IQuery<INotice>, IRemove<INotice>>('notification.notice.remove'),
       update: this.createHandler<IUpdate<INotice>, IView<INotice>>('notification.notice.update'),
       count: this.createHandler<IQuery<INotice>, ICount>('notification.notice.count'),
