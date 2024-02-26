@@ -183,6 +183,9 @@ export interface IValidationErrors<TFormValue> {
   message?: string;
 }
 
+// The "create" endpoint includes support for multiplication "isAllowMultiply"
+export type TypeOrArray<T> = T | T[];
+
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface IEndpoints {}
 
@@ -564,7 +567,7 @@ class Endpoints<
     notice: {
       list: this.createHandler<IQuery<INotice>, IList<INotice>>('notification.notice.list'),
       view: this.createHandler<IQuery<INotice>, IView<INotice>>('notification.notice.view'),
-      create: this.createHandler<ICreate<INotice | INotice[]>, IView<INotice | INotice[]>>(
+      create: this.createHandler<ICreate<TypeOrArray<INotice>>, IView<TypeOrArray<INotice>>>(
         'notification.notice.create',
       ),
       remove: this.createHandler<IQuery<INotice>, IRemove<INotice>>('notification.notice.remove'),
