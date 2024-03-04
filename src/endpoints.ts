@@ -532,6 +532,7 @@ class Endpoints<
       create: this.createHandler<IFileCreateInput, IView<IFile>>('files.file.create'),
       remove: this.createHandler<IFileRemoveInput, IFileRemoveOutput>('files.file.remove'),
       view: this.createHandler<IQuery<IFile>, IView<IFile>>('files.file.view'),
+      count: this.createHandler<IQuery<IFile>, ICount>('files.file.count'),
     },
     fileEntity: {
       create: this.createHandler<ICreate<IFileEntity>, IView<IFileEntity>>(
@@ -608,7 +609,6 @@ class Endpoints<
       remove: this.createHandler<IQuery<IComponent>, IRemove<IComponent>>(
         'content.component.remove',
       ),
-      count: this.createHandler<IQuery<IComponent>, ICount>('content.component.count'),
     },
     singleType: {
       list: this.createHandler<IQuery<ISingleType>, IList<ISingleType>>('content.single-type.list'),
