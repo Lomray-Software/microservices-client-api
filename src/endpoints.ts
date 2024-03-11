@@ -545,6 +545,7 @@ class Endpoints<
         'files.file-entity.remove',
       ),
       view: this.createHandler<IQuery<IFileEntity>, IView<IFileEntity>>('files.file-entity.view'),
+      list: this.createHandler<IQuery<IFileEntity>, IList<IFileEntity>>('files.file-entity.list'),
     },
     folder: {
       create: this.createHandler<ICreate<IFolder>, IView<IFolder>>('files.folder.create'),
