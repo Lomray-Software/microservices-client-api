@@ -63,6 +63,10 @@ import type {
 } from './interfaces/notifications/methods/email/send';
 import type { IHideAllOutput } from './interfaces/notifications/methods/notice/hide-all';
 import type {
+  IViewAllInput,
+  IViewAllOutput,
+} from './interfaces/notifications/methods/notice/view-all';
+import type {
   IPhoneSendInput,
   IPhoneSendOutput,
 } from './interfaces/notifications/methods/phone/send';
@@ -576,6 +580,9 @@ class Endpoints<
       update: this.createHandler<IUpdate<INotice>, IView<INotice>>('notification.notice.update'),
       count: this.createHandler<IQuery<INotice>, ICount>('notification.notice.count'),
       hideAll: this.createHandler<never, IHideAllOutput>('notification.notice.hide-all'),
+      viewAll: this.createHandler<IQuery<IViewAllInput>, IView<IViewAllOutput>>(
+        'notification.notice.view-all',
+      ),
     },
     task: {
       list: this.createHandler<IQuery<ITask>, IList<ITask>>('notification.task.list'),
