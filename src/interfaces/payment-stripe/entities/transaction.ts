@@ -98,6 +98,8 @@ interface ITransaction extends IEntity {
   entityId?: string;
   // Smallest currency unit amount
   amount?: number;
+  // Custom amount paid by user for PWYW transactions (in cents)
+  customAmount?: number;
   // Smallest currency unit tax
   tax?: number;
   // Smallest currency unit fee
