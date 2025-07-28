@@ -13,6 +13,7 @@ interface IPrice extends IEntity {
   createdAt?: Date;
   updatedAt?: Date;
   product?: IProduct;
+  metadata?: Record<string, any> | null;
 }
 
 export default IPrice;

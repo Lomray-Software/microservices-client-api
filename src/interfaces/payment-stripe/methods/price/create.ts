@@ -5,6 +5,7 @@ interface IPriceCreateInput {
   currency: string;
   userId: string;
   unitAmount: number;
+  metadata?: Record<string, any>;
 }
 
 interface IPriceCreateOutput {
