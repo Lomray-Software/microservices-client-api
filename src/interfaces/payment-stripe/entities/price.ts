@@ -14,6 +14,12 @@ interface IPrice extends IEntity {
   updatedAt?: Date;
   product?: IProduct;
   metadata?: Record<string, any> | null;
+  customUnitAmount?: {
+    enabled: boolean;
+    preset?: number;
+    minimum?: number;
+    maximum?: number;
+  };
 }
 
 export default IPrice;
