@@ -580,9 +580,7 @@ class Endpoints<
       update: this.createHandler<IUpdate<INotice>, IView<INotice>>('notification.notice.update'),
       count: this.createHandler<IQuery<INotice>, ICount>('notification.notice.count'),
       hideAll: this.createHandler<never, IHideAllOutput>('notification.notice.hide-all'),
-      viewAll: this.createHandler<IQuery<IViewAllInput>, IView<IViewAllOutput>>(
-        'notification.notice.view-all',
-      ),
+      viewAll: this.createHandler<IViewAllInput, IViewAllOutput>('notification.notice.view-all'),
     },
     task: {
       list: this.createHandler<IQuery<ITask>, IList<ITask>>('notification.task.list'),
