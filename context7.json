@@ -21,5 +21,7 @@
   "rules": [
     "Use the documented api-client, api-client-backend or endpoints subpaths; release 2.104.0 has no root index module.",
     "The backend adapter expects sendRequest results with toJSON() and rejects batch arrays."
-  ]
+  ],
+  "url": "https://context7.com/lomray-software/microservices-client-api",
+  "public_key": "pk_EehfGIwKy1hHNX7dClOVS"
 }
