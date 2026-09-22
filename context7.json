@@ -1,0 +1,25 @@
+{
+  "$schema": "https://context7.com/schema/context7.json",
+  "projectTitle": "microservices-client-api",
+  "description": "Typed client modules for Lomray microservice RPC endpoints.",
+  "branch": "prod",
+  "folders": [],
+  "excludeFolders": [
+    "node_modules",
+    ".github",
+    "src",
+    "lib",
+    "dist",
+    "__tests__",
+    "__mocks__"
+  ],
+  "excludeFiles": [
+    "CHANGELOG.md",
+    "LICENSE",
+    "CODE_OF_CONDUCT.md"
+  ],
+  "rules": [
+    "Use the documented api-client, api-client-backend or endpoints subpaths; release 2.104.0 has no root index module.",
+    "The backend adapter expects sendRequest results with toJSON() and rejects batch arrays."
+  ]
+}
